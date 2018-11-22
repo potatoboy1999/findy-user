@@ -7,19 +7,25 @@
 		<title>Findy</title>
 		<link rel="stylesheet" href="jquery_mobile/jquery.mobile-1.4.5.min.css" />
 		<script src="js/jquery-1.11.1.min.js"></script>
-		<script src="jquery_mobile/jquery.mobile-1.4.5.min.js"></script>
+		<!--<script src="jquery_mobile/jquery.mobile-1.4.5.min.js"></script>-->
 		<script src="js/index.js"></script>
 		<script src="js/geolocation/map.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ruGnwOw-V0cDLoT_Es1CU3jY3tDuB7s" async defer></script>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap/style.css">
+		<link rel="stylesheet" type="text/css" href="css/global.css">
 	</head>
 	<body>
-		<div data-role="page" id="index">
-			<div data-role="header">
-				<h1>Map</h1>
-				<!--<button id="getLocation">Get GPS Location</button>-->
+		<div data-role="page" id="index" style="height: 100%;">
+			<div style="height: 100%; position: relative;">
+				  <!--<div data-role="header">
+						<h1>Map</h1>
+						<button id="getLocation">Get GPS Location</button>
+					</div>-->
+					<div style="position: absolute;">
+						
+					</div>
+					<div id="map" style="width: 100%; height: 100%; min-height: 590px; border:1px solid red;"></div>
 			</div>
-			<div id="map" style="width: 100%; height: 100%; min-height: 590px; border:1px solid red;"></div>
 		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 	</body>

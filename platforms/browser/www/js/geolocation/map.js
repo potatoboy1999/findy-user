@@ -114,14 +114,18 @@ function loadCommerceLocation(){
 	                    anchor: new google.maps.Point(17, 34),
 	                    scaledSize: new google.maps.Size(40, 55)
 	                  };
-	        //Create the Marker
-	        //console.log('creando el marcador');
-	        new google.maps.Marker({
+	         //Create the Marker
+	         //console.log('creando el marcador');
+	         var marker = new google.maps.Marker({
 	                        map: map,
 	                        icon: icon,
 	                        title: comm.name,
 	                        position: pos
 	                      });
+	         marker.addListener('click', function() {
+					map.setZoom(18	);
+					map.setCenter(marker.getPosition());
+				});
 			});
 		},
 		error:function(error){
