@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Findy-User",
+  "short_name": "Findy-User",
+  "version": "io.cordova.hellocordova",
+  "description": "Findy, encuentra todas tus tiendas",
+  "author": "ABBOST DEVELOPMENT TEAM",
+  "icons": [],
+  "start_url": "index.html"
+}

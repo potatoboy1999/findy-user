@@ -1,8 +1,8 @@
 {
-    "name": "helloworld",
-    "displayName": "HelloCordova",
+    "name": "Findy-User",
+    "displayName": "Findy",
     "version": "1.0.0",
-    "description": "A sample Apache Cordova application that responds to the deviceready event.",
+    "description": "Findy, encuentra todas tus tiendas",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,13 +10,23 @@
     "author": "Apache Cordova Team",
     "license": "Apache-2.0",
     "dependencies": {
+        "cordova-browser": "^5.0.4",
         "cordova-plugin-compat": "^1.2.0",
-        "cordova-plugin-geolocation": "^4.0.1"
+        "cordova-plugin-dialogs": "^2.0.1",
+        "cordova-plugin-geolocation": "^4.0.1",
+        "cordova-plugin-whitelist": "1",
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2"
     },
     "cordova": {
         "plugins": {
             "cordova-plugin-geolocation": {},
-            "cordova-plugin-compat": {}
-        }
+            "cordova-plugin-compat": {},
+            "cordova-plugin-whitelist": {},
+            "cordova-plugin-dialogs": {},
+            "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
+        },
+        "platforms": [
+            "browser"
+        ]
     }
 }

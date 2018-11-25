@@ -1,4 +1,5 @@
 var map = null;
+var arrayMarkers = [];
 //var base_api_url='http://localhost/findy/public/api/';
 var base_api_url='http://findy.pe/public/api/';
 
@@ -82,7 +83,7 @@ function initMap() {
 					];
   	// INICIALIZAR MAPA
   	options = {
-		center: {lat: -12.0682866, lng: -77.0190969},
+		center: {lat: -12.070117, lng: -76.955271},
 		zoom: 17,
 		streetViewControl: false,
 		rotateControl: false,
@@ -93,13 +94,14 @@ function initMap() {
   	};
 	map = new google.maps.Map(document.getElementById('map'), options);
 }
+
 function loadCommerceLocation(){
 	//alert('Cargar los comercios en el mapa');
 	$.ajax({
 		url:base_api_url+'commerces/locations',
 		dataType:"json",
 		success:function(response){
-			//console.log(response);
+			console.log(response);
 			commerce = response;
 			commerce.forEach(function(comm){
 				//alert('Comercio: '+comm.name+', lat:'+comm.lat+', lng:'+comm.lng);
@@ -119,17 +121,24 @@ function loadCommerceLocation(){
 	         var marker = new google.maps.Marker({
 	                        map: map,
 	                        icon: icon,
-	                        title: comm.name,
+	                        title: comm.id.toString(),
 	                        position: pos
 	                      });
+	         arrayMarkers.push(marker);
+	         map.addListener('click', function() {
+					hideInfo();
+				});
 	         marker.addListener('click', function() {
-					map.setZoom(18	);
-					map.setCenter(marker.getPosition());
+					map.setZoom(18);
+					map.panTo(marker.getPosition());
+					
+					id = marker.getTitle();
+					showInfo(id);
 				});
 			});
 		},
 		error:function(error){
-			alert('Error en la carga de coordenadas')
+			navigator.notification.alert('Error en la carga de coordenadas')
 		}
 	});
 	//alert('Comercios cargados exitosamente');

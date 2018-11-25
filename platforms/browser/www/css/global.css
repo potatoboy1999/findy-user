@@ -1,2 +1,6 @@
 html, body {height: 100%}
 body{margin: 0px;}
+
+.topDiv{position: absolute; left: 5%; z-index: 99; width: 90%; border: 1px solid black; border-radius: 10px}
+#verCategoriasBtn{bottom:30px; min-height: 50px; background-color: white; cursor: pointer; text-align: center;}
+.info{bottom:100px; min-height: 80px; background-color: white;}

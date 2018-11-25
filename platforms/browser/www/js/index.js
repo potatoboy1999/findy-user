@@ -1,9 +1,12 @@
 var base_api_url='http://localhost/findy/public/api/';
+var commerce = null;
+
 window.onload= function () {
   	//$("#getLocation").on("click",getCurrentLocation);
     getCurrentLocation();
     initMap();
     loadCommerceLocation();
+    $('#btn_nav').on('click',navigate);
 };
 
 function getCurrentLocation(){
@@ -29,8 +32,37 @@ function onSuccess(position){
   });
   var marker = new google.maps.Marker(markerOptions);
   //mapMsg.setCenter(results[0].geometry.location);
-  map.setCenter({lat:lat, lng:lng});
+  map.panTo({lat:lat, lng:lng});
 };
 function onError(error){
-  alert("code: "+ error.code+ ", message: "+error.message);
+  navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
 };
+function hideInfo(){
+  $('.info').hide();
+}
+function showInfo(id){
+  $.ajax({
+    url:base_api_url+'commerces/info/'+id,
+    dataType:"json",
+    success:function(comm){
+      commerce = comm;
+      $('.commName').html(comm.name);
+      $('.commDireccion').html(comm.address);
+      $('.linkNavigation').attr('lat',comm.lat);
+      $('.linkNavigation').attr('lng',comm.lng);
+      $('.info').show();
+      //$('.commSchedule').html(comm.name);
+    },
+    error:function(error){
+      navigator.notification.alert('Error, no se pudo obtener la información');
+    }
+  });
+}
+function navigate(){
+  lat = $('.linkNavigation').attr('lat');
+  lng = $('.linkNavigation').attr('lng');
+  //linkNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
+  //navigator.notification.alert(linkNav);
+  launchnavigator.navigate([lat,lng],{start:"-21.9,-70.88888999"});
+  //window.open(linkNav,'_system');
+}
