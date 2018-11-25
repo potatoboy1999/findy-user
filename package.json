@@ -15,7 +15,10 @@
         "cordova-plugin-dialogs": "^2.0.1",
         "cordova-plugin-geolocation": "^4.0.1",
         "cordova-plugin-whitelist": "1",
-        "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2"
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2",
+        "cordova-android": "latest",
+        "cordova-ios": "latest",
+        "cordova-windows": "latest"
     },
     "cordova": {
         "plugins": {
@@ -23,10 +26,16 @@
             "cordova-plugin-compat": {},
             "cordova-plugin-whitelist": {},
             "cordova-plugin-dialogs": {},
-            "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
+            "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+                "OKHTTP_VERSION": "3.10.0",
+                "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
+            }
         },
         "platforms": [
-            "browser"
+            "browser",
+            "android",
+            "ios",
+            "windows"
         ]
     }
 }

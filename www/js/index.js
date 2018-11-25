@@ -32,7 +32,7 @@ function onSuccess(position){
   });
   var marker = new google.maps.Marker(markerOptions);
   //mapMsg.setCenter(results[0].geometry.location);
-  map.panTo({lat:lat, lng:lng});
+  //map.panTo({lat:lat, lng:lng});
 };
 function onError(error){
   navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
@@ -59,10 +59,27 @@ function showInfo(id){
   });
 }
 function navigate(){
+  navigator.notification.alert("Start Call to navigator");
   lat = $('.linkNavigation').attr('lat');
   lng = $('.linkNavigation').attr('lng');
+
+  lat = parceFloat(lat);
+  lng = parceFloat(lng);
   //linkNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
-  //navigator.notification.alert(linkNav);
-  launchnavigator.navigate([lat,lng],{start:"-21.9,-70.88888999"});
   //window.open(linkNav,'_system');
+  launchnavigator.navigate([lat,lng],{
+        start:"-12.108670,-77.028547",
+        enableDebug: true,
+        successCallback: onSuccessNav,
+        errorCallback: onErrorNav
+      });
+  navigator.notification.alert(linkNav);
+}
+
+function onSuccessNav(){
+    navigator.notification.alert("Navigator Correctamente Iniciado");
+}
+
+function onErrorNav(errMsg){
+    navigator.notification.alert("Error en Navegador: "+errMsg);
 }

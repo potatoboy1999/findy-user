@@ -34,9 +34,19 @@
   "uk.co.workingedge.phonegap.plugin.launchnavigator": {
     "source": {
       "type": "registry",
-      "id": "uk.co.workingedge.phonegap.plugin.launchnavigator@4.2.2"
+      "id": "uk.co.workingedge.phonegap.plugin.launchnavigator@^4.2.2"
     },
     "is_top_level": true,
+    "variables": {
+      "OKHTTP_VERSION": "1.2.3"
+    }
+  },
+  "cordova-plugin-actionsheet": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-actionsheet@2"
+    },
+    "is_top_level": false,
     "variables": {}
   }
 }
