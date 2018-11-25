@@ -1,41 +1,19 @@
 {
-    "name": "Findy-User",
-    "displayName": "Findy",
-    "version": "1.0.0",
-    "description": "Findy, encuentra todas tus tiendas",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Apache Cordova Team",
-    "license": "Apache-2.0",
-    "dependencies": {
-        "cordova-browser": "^5.0.4",
-        "cordova-plugin-compat": "^1.2.0",
-        "cordova-plugin-dialogs": "^2.0.1",
-        "cordova-plugin-geolocation": "^4.0.1",
-        "cordova-plugin-whitelist": "1",
-        "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2",
-        "cordova-android": "latest",
-        "cordova-ios": "latest",
-        "cordova-windows": "latest"
-    },
-    "cordova": {
-        "plugins": {
-            "cordova-plugin-geolocation": {},
-            "cordova-plugin-compat": {},
-            "cordova-plugin-whitelist": {},
-            "cordova-plugin-dialogs": {},
-            "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-                "OKHTTP_VERSION": "3.10.0",
-                "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
-            }
-        },
-        "platforms": [
-            "browser",
-            "android",
-            "ios",
-            "windows"
-        ]
+  "name": "workingedge.example.launchnavigator.simple",
+  "version": "4.0.0",
+  "displayName": "Launch Navigator Simple Example",
+  "cordova": {
+    "platforms": [
+      "android",
+      "ios",
+      "windows"
+    ],
+    "plugins": {
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {}
     }
+  },
+  "dependencies": {
+    "cordova-android": "latest",
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4"
+  }
 }

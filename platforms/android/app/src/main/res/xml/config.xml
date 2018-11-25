@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="workingedge.example.launchnavigator.simple" version="4.0.0" xmlns="http://www.w3.org/ns/widgets">
     <feature name="Notification">
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
@@ -16,20 +16,16 @@
     <feature name="LaunchNavigator">
         <param name="android-package" value="uk.co.workingedge.phonegap.plugin.LaunchNavigator" />
     </feature>
-    <name>Findy-User</name>
+    <name>Launch Navigator Simple Example</name>
     <description>
-        Findy, encuentra todas tus tiendas
+        Sample application that illustrates basic usage of the LaunchNavigator plugin
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        ABBOST DEVELOPMENT TEAM
+    <author email="dave@workingedge.co.uk" href="http://www.workingedge.co.uk/dave">
+        Dave Alden
     </author>
-    <content src="index.html" />
     <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="fullscreen" value="false" />
+    <preference name="orientation" value="default" />
+    <preference name="permissions" value="none" />
 </widget>
