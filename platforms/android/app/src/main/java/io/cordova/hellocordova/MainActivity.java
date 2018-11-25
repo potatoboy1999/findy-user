@@ -17,7 +17,7 @@
        under the License.
  */
 
-package workingedge.example.launchnavigator.simple;
+package io.cordova.hellocordova;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

@@ -4,7 +4,7 @@
     <description>
         Findy, encuentra todas tus tiendas
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
+    <author email="soporte@abbost.com" href="http://abbost.com">
         ABBOST DEVELOPMENT TEAM
     </author>
     
@@ -22,7 +22,9 @@
     <engine name="android" spec="latest" />
     <engine name="ios" spec="latest" />
 
-    <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="This app uses your location for maps." />
+    </plugin>
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
@@ -30,4 +32,10 @@
         <variable name="OKHTTP_VERSION" value="3.10.0" />
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
+
+    <platform name="android">
+        <uses-permission name="android.permission.ACCESS_COARSE_LOCATION" />
+        <uses-permission name="android.permission.ACCESS_FINE_LOCATION" />
+        <uses-permission name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    </platform>
 </widget>

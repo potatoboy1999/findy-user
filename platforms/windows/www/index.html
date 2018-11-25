@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<meta http-equiv="Content-Security-Policy" content="default-src *; style-src *  'unsafe-inline'; script-src *  'unsafe-inline'; media-src *">
+		<title>Findy</title>
+		<link rel="stylesheet" href="jquery_mobile/jquery.mobile-1.4.5.min.css" />
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<!--<script src="jquery_mobile/jquery.mobile-1.4.5.min.js"></script>-->
+		<script src="js/index.js"></script>
+		<script src="js/geolocation/map.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ruGnwOw-V0cDLoT_Es1CU3jY3tDuB7s" async defer></script>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap/style.css">
+		<link rel="stylesheet" type="text/css" href="css/global.css">
+	</head>
+	<body>
+		<div data-role="page" id="index" style="height: 100%;">
+			<div style="height: 100%; position: relative;">
+				  <!--<div data-role="header">
+						<h1>Map</h1>
+						<button id="getLocation">Get GPS Location</button>
+					</div>-->
+					<div class="topDiv info iCommerce" style="display: none;">
+						<div class="tipoLogo" style="width: 30%; float: left;">
+							<img width="60" height="70" src="http://findy.pe/public/img/categoria/bodegas.png">
+						</div>
+						<div class="tipoLogo" style="width: 70%; float: left;">
+							<h3 class="commName">'Commercio'</h3>
+							<p class="commDireccion">'Direccion'</p>
+							<!--<p class="commSchedule">'Horario'</p>-->
+						</div>
+						<div style="clear: both"></div>
+						<div style="padding: 5px; text-align: center">
+							<div id="btn_nav" style="width: 48%; border: 1px solid black; border-radius: 10px; float: left; color: white; background-color: #00b3bc; cursor: pointer;">
+								<p><a class="linkNavigation" href="#" lat="" lng="" style="color: white; text-decoration: none;">¿Cómo Llegar?</a></p>
+							</div>
+							<div style="width: 48%; border: 1px solid black; border-radius: 10px;float: left">
+								<p>Vér Más</p>
+							</div>
+						</div>
+					</div>
+					<div id="verCategoriasBtn" class="topDiv">
+						<p style="font-size: 20px; margin-top:15px; margin-bottom: 15px;">Ver todas las categorias</p>
+					</div>
+					<div id="map" style="width: 100%; height: 100%; min-height: 590px;"></div>
+			</div>
+		</div>
+		<script type="text/javascript" src="cordova.js"></script>
+	</body>
+</html>

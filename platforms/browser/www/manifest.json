@@ -1,12 +1,11 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "Launch Navigator Simple Example",
-  "short_name": "Launch Navigator Simple Example",
-  "version": "workingedge.example.launchnavigator.simple",
-  "description": "Sample application that illustrates basic usage of the LaunchNavigator plugin",
-  "author": "Dave Alden",
+  "name": "Findy-User",
+  "short_name": "Findy-User",
+  "version": "io.cordova.hellocordova",
+  "description": "Findy, encuentra todas tus tiendas",
+  "author": "ABBOST DEVELOPMENT TEAM",
   "icons": [],
-  "orientation": "any",
   "start_url": "index.html"
 }
