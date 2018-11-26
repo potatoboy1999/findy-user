@@ -82,8 +82,8 @@ function initMap() {
 					  }
 					];
   	// INICIALIZAR MAPA
-  	options = {
-		center: {lat: -12.070117, lng: -76.955271},
+  	options = { 
+		center: {lat: -12.066367, lng: -76.952500},
 		zoom: 17,
 		streetViewControl: false,
 		rotateControl: false,
