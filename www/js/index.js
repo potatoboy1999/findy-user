@@ -7,6 +7,9 @@ window.onload= function () {
     getCurrentLocation();
     initMap();
     loadCommerceLocation();
+    $('.btn_link_logIn').on('click',viewLogIn);
+    $('.btn_link_register').on('click',viewRegister);
+    $('#btn_nav').on('click',navigate);
     $('#btn_nav').on('click',navigate);
     $('#btnLogIn').on("click",validateLogIn);
     $('#btnRegister').on("click",requestRegister);
@@ -183,4 +186,11 @@ function onSuccessNav(){
 
 function onErrorNav(errMsg){
     navigator.notification.alert("Error en Navegador: "+errMsg);
+}
+
+function viewLogIn(){
+  window.location.href = "#logIn";
+}
+function viewRegister(){
+  window.location.href = "#registerPage";
 }

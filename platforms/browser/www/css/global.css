@@ -1,9 +1,23 @@
+
+@font-face{
+  font-family:'GothamRnd-Medium';
+  src:url('../fonts/GothamRnd-Medium.otf') format('opentype');
+}
+@font-face{
+  font-family:'GothamRnd-Bold';
+  src:url('../fonts/GothamRnd-Bold.otf') format('opentype');
+}
+@font-face{
+  font-family:'GothamRnd-MedItal';
+  src:url('../fonts/GothamRnd-MedItal.otf') format('opentype');
+}
+
 html, body {height: 100%}
-body{margin: 0px;}
+body{margin: 0px; font-family: GothamRnd-Medium;}
 
 .headerLogoImg{background-position: center; background-repeat: no-repeat; min-height: 150px; width: 100%;}
 @media only screen and (max-width: 320px){
-	.headerLogoImg{background-size: 200px 150px}
+	.headerLogoImg{background-size: 260px 120px}
 }
 @media only screen and (min-width: 321px){
 	.headerLogoImg{background-size: auto;}
