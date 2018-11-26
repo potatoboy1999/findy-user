@@ -10,19 +10,21 @@
     "author": "Apache Cordova Team",
     "license": "Apache-2.0",
     "dependencies": {
+        "cordova-android": "^6.4.0",
         "cordova-browser": "^5.0.4",
+        "cordova-ios": "latest",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-dialogs": "^2.0.1",
         "cordova-plugin-geolocation": "^4.0.1",
         "cordova-plugin-whitelist": "1",
-        "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2",
-        "cordova-android": "latest",
-        "cordova-ios": "latest",
-        "cordova-windows": "latest"
+        "cordova-windows": "latest",
+        "uk.co.workingedge.phonegap.plugin.launchnavigator": "^4.2.2"
     },
     "cordova": {
         "plugins": {
-            "cordova-plugin-geolocation": {},
+            "cordova-plugin-geolocation": {
+                "GEOLOCATION_USAGE_DESCRIPTION": "This app uses your location for maps."
+            },
             "cordova-plugin-compat": {},
             "cordova-plugin-whitelist": {},
             "cordova-plugin-dialogs": {},
@@ -33,7 +35,8 @@
         },
         "platforms": [
             "browser",
-            "android"
+            "android",
+            "ios"
         ]
     }
 }

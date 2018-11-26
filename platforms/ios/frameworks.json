@@ -1,6 +1,0 @@
-{
-    "CoreLocation.framework": 2,
-    "AudioToolbox.framework": 1,
-    "MapKit.framework": 1,
-    "SystemConfiguration.framework": 1
-}
