@@ -1,5 +1,5 @@
-var base_api_url='http://localhost/findy/public/api/';
-//var base_api_url='http://findy.pe/public/api/';
+//var base_api_url='http://localhost/findy/public/api/';
+var base_api_url='http://findy.pe/public/api/';
 var commerce = null;
 
 window.onload= function () {
