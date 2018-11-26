@@ -1,4 +1,5 @@
-var base_api_url='http://localhost/findy/public/api/';
+//var base_api_url='http://localhost/findy/public/api/';
+var base_api_url='http://findy.pe/public/api/';
 var commerce = null;
 
 window.onload= function () {
@@ -7,7 +8,99 @@ window.onload= function () {
     initMap();
     loadCommerceLocation();
     $('#btn_nav').on('click',navigate);
+    $('#btnLogIn').on("click",validateLogIn);
+    $('#btnRegister').on("click",requestRegister);
 };
+
+//PREVENT MIN HEIGHT JQUERY MOBILE
+$(document).on( "pagecontainershow", function ( e, data ) {
+   var activePage = data.toPage;
+   setTimeout(function () {
+      //var currentHeight = activePage.css( "min-height" );
+      activePage.css( "height", '100%' ); /* subtract 1px or set your custom height */
+   }, 50); /* set delay here */
+});
+$(window).on( "throttledresize", function ( e ) {
+   var activePage = $.mobile.pageContainer.pagecontainer( "getActivePage" );
+   setTimeout(function () {
+      //var currentHeight = activePage.css( "min-height" );
+      activePage.css( "height", '100%' );
+   }, 50);
+});
+
+
+function requestRegister(e){
+  e.preventDefault();
+
+  email = $("#registerForm input[name='email']").val();
+  user_name = $("#registerForm input[name='user_name']").val();
+  password = $("#registerForm input[name='password']").val();
+  password_confirm = $("#registerForm input[name='password_confirm']").val();
+  
+  //Set Obligatory Inputs
+  if(email === '' || user_name === '' || password === '' || password_confirm === ''){
+    navigator.notification.alert('Por favor llene todos los datos');
+    return;
+  }
+  //Confirm passwords the same
+  if(password !== password_confirm){
+    navigator.notification.alert('Las contraseñas no son iguales');
+    return;
+  }
+
+  $.ajax({
+    url:base_api_url+'customer/register',
+    type:'post',
+    dataType:'json',
+    data:{
+      'user_name':user_name,
+      'email':email,
+      'password':password
+    },
+    success:function(response){
+      navigator.notification.alert(response.message);
+      window.location.href = "#logIn";
+    },
+    error: function(error) {
+      navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/register');
+    }
+  });
+}
+
+function validateLogIn(e){
+  e.preventDefault();
+
+  email = $("#logInForm input[name='email']").val();
+  password = $("#logInForm input[name='password']").val();
+  
+  //Set Obligatory Inputs
+  if(email === '' || password === ''){
+    navigator.notification.alert('Por favor llene todos los datos');
+    return;
+  }
+  //Confirm passwords the same
+  if(password !== password_confirm){
+    navigator.notification.alert('Las contraseñas no son iguales');
+    return;
+  }
+
+  $.ajax({
+    url:base_api_url+'customer/validateUser',
+    type:'post',
+    dataType:'json',
+    data:{
+      'email':email,
+      'password':password
+    },
+    success:function(response){
+      navigator.notification.alert(response.message);
+      window.location.href = "#mapPage";
+    },
+    error: function(error) {
+      navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+    }
+  });
+}
 
 function getCurrentLocation(){
   //alert('Get GPS Start');
