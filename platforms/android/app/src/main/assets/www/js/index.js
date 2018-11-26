@@ -1,5 +1,5 @@
-//var base_api_url='http://localhost/findy/public/api/';
-var base_api_url='http://findy.pe/public/api/';
+var base_api_url='http://localhost/findy/public/api/';
+//var base_api_url='http://findy.pe/public/api/';
 var commerce = null;
 
 window.onload= function () {
@@ -58,8 +58,13 @@ function requestRegister(e){
       'password':password
     },
     success:function(response){
-      navigator.notification.alert(response.message);
-      window.location.href = "#logIn";
+      if (response['status']=='ok') {
+        navigator.notification.alert(response.message);
+        window.location.href = "#logIn";
+      }else{
+        navigator.notification.alert(response.message);
+      }
+      
     },
     error: function(error) {
       navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/register');
@@ -78,7 +83,6 @@ function validateLogIn(e){
     navigator.notification.alert('Por favor llene todos los datos');
     return;
   }
-  console.log(email+','+password);
   $.ajax({
     url:base_api_url+'customer/validateUser',
     type:'post',
