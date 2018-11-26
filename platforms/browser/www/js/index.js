@@ -4,7 +4,7 @@ var commerce = null;
 
 window.onload= function () {
   	//$("#getLocation").on("click",getCurrentLocation);
-    getCurrentLocation();
+    //getCurrentLocation();
     initMap();
     loadCommerceLocation();
     $('.btn_link_logIn').on('click',viewLogIn);
