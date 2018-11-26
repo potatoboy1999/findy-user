@@ -48,6 +48,7 @@ function showInfo(id){
       commerce = comm;
       $('.commName').html(comm.name);
       $('.commDireccion').html(comm.address);
+      $('#commCategoryImg').attr('src','http://findy.pe/public/img/categoria/'+comm.category_image)
       $('.linkNavigation').attr('lat',comm.lat);
       $('.linkNavigation').attr('lng',comm.lng);
       $('.info').show();
