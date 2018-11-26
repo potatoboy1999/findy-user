@@ -78,12 +78,7 @@ function validateLogIn(e){
     navigator.notification.alert('Por favor llene todos los datos');
     return;
   }
-  //Confirm passwords the same
-  if(password !== password_confirm){
-    navigator.notification.alert('Las contraseñas no son iguales');
-    return;
-  }
-
+  console.log(email+','+password);
   $.ajax({
     url:base_api_url+'customer/validateUser',
     type:'post',
@@ -93,11 +88,15 @@ function validateLogIn(e){
       'password':password
     },
     success:function(response){
-      navigator.notification.alert(response.message);
-      window.location.href = "#mapPage";
+      if (response['status']=='ok') {
+        window.location.href = "#mapPage";
+      }else{
+        navigator.notification.alert(response.message);
+      }
     },
     error: function(error) {
-      navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+      navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
+      //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
     }
   });
 }
