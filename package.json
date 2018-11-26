@@ -33,9 +33,7 @@
         },
         "platforms": [
             "browser",
-            "android",
-            "ios",
-            "windows"
+            "android"
         ]
     }
 }
