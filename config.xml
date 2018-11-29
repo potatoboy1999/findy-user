@@ -7,7 +7,6 @@
     <author email="soporte@abbost.com" href="http://abbost.com">
         ABBOST DEVELOPMENT TEAM
     </author>
-    <splash platform="android" src="splash.png" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -31,7 +30,7 @@
 
     <preference name="orienation" value="portrait" />
     <preference name="phonegap-version" value="cli-8.1.1" />
-    
+
     <platform name="android">
         <uses-permission name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <uses-permission name="android.permission.ACCESS_NETWORK_STATE" />
