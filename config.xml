@@ -7,6 +7,7 @@
     <author email="soporte@abbost.com" href="http://abbost.com">
         ABBOST DEVELOPMENT TEAM
     </author>
+    <splash platform="android" src="splash.png" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -17,9 +18,7 @@
     <allow-intent href="geo:*" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="latest" />
-    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="This app uses your location for maps." />
-    </plugin>
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
@@ -35,5 +34,4 @@
         <uses-permission name="android.permission.ACCESS_FINE_LOCATION" />
         <uses-permission name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     </platform>
-    <engine name="android" spec="~6.4.0" />
 </widget>

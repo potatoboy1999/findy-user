@@ -1,18 +1,18 @@
-var base_api_url='http://localhost/findy/public/api/';
-//var base_api_url='http://findy.pe/public/api/';
+//var base_api_url='http://localhost/findy/public/api/';
+var base_api_url='http://findy.pe/public/api/';
 var commerce = null;
 
 window.onload= function () {
   	//$("#getLocation").on("click",getCurrentLocation);
-    //getCurrentLocation();
-    initMap();
-    loadCommerceLocation();
     $('.btn_link_logIn').on('click',viewLogIn);
     $('.btn_link_register').on('click',viewRegister);
     $('#btn_nav').on('click',navigate);
     $('#btn_nav').on('click',navigate);
     $('#btnLogIn').on("click",validateLogIn);
     $('#btnRegister').on("click",requestRegister);
+    
+    //load pages
+    $("#mapPage").on("pageshow", loadMapPage);
 };
 
 //PREVENT MIN HEIGHT JQUERY MOBILE
@@ -31,6 +31,12 @@ $(window).on( "throttledresize", function ( e ) {
    }, 50);
 });
 
+
+function loadMapPage(){
+    getCurrentLocation();
+    initMap();
+    loadCommerceLocation(); 
+}
 
 function requestRegister(e){
   e.preventDefault();
@@ -110,16 +116,20 @@ function validateLogIn(e){
 
 function getCurrentLocation(){
   //alert('Get GPS Start');
-  navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
+  
+  //GET CURRENT POSITION 1 TIME
+  //navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
+
+  //GET POSITION LIVE
+  navigator.geolocation.watchPosition(onSuccess, onError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
 };
 
 function onSuccess(position){
   //alert('Retrieve current location');
   var lng = position.coords.longitude;
   var lat = position.coords.latitude;
-  var timestamp = position.timestamp;
 
-  //alert("longitude: "+lng+", Latitude: "+lat+", Timestamp: "+timestamp);
+  navigator.notification.alert("longitude: "+lng+", Latitude: "+lat);
   var markerOptions = new google.maps.Marker({
     clickable: true,
     flat: true,
@@ -147,6 +157,7 @@ function showInfo(id){
       commerce = comm;
       $('.commName').html(comm.name);
       $('.commDireccion').html(comm.address);
+      $('.commSchedule').html('<strong>Horario de Atención:</strong> '+comm.hourStart+" - "+comm.hourEnd);
       $('#commCategoryImg').attr('src','http://findy.pe/public/img/categoria/'+comm.category_image)
       $('.linkNavigation').attr('lat',comm.lat);
       $('.linkNavigation').attr('lng',comm.lng);

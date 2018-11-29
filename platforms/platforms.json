@@ -1,4 +1,5 @@
 {
     "android": "latest",
-    "browser": "latest"
+    "browser": "latest",
+    "ios": "latest"
 }
