@@ -18,24 +18,55 @@
 
 html, body {height: 100%}
 body{margin: 0px; font-family: GothamRnd-Medium;}
+.fix-clear{clear: both;}
 
 .headerLogoImg{background-position: center; background-repeat: no-repeat; min-height: 150px; width: 100%;}
 @media only screen and (max-width: 320px){
-	.headerLogoImg{background-size: 260px 500px}
+	.headerLogoImg{background-size: 250px 100px}
 }
 @media only screen and (min-width: 321px){
 	.headerLogoImg{background-size: auto;}
 }
 
+#btn_sideMenu{position: absolute;left: 5%; top:5%; z-index: 99; width: 90%;}
+#mapMenu{text-shadow: none!important;}
+#mapMenu{position: absolute; left: 0; top:2%; height: 98%; background-color: #00b3bc; width: 70%; z-index: 101;}
+.menu_options{}
+.menu_logOff{margin-top: 20px;}
+.user{padding: 50px 15px 20px 15px}
+.user p{margin:3px 0px;}
+.option{padding: 10px 20px;}
+.option p{margin:0;}
+.exit-menu{padding: 10px 20px;}
+
 .topDiv{position: absolute; left: 5%; z-index: 99; width: 90%; border: 1px solid black; border-radius: 10px}
 #verCategoriasBtn{bottom:30px; min-height: 50px; background-color: white; cursor: pointer; text-align: center;}
-.info{bottom:100px; min-height: 80px; background-color: white;}
 
-.infoDetail h3,.infoDetail p{
-	margin:0px;
-	padding: 2px 0px ;
-}
-.infoDetail p{
-	font-family: 'GothamRnd-Light';
-	font-size: 11px;
-}
+.info{bottom:100px; min-height: 80px; background-color: white;}
+.moreInfo{padding: 10px 15px;width: calc(90% - 30px);bottom: 30px; min-height: 90%; background-color: white; z-index: 100; }
+
+.btn_nav{border-radius: 10px; color: white; background-color: #00b3bc;}
+.btn_nav p{padding: 1em 0px; margin:0;}
+
+.right-exit{float:right; opacity: 0.5;}
+.comm_name{font-family: 'GothamRnd-Bold'; margin-bottom: 5px;}
+.comm_distance{font-family: 'GothamRnd-Light'; font-size: 14px;margin: 0px; margin-bottom: 0px;}
+.comm_distance span{color: blue;}
+.comm_descr,.comm_hours,.comm_days,.comm_address{font-family: 'GothamRnd-Light'; font-size: 15px;}
+
+.infoDetail h3,.infoDetail p{margin:0px;padding: 2px 0px;}
+.infoDetail p{font-family: 'GothamRnd-Light';font-size: 11px;}
+
+.findy-category{width: calc(50% - 25px); margin: 10px 10px; padding-top: 40%; border:1px solid black; border-radius: 10px; position: relative;}
+.ctg-absolute{position:  absolute;top: 20%;left: 0;right: 0;text-align: center;font-size: 20px;}
+.ctg-absolute p{margin: 2px 0px;}
+
+.subCtg p{padding-left: 10px;}
+.right-arrow{float:right; padding: 2px 8px; margin-right: 20px; background-color:#ffbc14; border-radius: 10px;}
+
+.question p{padding-left: 10px; font-size: 14px;}
+.question .right-arrow{background-color: transparent!important}
+#questionList .answer{font-family: 'GothamRnd-Light'; font-size: 13px;padding: 1.5em 1em 0 1em;}
+
+.btn_profile_photo{border-radius: 10px; color: white; background-color: #00b3bc;}
+.btn_profile_photo p{font-family: 'GothamRnd-Light'; text-align: center; padding: 1em 0px; margin:0;}

@@ -7,7 +7,6 @@
     <author email="soporte@abbost.com" href="http://abbost.com">
         ABBOST DEVELOPMENT TEAM
     </author>
-    <splash platform="android" src="splash.png" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -23,4 +22,6 @@
     <uses-permission name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="orienation" value="portrait" />
+    <preference name="phonegap-version" value="cli-8.1.1" />
 </widget>

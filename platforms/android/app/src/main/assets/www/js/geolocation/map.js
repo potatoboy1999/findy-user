@@ -4,6 +4,7 @@ var arrayMarkers = [];
 var base_api_url='http://findy.pe/public/api/';
 
 function initMap() {
+	arrayMarkers = [];
 	// Crear Estilo
 	var style = [
 					  {
@@ -101,6 +102,7 @@ function loadCommerceLocation(){
 		url:base_api_url+'commerces/locations',
 		dataType:"json",
 		success:function(response){
+			console.log('commerces');
 			console.log(response);
 			commerce = response;
 			commerce.forEach(function(comm){
@@ -111,7 +113,7 @@ function loadCommerceLocation(){
 				//console.log('creando el icono');
 				var icon = {
 	                    url: "http://findy.pe/public/img/marker/"+comm.category_img,
-	                    size: new google.maps.Size(150, 200),
+	                    size: new google.maps.Size(40, 55),
 	                    origin: new google.maps.Point(0, 0),
 	                    anchor: new google.maps.Point(17, 34),
 	                    scaledSize: new google.maps.Size(40, 55)
@@ -127,6 +129,7 @@ function loadCommerceLocation(){
 	         arrayMarkers.push(marker);
 	         map.addListener('click', function() {
 					hideInfo();
+					hideMoreInfo();
 				});
 	         marker.addListener('click', function() {
 					map.setZoom(18);
@@ -142,4 +145,14 @@ function loadCommerceLocation(){
 		}
 	});
 	//alert('Comercios cargados exitosamente');
+}
+
+function setMapOnAll(map) {
+	for (var i = 0; i < arrayMarkers.length; i++) {
+		arrayMarkers[i].setMap(map);
+	}
+}
+function deleteMarkers() {
+	setMapOnAll(null);
+	arrayMarkers = [];
 }

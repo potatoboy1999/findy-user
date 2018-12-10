@@ -4,12 +4,27 @@ var commerce = null;
 
 window.onload= function () {
   	//$("#getLocation").on("click",getCurrentLocation);
+    //botones listeners
     $('.btn_link_logIn').on('click',viewLogIn);
     $('.btn_link_register').on('click',viewRegister);
-    $('#btn_nav').on('click',navigate);
-    $('#btn_nav').on('click',navigate);
+    $('.btn_nav').on('click',navigate);
+    $('.btnMoreInfo').on('click',showMoreInfo);
+    $('.btnLessInfo').on('click',function(){$('.moreInfo').hide();$('.info').show()})
     $('#btnLogIn').on("click",validateLogIn);
     $('#btnRegister').on("click",requestRegister);
+    $("#verCategoriasBtn").on('click',viewCategories);
+    $('.exit-info').on('click',hideMoreInfo);
+    $("#btn_sideMenu").on('click',showSideMenu);
+    $(".exit-menu").on('click',hideSideMenu);
+    $('#btn_profile').on('click',showProfile);
+    $('#btn_help').on('click',showHelp);
+    $('#btn_settings').on('click',showSettings);
+    $('#btn_questions').on('click',showQuestions);
+    $('#btn_about').on('click',showAbout);
+    $('.question').on('click',toggleAnswer);
+    $('#btn_close_session').on('click',closeSession);
+
+    //$(".findy-category").on('click',viewSubCategories);
     
     //load pages
     $("#mapPage").on("pageshow", loadMapPage);
@@ -31,12 +46,164 @@ $(window).on( "throttledresize", function ( e ) {
    }, 50);
 });
 
+/*------- LOAD PAGES --------*/
 
 function loadMapPage(){
-    getCurrentLocation();
+  if(!map){
     initMap();
+    getCurrentLocation();
     loadCommerceLocation(); 
+    loadCategories();
+  }
 }
+
+/*------- LOAD DATA FUNCTIONS ------------*/
+
+function loadCategories(){
+  $.ajax({
+    url:base_api_url+'category/all',
+    dataType:"json",
+    success:function(response){
+      console.log('categories');
+      console.log(response);
+      ctg = response;
+      var ctgDiv = $("#categories");
+      ctgDiv.html('');
+      ctg.forEach(function(ctg){
+        ctgDiv.append("<div class='findy-category' ctg-id='"+ctg['id']+"' style='float: left;'><div class='ctg-absolute'><img width='50' height='50' src='http://findy.pe/public/img/categoria/"+ctg.image+"'><p class='ctg-name'>"+ctg['name']+"</p></div></div>");
+      });
+      $(".findy-category").on('click',viewSubCategories);
+    },
+    error:function(error){
+      navigator.notification.alert('Error en la carga de categorias');
+    }
+  });
+}
+
+function loadSubCategories(subCtgArray){
+  var listDiv = $('#subCtgList');
+  listDiv.html('');
+  subCtgArray.forEach(function(subCtg){
+    listDiv.append("<div class='subCtg' subCtg='"+subCtg['id']+"' style='border-bottom: 1px solid black;'><span class='right-arrow'>></span><p>"+subCtg['name']+"</p></div>");
+  });
+  $('.subCtg').on('click',showMapCategories);
+}
+
+function loadPositionCategories(ctgId){
+  $.ajax({
+    url:base_api_url+'commerces/getCategory',
+    type:'post',
+    dataType:'json',
+    data:{
+      'ctgId':ctgId
+    },
+    success:function(response){
+      console.log('Commerce Category');
+      console.log(response);
+
+      //commerce = response;
+      response.forEach(function(comm){
+        //alert('Comercio: '+comm.name+', lat:'+comm.lat+', lng:'+comm.lng);        
+        var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
+        var icon = {
+                      url: "http://findy.pe/public/img/marker/"+comm.category_img,
+                      size: new google.maps.Size(150, 200),
+                      origin: new google.maps.Point(0, 0),
+                      anchor: new google.maps.Point(17, 34),
+                      scaledSize: new google.maps.Size(40, 55)
+                    };
+           //Create the Marker
+           //console.log('creando el marcador');
+           var marker = new google.maps.Marker({
+                          map: map,
+                          icon: icon,
+                          title: comm.id.toString(),
+                          position: pos
+                        });
+           arrayMarkers.push(marker);
+           marker.addListener('click', function() {
+             map.setZoom(18);
+             map.panTo(marker.getPosition());
+            
+             id = marker.getTitle();
+             showInfo(id);
+           });
+      });
+    },
+    error:function(error){
+      navigator.notification.alert('Error en la carga de coordenadas')
+    }
+  });
+}
+
+/*------- REDIRECT / SHOW FUNCTIONS ------------*/
+
+function viewLogIn(){
+  window.location.href = "#logIn";
+}
+function viewRegister(){
+  window.location.href = "#registerPage";
+}
+function viewCategories(){
+  window.location.href="#ctgPage";
+}
+function viewSubCategories(){
+  var id = $(this).attr('ctg-id');
+  console.log(id);
+  $.ajax({
+    url:base_api_url+'category/subList',
+    type:'post',
+    dataType:'json',
+    data:{
+      'parent':id
+    },
+    success:function(response){
+        console.log(response);
+        loadSubCategories(response);
+        window.location.href="#subCtgPage";
+    },
+    error: function(error) {
+      navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/register');
+    }
+  });
+}
+function showMapCategories(){
+  var ctgId = $(this).attr('subctg');
+  console.log(ctgId);
+  deleteMarkers();
+  loadPositionCategories(ctgId);
+  window.location.href = "#mapPage";
+}
+function showProfile(){
+  window.location.href = "#profilePage";
+}
+function showQuestions(){
+  window.location.href = "#questionsPage";
+}
+function showAbout(){
+  window.location.href = "#aboutPage";
+}
+function showHelp(){
+  window.location.href = "#helpPage";
+}
+function showSettings(){
+  window.location.href = "#settingsPage";
+}
+
+function toggleAnswer(e){
+  var answer = $(this).attr('for');
+  var imgDiv = $(this).find('.right-arrow');
+  if(imgDiv.attr('st') == 'down'){
+    imgDiv.attr('st','up');
+    imgDiv.find('img').attr('src','img/icons/drop_up.png');
+  }else if(imgDiv.attr('st') == 'up'){
+    imgDiv.attr('st','down');
+    imgDiv.find('img').attr('src','img/icons/drop_down.png');
+  }
+  $('.'+answer).slideToggle();
+}
+
+/*------- LOGIN / REGISTER / LOG OFF ----------*/
 
 function requestRegister(e){
   e.preventDefault();
@@ -102,6 +269,7 @@ function validateLogIn(e){
     },
     success:function(response){
       if (response['status']=='ok') {
+        loadMapPage();
         window.location.href = "#mapPage";
       }else{
         navigator.notification.alert(response.message);
@@ -114,22 +282,27 @@ function validateLogIn(e){
   });
 }
 
+function closeSession(){
+  window.location.href = "#logIn";
+}
+
+/*------- GEOLOCATION --------*/
 function getCurrentLocation(){
   //alert('Get GPS Start');
-  
+
   //GET CURRENT POSITION 1 TIME
-  //navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
+  navigator.geolocation.getCurrentPosition(geoSuccess, geoError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
 
   //GET POSITION LIVE
-  navigator.geolocation.watchPosition(onSuccess, onError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
+  //navigator.geolocation.watchPosition(onSuccess, onError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
 };
 
-function onSuccess(position){
+function geoSuccess(position){
   //alert('Retrieve current location');
   var lng = position.coords.longitude;
   var lat = position.coords.latitude;
 
-  navigator.notification.alert("longitude: "+lng+", Latitude: "+lat);
+  //navigator.notification.alert("longitude: "+lng+", Latitude: "+lat);
   var markerOptions = new google.maps.Marker({
     clickable: true,
     flat: true,
@@ -141,34 +314,14 @@ function onSuccess(position){
   });
   var marker = new google.maps.Marker(markerOptions);
   //mapMsg.setCenter(results[0].geometry.location);
-  //map.panTo({lat:lat, lng:lng});
+  map.panTo({lat:lat, lng:lng});
 };
-function onError(error){
+
+function geoError(error){
   navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
 };
-function hideInfo(){
-  $('.info').hide();
-}
-function showInfo(id){
-  $.ajax({
-    url:base_api_url+'commerces/info/'+id,
-    dataType:"json",
-    success:function(comm){
-      commerce = comm;
-      $('.commName').html(comm.name);
-      $('.commDireccion').html(comm.address);
-      $('.commSchedule').html('<strong>Horario de Atención:</strong> '+comm.hourStart+" - "+comm.hourEnd);
-      $('#commCategoryImg').attr('src','http://findy.pe/public/img/categoria/'+comm.category_image)
-      $('.linkNavigation').attr('lat',comm.lat);
-      $('.linkNavigation').attr('lng',comm.lng);
-      $('.info').show();
-      //$('.commSchedule').html(comm.name);
-    },
-    error:function(error){
-      navigator.notification.alert('Error, no se pudo obtener la información');
-    }
-  });
-}
+/*------ WAZE/MAPS LINKS --------*/
+
 function navigate(){
   //navigator.notification.alert("Start Call to navigator");
   lat = $('.linkNavigation').attr('lat');
@@ -199,9 +352,53 @@ function onErrorNav(errMsg){
     navigator.notification.alert("Error en Navegador: "+errMsg);
 }
 
-function viewLogIn(){
-  window.location.href = "#logIn";
+/*------- BUTTON FUNCTIONS ------*/
+
+function hideInfo(){
+  $('.info').hide();
 }
-function viewRegister(){
-  window.location.href = "#registerPage";
+function hideMoreInfo(){
+  $('.moreInfo').hide();
 }
+function hideSideMenu(){
+  $("#mapMenu").hide();
+}
+function showInfo(id){
+  $.ajax({
+    url:base_api_url+'commerces/info/'+id,
+    dataType:"json",
+    success:function(comm){
+      commerce = comm;
+      $('.commName').html(comm.name);
+      $('.commDireccion').html(comm.address);
+      $('.commSchedule').html('<strong>Horario de Atención:</strong> '+comm.hourStart+" - "+comm.hourEnd);
+      $('.commCategoryImg').attr('src','http://findy.pe/public/img/categoria/'+comm.category_image)
+      $('.linkNavigation').attr('lat',comm.lat);
+      $('.linkNavigation').attr('lng',comm.lng);
+      $('.btnMoreInfo').attr('commId',comm.id);
+      $('.info').show();
+      //$('.commSchedule').html(comm.name);
+    },
+    error:function(error){
+      navigator.notification.alert('Error, no se pudo obtener la información');
+    }
+  });
+}
+function showMoreInfo(){
+  var commId = $(this).attr('commId');
+  console.log(commId);
+  hideInfo();
+  $('.comm_name').html(commerce['name']);
+  $('.comm_descr').html(commerce['description']);
+  $('.comm_start').html(commerce['hourStart']);
+  $('.comm_end').html(commerce['hourEnd']);
+  $('.comm_days').html(commerce['daysWord']);
+  $('.comm_address').html(commerce['address']);
+  $('.moreInfo').show();
+}
+function showSideMenu(){
+  $("#mapMenu").show();
+}
+
+
+

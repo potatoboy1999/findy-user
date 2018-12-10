@@ -18,6 +18,7 @@
 
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="latest" />
+    <engine name="android" spec="latest" />
 
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />

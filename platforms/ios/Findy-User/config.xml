@@ -38,7 +38,6 @@
     <author email="soporte@abbost.com" href="http://abbost.com">
         ABBOST DEVELOPMENT TEAM
     </author>
-    <splash platform="android" src="splash.png" />
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -60,4 +59,6 @@
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
     <preference name="PaginationMode" value="unpaginated" />
+    <preference name="orienation" value="portrait" />
+    <preference name="phonegap-version" value="cli-8.1.1" />
 </widget>
