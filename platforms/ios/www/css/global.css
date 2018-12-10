@@ -68,5 +68,13 @@ body{margin: 0px; font-family: GothamRnd-Medium;}
 .question .right-arrow{background-color: transparent!important}
 #questionList .answer{font-family: 'GothamRnd-Light'; font-size: 13px;padding: 1.5em 1em 0 1em;}
 
-.btn_profile_photo{border-radius: 10px; color: white; background-color: #00b3bc;}
-.btn_profile_photo p{font-family: 'GothamRnd-Light'; text-align: center; padding: 1em 0px; margin:0;}
+.btn_profile{border-radius: 10px; color: white; background-color: #00b3bc;}
+.btn_profile p{font-family: 'GothamRnd-Light'; text-align: center; padding: 0.8em 0px; margin:0;}
+
+.user_info label{font-family: 'GothamRnd-Light'; font-size: 15px; color: #00b3bc}
+.user_info input{}
+.btn_send_comment{position: absolute; bottom:30px; background-color: #00b3bc; text-align: center; color: white; text-shadow: none; margin:auto;}
+.btn_viewMap{position: absolute; bottom:30px; background-color: #00b3bc; text-align: center; color: white; text-shadow: none; margin:auto;}
+
+.thanksDiv{width: 80%; left: 10%; position: absolute; top:25%;  text-align: center;}
+.thanksDiv p{margin:0; padding: 5px 0;}

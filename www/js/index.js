@@ -1,6 +1,8 @@
 //var base_api_url='http://localhost/findy/public/api/';
 var base_api_url='http://findy.pe/public/api/';
+var storage = window.localStorage;
 var commerce = null;
+var user = null;
 
 window.onload= function () {
   	//$("#getLocation").on("click",getCurrentLocation);
@@ -16,13 +18,18 @@ window.onload= function () {
     $('.exit-info').on('click',hideMoreInfo);
     $("#btn_sideMenu").on('click',showSideMenu);
     $(".exit-menu").on('click',hideSideMenu);
-    $('#btn_profile').on('click',showProfile);
-    $('#btn_help').on('click',showHelp);
-    $('#btn_settings').on('click',showSettings);
-    $('#btn_questions').on('click',showQuestions);
-    $('#btn_about').on('click',showAbout);
+    $('#btn_profile').on('click',viewProfile);
+    $('#btn_help').on('click',viewHelp);
+    $('#btn_settings').on('click',viewSettings);
+    $('#btn_questions').on('click',viewQuestions);
+    $('#btn_about').on('click',viewAbout);
+    $('#btn_comment').on('click',viewSendComment);
+    $('.btn_viewMap').on('click',viewMap);
+    
     $('.question').on('click',toggleAnswer);
     $('#btn_close_session').on('click',closeSession);
+    $('.save-profile').on('click',editProfile);
+    $('.btn_send_comment').on('click',sendComment);
 
     //$(".findy-category").on('click',viewSubCategories);
     
@@ -147,6 +154,30 @@ function viewRegister(){
 function viewCategories(){
   window.location.href="#ctgPage";
 }
+function viewProfile(){
+  window.location.href = "#profilePage";
+}
+function viewQuestions(){
+  window.location.href = "#questionsPage";
+}
+function viewAbout(){
+  window.location.href = "#aboutPage";
+}
+function viewHelp(){
+  window.location.href = "#helpPage";
+}
+function viewSettings(){
+  window.location.href = "#settingsPage";
+}
+function viewSendComment(){
+ window.location.href = "#commentsPage"; 
+}
+function viewCommentThanks(){
+ window.location.href = "#commentThanksPage"; 
+}
+function viewMap(){
+ window.location.href = "#mapPage";
+}
 function viewSubCategories(){
   var id = $(this).attr('ctg-id');
   console.log(id);
@@ -174,22 +205,6 @@ function showMapCategories(){
   loadPositionCategories(ctgId);
   window.location.href = "#mapPage";
 }
-function showProfile(){
-  window.location.href = "#profilePage";
-}
-function showQuestions(){
-  window.location.href = "#questionsPage";
-}
-function showAbout(){
-  window.location.href = "#aboutPage";
-}
-function showHelp(){
-  window.location.href = "#helpPage";
-}
-function showSettings(){
-  window.location.href = "#settingsPage";
-}
-
 function toggleAnswer(e){
   var answer = $(this).attr('for');
   var imgDiv = $(this).find('.right-arrow');
@@ -269,7 +284,13 @@ function validateLogIn(e){
     },
     success:function(response){
       if (response['status']=='ok') {
+        user = response['idUser'];
+        storage.setItem('userId', response['idUser']);
+        $('.user_name').html(response['user_name']);
+        $('input[name="user_name"]').val(response['user_name']);
+        $('input[name="email"]').val(response['email']);
         loadMapPage();
+
         window.location.href = "#mapPage";
       }else{
         navigator.notification.alert(response.message);
@@ -284,6 +305,82 @@ function validateLogIn(e){
 
 function closeSession(){
   window.location.href = "#logIn";
+}
+/*------- EDIT DATA ----------*/
+function editProfile(){
+  var custId = storage.getItem('userId');
+  var user_name = $('#profile_name').val();
+  var email = $('#profile_email').val();
+  var password = $('#profile_password').val();
+  if (!user_name || !email) {
+    navigator.notification.alert('Por favor complete los datos en su perfil');
+  }else{
+    if (email.indexOf('@') == -1) {
+      navigator.notification.alert('Por favor ingrese un email válido');
+    }else{
+      //navigator.notification.alert('Espere un momento');
+      $.ajax({
+        url:base_api_url+'customer/editUser',
+        type:'post',
+        dataType:'json',
+        data:{
+          'custId': custId,
+          'user_name':user_name,
+          'email':email
+        },
+        success:function(response){
+          navigator.notification.alert('Se han guardado los cambios');
+        },
+        error: function(error) {
+          navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
+          //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+        }
+      });
+      //console.log('NAME: '+user_name);
+      //console.log('EMAIL: '+email);
+    }
+  }
+  //console.log('PASSWORD: '+password);
+}
+/*------- SEND DATA ----------*/
+function sendComment(){
+  var custId = storage.getItem('userId');
+  var user_name = $('#comment_name').val();
+  var email = $('#comment_email').val();
+  var comment = $('#comment_text').val();
+  if (!user_name || !email || !comment) {
+    navigator.notification.alert('Por favor complete los datos');
+  }else{
+    if (email.indexOf('@') == -1) {
+      navigator.notification.alert('Por favor ingrese un email válido');
+    }else{
+      //navigator.notification.alert('Espere un momento');
+      console.log('NAME: '+user_name);
+      console.log('EMAIL: '+email);
+      console.log('COMMENT: '+comment);
+      $.ajax({
+        url:base_api_url+'customer/sendComment',
+        type:'post',
+        dataType:'json',
+        data:{
+          'user_name':user_name,
+          'email':email,
+          'comment': comment
+        },
+        success:function(response){
+          //navigator.notification.alert('Gracias por su comentario');
+          viewCommentThanks();
+        },
+        error: function(error) {
+          navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
+          //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+        }
+      });
+      //console.log('NAME: '+user_name);
+      //console.log('EMAIL: '+email);
+      //console.log('COMMENT: '+comment);
+    }
+  }
 }
 
 /*------- GEOLOCATION --------*/
@@ -352,7 +449,7 @@ function onErrorNav(errMsg){
     navigator.notification.alert("Error en Navegador: "+errMsg);
 }
 
-/*------- BUTTON FUNCTIONS ------*/
+/*------- BUTTONS HIDE / SHOW ------*/
 
 function hideInfo(){
   $('.info').hide();

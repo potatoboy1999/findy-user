@@ -255,9 +255,9 @@
 				<div id="user_presentation" style="height: calc(55% - 80px); overflow-y: auto;">
 					<div style="text-align: center">
 						<img width="120" height="120" src="img/icons/profile.png">
-						<p>Aldo Ponce de León</p>
+						<p class="user_name">User Name</p>
 					</div>
-					<div class="btn_profile_photo" style="width: 50%; margin: auto;">
+					<div class="btn_profile save-photo" style="width: 50%; margin: auto;">
 						<p>Cambiar Foto</p>
 					</div>
 				</div>
@@ -267,15 +267,18 @@
 				<div id="user_extra_info" style="height: calc(45% - 51px); margin:0 -10px;overflow-y: auto; padding: 10px 15px;">
 					<div class="user_info">
 						<label>Nombre</label>
-						<input type="text" name="user_name" value="Aldo Ponce de Leon">
+						<input id="profile_name" type="text" name="user_name" value="Aldo Ponce de Leon">
 					</div>
 					<div class="user_info">
 						<label>Correo</label>
-						<input type="email" name="email" value="aldo.ponce@gmail.com">
+						<input id="profile_email" type="email" name="email" value="aldo.ponce@gmail.com">
 					</div>
 					<div class="user_info">
 						<label>Contraseña</label>
-						<input type="password" name="password" value="********">
+						<input id="profile_password" type="password" name="password" value="********" disabled>
+					</div>
+					<div class="btn_profile save-profile" style="width: 50%; margin: auto;">
+						<p>Guardar</p>
 					</div>
 				</div>
 			</div>
@@ -316,10 +319,10 @@
 						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
 						<p>Sobre FindyApp</p>
 					</div>
-					<!--<div class='question' style='border-bottom: 1px solid black;'>
-						<span class='right-arrow'>></span>
+					<div id="btn_comment" class='question' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
 						<p>Contactar a FindyApp</p>
-					</div>-->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -397,7 +400,50 @@
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
+		<div data-role="page" id="commentsPage" style="height: 100%;">
+			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<h3 style="margin: 0; padding: 15px 0px;">Contáctate con FindyApp</h3>
+				</div>
+				<div class="comments">
+					<h3 style="margin-top: 0">Tus comentarios podrán hacer mejor a FindyApp</h3>
+					<p style="font-size: 12px;">Cuentanos que te gusta de la aplicación o qué podriamos hacer para mejorar</p>
+				</div>
+				<div id="formComment">
+					<div class="user_info">
+						<label>Nombre</label>
+						<input id="comment_name" type="text" name="user_name" value="Aldo Ponce de Leon">
+					</div>
+					<div class="user_info">
+						<label>Correo</label>
+						<input id="comment_email" type="text" name="email" value="email@email.com">
+					</div>
+					<div class="user_info">
+						<label>Comentario</label>
+						<input id="comment_text" type="text" name="user_comment">
+					</div>
+				</div>
+				<div class="btn_send_comment" style="width: calc(100% - 20px); border-radius: 10px;">
+					<p style="margin:0; padding: 10px 0;">Enviar</p>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="commentThanksPage" style="height: 100%;">
+			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<h3 style="margin: 0; padding: 15px 0px;">Contáctate con FindyApp</h3>
+				</div>
+				<div class="thanksDiv" style="">
+					<img height="100" width="120" src="img/icons/thanks_mail.png">
+					<p style="font-family: 'GothamRnd-Bold';font-size: 18px;">Muchas gracias por tus comentarios</p>
+					<p style="font-size: 14px;">Te prometemos que lo vamos a tener en cuenta</p>
+				</div>
+				<div class="btn_viewMap" style="width: calc(100% - 20px); border-radius: 10px;">
+					<p style="margin:0; padding: 10px 0;">Volver al mapa</p>
+				</div>
+			</div>
+		</div>
 		<script type="text/javascript" src="cordova.js"></script>
 	</body>
 </html>
