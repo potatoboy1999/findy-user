@@ -1,8 +1,8 @@
 //var base_api_url='http://localhost/findy/public/api/';
 var base_api_url='http://findy.pe/public/api/';
 var storage = window.localStorage;
-var lng = null;
-var lat = null;
+var storageLng = null;
+var storageLat = null;
 var commerceArray = null;
 var commerce = null;
 var user = null;
@@ -136,10 +136,11 @@ function loadPositionCategories(ctgId){
              map.setZoom(18);
              map.panTo(marker.getPosition());
             
-             id = marker.getTitle();
+             var id = marker.getTitle();
              showInfo(id);
            });
       });
+      hideCommOutOfRange(commerceArray);
     },
     error:function(error){
       navigator.notification.alert('Error en la carga de coordenadas')
@@ -207,6 +208,7 @@ function showMapCategories(){
   console.log(ctgId);
   deleteMarkers();
   loadPositionCategories(ctgId);
+  hideInfo();
   window.location.href = "#mapPage";
 }
 function toggleAnswer(e){
@@ -423,7 +425,6 @@ function geoSuccess(position){
   lng = position.coords.longitude;
   lat = position.coords.latitude;
 
-  posLatLng = new LatLon(lat,lng);
 
   storage.setItem('PosLng',lng);
   storage.setItem('PosLat',lat);
@@ -442,12 +443,34 @@ function geoSuccess(position){
   //mapMsg.setCenter(results[0].geometry.location);
   map.panTo({lat:lat, lng:lng});
 
-  commerceArray.forEach(function(commerce){
+  //Cargar comercios en rango de 3km
+  hideCommOutOfRange(commerceArray); 
+};
+
+function hideCommOutOfRange(cArray){
+  posLatLng = new LatLon(parseFloat(storage.getItem('PosLat')),parseFloat(storage.getItem('PosLng')));
+  commInRange = [];
+  commOutOfRange = [];
+  cArray.forEach(function(commerce){
     commLat = commerce.lat;
     commLng = commerce.lng;
-    alert('Distancia a '+commerce.name+': '+calcDistance(commLat, commLng, posLatLng))+' metros';
+    if (calcDistance(commLat,commLng, posLatLng) > 3000) {
+      commOutOfRange.push(commerce);
+    }else{
+      commInRange.push(commerce);
+    }
+    //navigator.notification.alert('Distancia a '+commerce.name+': '+calcDistance(commLat, commLng, posLatLng)+' metros');
+    console.log('Distancia a '+commerce.name+': '+calcDistance(commLat, commLng, posLatLng)+' metros');
   });
-};
+  hideMapOnArray(map,commOutOfRange);
+  console.log(commInRange);
+  console.log(commOutOfRange);
+
+  commerceArray = commInRange;
+  if (commerceArray.length == 0) {
+        navigator.notification.alert('No hay commercios de esta categoria cerca a ti (en 3km)');
+      }
+}
 
 function geoError(error){
   navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
