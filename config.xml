@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.findy.findyApp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Findy-User</name>
     <description>
         Findy, encuentra todas tus tiendas
@@ -15,11 +15,9 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="latest" />
     <engine name="android" spec="latest" />
-
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
@@ -28,10 +26,14 @@
         <variable name="OKHTTP_VERSION" value="3.10.0" />
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
+    <plugin name="cordova-plugin-facebook4" spec="3.2.0">
+        <variable name="APP_ID" value="291949018192665" />
+        <variable name="APP_NAME" value="FindyApp" />
+        <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.38.1" />
+    </plugin>
 
     <preference name="orienation" value="portrait" />
     <preference name="phonegap-version" value="cli-8.1.1" />
-
     <platform name="android">
         <uses-permission name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <uses-permission name="android.permission.ACCESS_NETWORK_STATE" />

@@ -3,7 +3,7 @@
   "display": "standalone",
   "name": "Findy-User",
   "short_name": "Findy-User",
-  "version": "io.cordova.hellocordova",
+  "version": "com.findy.findyApp",
   "description": "Findy, encuentra todas tus tiendas",
   "author": "ABBOST DEVELOPMENT TEAM",
   "icons": [],

@@ -31,6 +31,14 @@ module.exports = [
         "clobbers": [
             "localforage"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-facebook4/www/facebook-browser.js",
+        "id": "cordova-plugin-facebook4.FacebookConnectPluginBrowser",
+        "pluginId": "cordova-plugin-facebook4",
+        "clobbers": [
+            "facebookConnectPlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -40,7 +48,8 @@ module.exports.metadata =
     "cordova-plugin-geolocation": "4.0.1",
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-dialogs": "2.0.1",
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2"
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2",
+    "cordova-plugin-facebook4": "3.2.0"
 }
 // BOTTOM OF METADATA
 });

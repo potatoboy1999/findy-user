@@ -104,8 +104,9 @@ function loadCommerceLocation(){
 		success:function(response){
 			console.log('commerces');
 			console.log(response);
-			commerce = response;
-			commerce.forEach(function(comm){
+			commerceArray = response;
+			getCurrentLocation();
+			commerceArray.forEach(function(comm){
 				//alert('Comercio: '+comm.name+', lat:'+comm.lat+', lng:'+comm.lng);
 				
 				var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
@@ -145,6 +146,10 @@ function loadCommerceLocation(){
 		}
 	});
 	//alert('Comercios cargados exitosamente');
+}
+
+function selectByRange(arrayCommerces,Poslat,Poslng) {
+	
 }
 
 function setMapOnAll(map) {

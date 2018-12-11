@@ -1,10 +1,14 @@
 //var base_api_url='http://localhost/findy/public/api/';
 var base_api_url='http://findy.pe/public/api/';
 var storage = window.localStorage;
+var lng = null;
+var lat = null;
+var commerceArray = null;
 var commerce = null;
 var user = null;
 
 window.onload= function () {
+    $('#btn_fb').on('click',getDataFB);
   	//$("#getLocation").on("click",getCurrentLocation);
     //botones listeners
     $('.btn_link_logIn').on('click',viewLogIn);
@@ -58,7 +62,7 @@ $(window).on( "throttledresize", function ( e ) {
 function loadMapPage(){
   if(!map){
     initMap();
-    getCurrentLocation();
+    //getCurrentLocation();
     loadCommerceLocation(); 
     loadCategories();
   }
@@ -108,7 +112,7 @@ function loadPositionCategories(ctgId){
       console.log('Commerce Category');
       console.log(response);
 
-      //commerce = response;
+      commerceArray = response;
       response.forEach(function(comm){
         //alert('Comercio: '+comm.name+', lat:'+comm.lat+', lng:'+comm.lng);        
         var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
@@ -306,6 +310,26 @@ function validateLogIn(e){
 function closeSession(){
   window.location.href = "#logIn";
 }
+function getDataFB(e){
+  e.preventDefault();
+  facebookConnectPlugin.login(["public_profile","email"],fbSuccess,fbError);
+}
+function fbSuccess(result){
+  //success
+  console.log(JSON.stringify(result));
+  //calling api
+  facebookConnectPlugin.api("/me?fields=email,name,picture",["public_profile","email"],fbApiSuccess,fbApiError);
+}
+function fbError(error){
+  alert(JSON.stringify(error));
+}
+function fbApiSuccess(userData){
+  alert(JSON.stringify(userData));
+}
+
+function fbApiError(error){
+  alert(JSON.stringify(error));
+}
 /*------- EDIT DATA ----------*/
 function editProfile(){
   var custId = storage.getItem('userId');
@@ -396,8 +420,11 @@ function getCurrentLocation(){
 
 function geoSuccess(position){
   //alert('Retrieve current location');
-  var lng = position.coords.longitude;
-  var lat = position.coords.latitude;
+  lng = position.coords.longitude;
+  lat = position.coords.latitude;
+
+  storage.setItem('PosLng',lng);
+  storage.setItem('PosLat',lat);
 
   //navigator.notification.alert("longitude: "+lng+", Latitude: "+lat);
   var markerOptions = new google.maps.Marker({

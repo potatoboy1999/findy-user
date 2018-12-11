@@ -1,5 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.findy.findyApp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <feature name="FacebookConnectPlugin">
+        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <access origin="https://m.facebook.com" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
     <name>Findy-User</name>
     <description>
         Findy, encuentra todas tus tiendas
@@ -22,6 +31,7 @@
     <uses-permission name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <preference name="loglevel" value="DEBUG" />
+    <preference name="android-minSdkVersion" value="15" />
     <preference name="orienation" value="portrait" />
     <preference name="phonegap-version" value="cli-8.1.1" />
 </widget>

@@ -71,6 +71,14 @@ module.exports = [
     "clobbers": [
       "window.plugins.actionsheet"
     ]
+  },
+  {
+    "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
+    "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
+    "pluginId": "cordova-plugin-facebook4",
+    "clobbers": [
+      "facebookConnectPlugin"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -81,7 +89,8 @@ module.exports.metadata =
   "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-whitelist": "1.3.3",
   "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2",
-  "cordova-plugin-actionsheet": "2.3.3"
+  "cordova-plugin-actionsheet": "2.3.3",
+  "cordova-plugin-facebook4": "3.2.0"
 };
 // BOTTOM OF METADATA
 });
