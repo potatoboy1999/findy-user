@@ -423,6 +423,8 @@ function geoSuccess(position){
   lng = position.coords.longitude;
   lat = position.coords.latitude;
 
+  posLatLng = new LatLon(lat,lng);
+
   storage.setItem('PosLng',lng);
   storage.setItem('PosLat',lat);
 
@@ -439,10 +441,20 @@ function geoSuccess(position){
   var marker = new google.maps.Marker(markerOptions);
   //mapMsg.setCenter(results[0].geometry.location);
   map.panTo({lat:lat, lng:lng});
+
+  commerceArray.forEach(function(commerce){
+    commLat = commerce.lat;
+    commLng = commerce.lng;
+    alert('Distancia a '+commerce.name+': '+calcDistance(commLat, commLng, posLatLng))+' metros';
+  });
 };
 
 function geoError(error){
   navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
+};
+function calcDistance(lat, lng, pos2) {
+    var pos1 = new LatLon(lat, lng);
+    return pos1.distanceTo(pos2);
 };
 /*------ WAZE/MAPS LINKS --------*/
 
