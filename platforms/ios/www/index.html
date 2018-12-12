@@ -201,7 +201,7 @@
 					</div>
 					<div style="padding: 5px; text-align: center">
 						<div class="btn_nav" style="width: 100%;">
-							<p><a class="linkNavigation" href="#" lat="" lng="" style="color: white; text-decoration: none; font-family: 'GothamRnd-Light';text-shadow: none;"><strong>¿Cómo Llegar?</strong></a></p>
+							<p><a class="linkNavigation" href="#" lat="" lng="" idComm="" style="color: white; text-decoration: none; font-family: 'GothamRnd-Light';text-shadow: none;"><strong>¿Cómo Llegar?</strong></a></p>
 						</div>
 						<div class="btnLessInfo" commId="" style="width: 100%; text-align: center; color: #00b3bc;">
 							<p>Ver Menos</p>
@@ -259,19 +259,20 @@
 				<div id="profileHeader" style="height: 80px; text-align: center;">
 					<h3 style="margin: 0; padding: 15px 0px;">Mi Perfil</h3>
 				</div>
-				<div id="user_presentation" style="height: calc(55% - 80px); overflow-y: auto;">
+				<div id="user_presentation" style="height: calc(48% - 80px); overflow-y: auto;">
 					<div style="text-align: center">
 						<img width="120" height="120" src="img/icons/profile.png">
 						<p class="user_name">User Name</p>
 					</div>
-					<div class="btn_profile save-photo" style="width: 50%; margin: auto;">
+					<!--<div class="btn_profile save-photo" style="width: 50%; margin: auto;">
 						<p>Cambiar Foto</p>
-					</div>
+					</div>-->
 				</div>
-				<div class="extra_info_menu" style=" height: 30px;margin:0 -10px;border-bottom: 1px solid black">
-					<p style="margin:0; padding: 5px 10px">Datos Personales</p>
+				<div class="extra_info_menu" style=" height: 30px;margin:0 -10px;border-bottom: 1px solid black; overflow-x: scroll;overflow-y: hidden;">
+					<span id="btn_user_data" style="margin:0; padding: 5px 10px" class="info_active">Datos Personales</span>
+					<span id="btn_user_history" style="margin:0; padding: 5px 10px">Viajes</span>
 				</div>
-				<div id="user_extra_info" style="height: calc(45% - 51px); margin:0 -10px;overflow-y: auto; padding: 10px 15px;">
+				<div id="user_extra_info" style="height: calc(52% - 51px); margin:0 -10px;overflow-y: auto; padding: 10px 15px; display: block;">
 					<div class="user_info">
 						<label>Nombre</label>
 						<input id="profile_name" type="text" name="user_name" value="Aldo Ponce de Leon">
@@ -286,6 +287,28 @@
 					</div>
 					<div class="btn_profile save-profile" style="width: 50%; margin: auto;">
 						<p>Guardar</p>
+					</div>
+				</div>
+				<div id="user_travel_history" style="height: calc(52% - 51px); margin:0 -10px;overflow-y: auto; padding: 10px 15px; display: none;">
+					<div class='travel'>
+						<div class='go-arrow transparent' commId='' lat='' lng='' >
+							<span>Volver A Ir</span>
+							<img width='20' height='20' src='img/icons/continue.png'>
+						</div>
+						<div class='status'>
+							<span class='b_status open'>Abierto</span>
+						</div>
+						<div class='travel_info'>
+							<div>
+								<div class='left'>
+									<img height='30' width='30' src='img/categories/restaurantes.png'>
+								</div>
+								<div class='right'>
+									<p>MEZZANINE JUGOS NIÑOS</p>	
+								</div>
+								<div class='fix-clear'></div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

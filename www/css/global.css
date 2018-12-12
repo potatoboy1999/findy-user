@@ -63,6 +63,7 @@ body{margin: 0px; font-family: GothamRnd-Medium;}
 
 .subCtg p{padding-left: 10px;}
 .right-arrow{float:right; padding: 2px 8px; margin-right: 20px; background-color:#ffbc14; border-radius: 10px;}
+.transparent{background-color: transparent;}
 
 .question p{padding-left: 10px; font-size: 14px;}
 .question .right-arrow{background-color: transparent!important}
@@ -73,6 +74,27 @@ body{margin: 0px; font-family: GothamRnd-Medium;}
 
 .user_info label{font-family: 'GothamRnd-Light'; font-size: 15px; color: #00b3bc}
 .user_info input{}
+
+.go-arrow{position: absolute; bottom: 5px; right: 10px; padding: 2px 8px ; color: #00b3bc}
+.go-arrow span{margin: 8px;}
+.go-arrow img{vertical-align: middle}
+
+.travel{min-height: 88px;border: 2px solid #acadaf; border-radius: 10px; position: relative; margin-bottom: 20px;}
+.travel .status{position: absolute; bottom: 5px; left: 10px; padding: 2px 8px;}
+
+.travel_info{width: calc(100% - 30px);}
+.travel_info>div{margin-left: 20px; margin-top: 10px;}
+.travel_info img{vertical-align: middle}
+.travel_info .left{float: left; width: 30px;}
+.travel_info .right{float: left; width: calc(100% - 30px); text-shadow: none;}
+.travel_info .right p{margin:0; padding-left: 10px;}
+
+.info_active{color: #00b3bc}
+
+.b_status{padding: 5px 15px; margin:0}
+.b_status.open{color: #00b3bc}
+.b_status.closed{color: #acadaf}
+
 .btn_send_comment{position: absolute; bottom:30px; background-color: #00b3bc; text-align: center; color: white; text-shadow: none; margin:auto;}
 .btn_viewMap{position: absolute; bottom:30px; background-color: #00b3bc; text-align: center; color: white; text-shadow: none; margin:auto;}
 

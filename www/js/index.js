@@ -6,11 +6,12 @@ var storageLat = null;
 var commerceArray = null;
 var commerce = null;
 var user = null;
+var profileCurrentTab = 'info';
 
 window.onload= function () {
-    $('#btn_fb').on('click',getDataFB);
-  	//$("#getLocation").on("click",getCurrentLocation);
     //botones listeners
+    //$("#getLocation").on("click",getCurrentLocation);
+    $('#btn_fb').on('click',getDataFB);
     $('.btn_link_logIn').on('click',viewLogIn);
     $('.btn_link_register').on('click',viewRegister);
     $('.btn_nav').on('click',navigate);
@@ -29,6 +30,8 @@ window.onload= function () {
     $('#btn_about').on('click',viewAbout);
     $('#btn_comment').on('click',viewSendComment);
     $('.btn_viewMap').on('click',viewMap);
+    $('#btn_user_data').on('click',showProfileData);
+    $('#btn_user_history').on('click',showProfileHistory);
     
     $('.question').on('click',toggleAnswer);
     $('#btn_close_session').on('click',closeSession);
@@ -39,6 +42,8 @@ window.onload= function () {
     
     //load pages
     $("#mapPage").on("pageshow", loadMapPage);
+    $("#profilePage").on("pageshow", loadVisitsFromUser);
+    
 };
 
 //PREVENT MIN HEIGHT JQUERY MOBILE
@@ -148,6 +153,62 @@ function loadPositionCategories(ctgId){
   });
 }
 
+function loadVisitsFromUser(){
+  var userId = storage.getItem('userId');
+  $.ajax({
+    url:base_api_url+'visit/getVisits',
+    type:'post',
+    dataType:'json',
+    data:{
+      'idUser':userId
+    },
+    success:function(response){
+      visits = $('#user_travel_history');
+      visits.html('');
+      console.log('Historial Comercios Viajados:');
+      console.log(response);
+      if (response.length == 0) {
+        visits.html('<h2>No tiene ningun viaje registrado</h2>');
+      }else{
+        response.forEach(function(comm){
+          var bStatus = 'Cerrado';
+          var classStatus = 'closed';
+          if (comm.bussiness_status == 1){
+            bStatus = 'Abierto';
+            classStatus = 'open';
+          }
+          visits.append(
+                          "<div class='travel'>"+
+                            "<div class='go-arrow transparent' commId='"+comm.commId+"' lat='"+comm.pos_lat+"' lng='"+comm.pos_lng+"' >"+
+                              "<span>Volver A Ir</span>"+
+                              "<img width='20' height='20' src='img/icons/continue.png'>"+
+                            "</div>"+
+                            "<div class='status'>"+
+                              "<span class='b_status "+classStatus+"'>"+bStatus+"</span>"+
+                            "</div>"+
+                            "<div class='travel_info'>"+
+                              "<div>"+
+                                "<div class='left'>"+
+                                  "<img height='35' width='35' src='img/categories/"+comm.category_img+"'>"+
+                                "</div>"+
+                                "<div class='right'>"+
+                                  "<p>"+comm.name+"</p>"+
+                                "</div>"+
+                                "<div class='fix-clear'></div>"+
+                              "</div>"+
+                            "</div>"+
+                          "</div>"
+                        );
+        });
+        $('.go-arrow').on('click',navigateFromHistory); 
+      }
+    },
+    error:function(error){
+      navigator.notification.alert('Error en la carga de historial de visitas');
+    }
+  });
+}
+
 /*------- REDIRECT / SHOW FUNCTIONS ------------*/
 
 function viewLogIn(){
@@ -223,6 +284,22 @@ function toggleAnswer(e){
   }
   $('.'+answer).slideToggle();
 }
+function showProfileData(){
+  profileCurrentTab = 'data';
+  $('#btn_user_history').removeClass('info_active');
+  $('#user_travel_history').hide();
+
+  $('#btn_user_data').addClass('info_active');
+  $('#user_extra_info').show();
+}
+function showProfileHistory(){
+  profileCurrentTab = 'history';
+  $('#btn_user_data').removeClass('info_active');
+  $('#user_extra_info').hide();
+
+  $('#btn_user_history').addClass('info_active');
+  $('#user_travel_history').show();
+}
 
 /*------- LOGIN / REGISTER / LOG OFF ----------*/
 
@@ -296,6 +373,7 @@ function validateLogIn(e){
         $('input[name="user_name"]').val(response['user_name']);
         $('input[name="email"]').val(response['email']);
         loadMapPage();
+        loadVisitsFromUser();
 
         window.location.href = "#mapPage";
       }else{
@@ -483,11 +561,17 @@ function calcDistance(lat, lng, pos2) {
 
 function navigate(){
   //navigator.notification.alert("Start Call to navigator");
-  lat = $('.linkNavigation').attr('lat');
-  lng = $('.linkNavigation').attr('lng');
+  linkNav = $('.linkNavigation');
+  lat = linkNav.attr('lat');
+  lng = linkNav.attr('lng');
+  idComm = linkNav.attr('idComm');
+  idUser = storage.getItem('userId');
 
   lat = parseFloat(lat);
   lng = parseFloat(lng);
+  console.log('COMMERCE ID:'+idComm);
+  console.log('USER ID:'+idUser);
+  saveTravelHistory(idComm,idUser);
   linkNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
   window.open(linkNav,'_system');
   /*
@@ -503,12 +587,69 @@ function navigate(){
   */
 }
 
+function navigateFromHistory(){
+  console.log('hola');
+  btn = $(this);
+  lat = btn.attr('lat');
+  lng = btn.attr('lng');
+  idComm = btn.attr('commId');
+  idUser = storage.getItem('userId');
+
+  lat = parseFloat(lat);
+  lng = parseFloat(lng);
+
+  console.log('COMMERCE ID:'+idComm);
+  console.log('USER ID:'+idUser);
+  saveTravelHistory(idComm,idUser);
+  linkNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
+  window.open(linkNav,'_system');
+}
+
 function onSuccessNav(){
     navigator.notification.alert("Navigator Correctamente Iniciado");
 }
 
 function onErrorNav(errMsg){
     navigator.notification.alert("Error en Navegador: "+errMsg);
+}
+
+function saveTravelHistory(idComm,idUser){
+  var date = dateToday();
+  $.ajax({
+        url:base_api_url+'visit/saveTravel',
+        type:'post',
+        dataType:'json',
+        data:{
+          'userId':idUser,
+          'idComm':idComm,
+          'date':date
+        },
+        success:function(response){
+          console.log('Viaje a sido registrado!');
+        },
+        error: function(error) {
+          console.log('Error: No se pudo comunicar con el servidor de Findy');
+          //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+        }
+      });
+}
+
+function dateToday(){
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+
+  if(dd<10) {
+      dd = '0'+dd
+  } 
+
+  if(mm<10) {
+      mm = '0'+mm
+  } 
+
+  today =  yyyy + '-' + mm + '-' + dd ;
+  return today;
 }
 
 /*------- BUTTONS HIDE / SHOW ------*/
@@ -534,6 +675,7 @@ function showInfo(id){
       $('.commCategoryImg').attr('src','http://findy.pe/public/img/categoria/'+comm.category_image)
       $('.linkNavigation').attr('lat',comm.lat);
       $('.linkNavigation').attr('lng',comm.lng);
+      $('.linkNavigation').attr('idComm',comm.id);
       $('.btnMoreInfo').attr('commId',comm.id);
       $('.info').show();
       //$('.commSchedule').html(comm.name);
