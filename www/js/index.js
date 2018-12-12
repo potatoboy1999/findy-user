@@ -391,9 +391,11 @@ function closeSession(){
   window.location.href = "#logIn";
 }
 function getDataFB(e){
+  /*
   e.preventDefault();
-  facebookConnectPlugin.login(["public_profile","email"],fbSuccess,fbError);
+  facebookConnectPlugin.login(["public_profile","email"],fbSuccess,fbError);*/
 }
+/*
 function fbSuccess(result){
   //success
   console.log(JSON.stringify(result));
@@ -409,7 +411,7 @@ function fbApiSuccess(userData){
 
 function fbApiError(error){
   alert(JSON.stringify(error));
-}
+}*/
 /*------- EDIT DATA ----------*/
 function editProfile(){
   var custId = storage.getItem('userId');

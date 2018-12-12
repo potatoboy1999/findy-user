@@ -265,7 +265,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
-    compile "com.facebook.android:facebook-android-sdk:4.38.1"
     compile "com.squareup.okhttp3:okhttp:1.2.3"
     // SUB-PROJECT DEPENDENCIES END
 }

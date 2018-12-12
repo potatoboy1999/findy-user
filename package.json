@@ -14,7 +14,6 @@
         "cordova-browser": "^5.0.4",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-dialogs": "^2.0.1",
-        "cordova-plugin-facebook4": "3.2.0",
         "cordova-plugin-geolocation": "^4.0.1",
         "cordova-plugin-whitelist": "1",
         "cordova-windows": "latest",
@@ -31,11 +30,6 @@
             "uk.co.workingedge.phonegap.plugin.launchnavigator": {
                 "OKHTTP_VERSION": "3.10.0",
                 "LOCATION_USAGE_DESCRIPTION": "This app requires access to your location for navigation purposes"
-            },
-            "cordova-plugin-facebook4": {
-                "APP_ID": "291949018192665",
-                "APP_NAME": "FindyApp",
-                "FACEBOOK_ANDROID_SDK_VERSION": "4.38.1"
             }
         },
         "platforms": [
