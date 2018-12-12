@@ -16,7 +16,6 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <engine name="browser" spec="^5.0.4" />
-    <engine name="ios" spec="latest" />
     <engine name="android" spec="latest" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
@@ -31,7 +30,6 @@
         <variable name="APP_NAME" value="FindyApp" />
         <variable name="FACEBOOK_ANDROID_SDK_VERSION" value="4.38.1" />
     </plugin>
-
     <preference name="orienation" value="portrait" />
     <preference name="phonegap-version" value="cli-8.1.1" />
     <platform name="android">
