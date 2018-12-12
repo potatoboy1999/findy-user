@@ -39,7 +39,8 @@
             }
         },
         "platforms": [
-            "browser"
+            "browser",
+            "android"
         ]
     }
 }

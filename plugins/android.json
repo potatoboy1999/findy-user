@@ -7,12 +7,29 @@
     "files": {}
   },
   "installed_plugins": {
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
     "cordova-plugin-facebook4": {
       "APP_ID": "291949018192665",
       "APP_NAME": "FindyApp",
       "FACEBOOK_ANDROID_SDK_VERSION": "4.38.1",
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
+    "uk.co.workingedge.phonegap.plugin.launchnavigator": {
+      "OKHTTP_VERSION": "1.2.3",
+      "PACKAGE_NAME": "com.findy.findyApp"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-actionsheet": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    }
+  }
 }

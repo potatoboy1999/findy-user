@@ -16,7 +16,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <engine name="browser" spec="^5.0.4" />
-    <engine name="android" spec="latest" />
+    <engine name="android" spec="~7.1.4" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
@@ -32,12 +32,4 @@
     </plugin>
     <preference name="orienation" value="portrait" />
     <preference name="phonegap-version" value="cli-8.1.1" />
-    <platform name="android">
-        <uses-permission name="android.permission.WRITE_EXTERNAL_STORAGE" />
-        <uses-permission name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission name="android.permission.ACCESS_WIFI_STATE" />
-        <uses-permission name="android.permission.ACCESS_COARSE_LOCATION" />
-        <uses-permission name="android.permission.ACCESS_FINE_LOCATION" />
-        <uses-permission name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    </platform>
 </widget>
