@@ -6,6 +6,8 @@
 		<meta http-equiv="Content-Security-Policy" content="default-src *; style-src *  'unsafe-inline'; script-src *  'unsafe-inline'; media-src *">
 		<title>Findy</title>
 
+		<script type="text/javascript" src="cordova.js"></script>
+
 		<script src="js/mathDistance/latlon-spherical.js"></script>
     	<script src="js/mathDistance/dms.js"></script>
 		<script src="js/jquery-1.11.1.min.js"></script>
@@ -42,7 +44,7 @@
    			<div class="headerLogoImg" style="background-image: url('img/logo/logo_findy.png');">
    			</div>
 		   	<div>
-	            <form id="logInForm" action="#" method="post">
+	            <form id="logInForm" autocomplete="off">
 	                <div class="form-group">
 	                    <label>Email</label>    
 	                    <input class="form-control" type="email" name="email">
@@ -52,12 +54,13 @@
 	                    <input class="form-control" type="password" name="password">
 	                </div>
 	                <div style="min-height: 20px;"></div>
-	                <div class="form-group" >
-	                	<button id="btn_fb" style="background-color: blue; color: white; text-shadow: none;">Ingresar con FB</button>
-	                </div>
 	                <div class="form-group">
 	                	<button id="btnLogIn">Ingresar</button>
 	                </div>
+	                <!--
+	                <div class="form-group" >
+	                	<button id="btn_fb" style="background-color: blue; color: white; text-shadow: none;">Ingresar con FB</button>
+	                </div>-->
 	            </form>
 	        </div>
 	        <div>
@@ -160,7 +163,7 @@
 				</div>
 				<div class="topDiv iCommerce info " style="display: none;">
 					<div class="tipoLogo" style="width: 20%; float: left;">
-						<img class="commCategoryImg" width="50" height="60" src="http://findy.pe/public/img/categoria/bodegas.png">
+						<img class="commCategoryImg" width="50" height="60" src="https://admin.findy.pe/img/categoria/bodegas.png">
 					</div>
 					<div class="infoDetail" style="width: 80%; float: left;">
 						<h3 class="commName">'Commercio'</h3>
@@ -183,7 +186,7 @@
 						<div style="clear: both;"></div>
 					</div>
 					<div style="width: 100%; text-align: center; padding: 10px 0px;">
-						<img class="commCategoryImg" width="60" height="60" src="http://findy.pe/public/img/categoria/bodegas.png">
+						<img class="commCategoryImg" width="60" height="60" src="https://admin.findy.pe/img/categoria/bodegas.png">
 						<p class="comm_name">NOMBRE</p>
 						<!--<p class="comm_distance"><span>0.8km</span> de distancia de ti</p>-->
 					</div>
@@ -212,24 +215,24 @@
 				<div id="verCategoriasBtn" class="topDiv">
 					<p style="font-size: 20px; margin-top:15px; margin-bottom: 15px;">Ver todas las categorias</p>
 				</div>
+				<div id="btn_position" class="topDiv">
+					<p style="text-align: center; margin: 0;padding-top: 8px;">o</p>
+				</div>
 				<div id="map" style="width: 100%; height: 100%;"></div>
 			</div>
 		</div>
 		<div data-role="page" id="ctgPage" style="height: 100%;">
 			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
 				<div id="ctgHeader" style="text-align: center;">
+					<div class='left-back' pageTo="mapPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
 					<h3 style="margin: 0; padding: 15px 0px;">Categorias Disponibles</h3>
+					<div class="fix-clear"></div>
 				</div>
 				<div id="categories" style="margin: 0px -10px">
 					<div class='findy-category' ctg-id='' style='float: left;'>
 						<div class='ctg-absolute'>
-							<img width='50' height='50' src='http://findy.pe/public/img/categoria/bodegas.png'>
-							<p class='ctg-name'>Bodegas</p>
-						</div>
-					</div>
-					<div class="findy-category" style="float: left;">
-						<div class="ctg-absolute">
-							<p class="ctg-name">Carpinteria</p>
+							<img width='50' height='50' src='https://admin.findy.pe/img/categoria/default.png'>
+							<p class='ctg-name'>?</p>
 						</div>
 					</div>
 					<div style="clear: both;"></div>
@@ -239,17 +242,18 @@
 		<div data-role="page" id="subCtgPage" style="height: 100%;">
 			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
 				<div id="ctgHeader" style="text-align: center;">
-					<h3 id="nameCtgHeader" style="margin: 0; padding: 15px 0px;">Categorias Restaurantes</h3>
+					<div class='left-back' pageTo="ctgPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 id="nameCtgHeader" style="margin: 0; padding: 15px 0px;">Categorias <span class="nameCtg">??</span></h3>
 				</div>
-				<div id="categoryPresent" style="margin: 0px -10px;position: relative; background-color: #ffbc14; height: 30%; text-align: center">
-					<div style="position: absolute; top: 20%; left: 32%;">
-						<img height="70" width="70" src="img\categories\restaurantes.png">
-						<p id="nameCtg">Restaurantes</p>
+				<div id="categoryPresent" style="margin: 0px -10px;position: relative; background-color: #00b3bc; height: 30%; text-align: center">
+					<div style="position: absolute; width: 100px; top: 15%; left: calc(50% - 50px);">
+						<img id="ctgHeaderImg" height="70" width="70" src="img\categories\restaurantes.png">
+						<p class="nameCtg" style="color:white;text-shadow: none;">Restaurantes</p>
 					</div>
 				</div>
 				<div id="subCtgList">
 					<div class='subCtg' subCtg='' style='border-bottom: 1px solid black;'>
-						<span class='right-arrow'>></span>
+						<div class='right-arrow' style='background-color: transparent'><img width="20" height="20" src="img/icons/continue.png"></div>
 						<p>Casual Dining</p>
 					</div>
 				</div>
@@ -258,6 +262,7 @@
 		<div data-role="page" id="profilePage" style="height: 100%;">
 			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
 				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="mapPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
 					<h3 style="margin: 0; padding: 15px 0px;">Mi Perfil</h3>
 				</div>
 				<div id="user_presentation" style="height: calc(48% - 80px); overflow-y: auto;">
@@ -317,6 +322,7 @@
 		<div data-role="page" id="helpPage" style="height: 100%;">
 			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
 				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="mapPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
 					<h3 style="margin: 0; padding: 15px 0px;">Ayuda</h3>
 				</div>
 				<div style="height: calc(35% - 100px); margin: 0px -10px; background-color: #00b3bc; text-align: center; padding: 20px 0 0 0; color: white; text-shadow: none;">
@@ -328,19 +334,15 @@
 						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
 						<p>Políticas de privacidad</p>
 					</div>
-					<div class="answer privacidad" style="display: none;">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+					<div id="privacidad" class="answer privacidad" style="display: none; text-align: justify;">
+						---
 					</div>
 					<div class='question' for='condiciones' style='border-bottom: 1px solid black;'>
 						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
 						<p>Condiciones de Uso</p>
 					</div>
-					<div class="answer condiciones" style="display: none;">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+					<div id="condiciones" class="answer condiciones" style="display: none; text-align: justify;">
+						---
 					</div>
 					<div id="btn_questions" class='question' style='border-bottom: 1px solid black;'>
 						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
@@ -371,6 +373,7 @@
 		<div data-role="page" id="aboutPage" style="height: 100%;">
 			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
 				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="helpPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
 					<h3 style="margin: 0; padding: 15px 0px;">Sobre FindyApp</h3>
 				</div>
 				<div style="height: calc(40% - 80px); margin: 0px -10px; background-color: #00b3bc; text-align: center; padding: 20px 0 0 0">
@@ -395,6 +398,7 @@
 		<div data-role="page" id="questionsPage" style="height: 100%;">
 			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
 				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="helpPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
 					<h3 style="margin: 0; padding: 15px 0px;">Preguntas Frecuentes</h3>
 				</div>
 				<div style="height: calc(35% - 100px); margin: 0px -10px; background-color: #00b3bc; text-align: center; padding: 20px 0 0 0; color: white; text-shadow: none;">
@@ -404,30 +408,38 @@
 				<div id="questionList" style="height: 65%; overflow-y: auto;">
 					<div class='question' for='q1' style='border-bottom: 1px solid black;'>
 						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
-						<p>¿Pregunta #1?</p>
+						<p>¿Puedo desafiliar mi cuenta como local comercial?</p>
 					</div>
 					<div class="answer q1" style="display: none;">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+						Claro, sólo tienes que enviar un correo al buzón <span style="color: #00b3bc;">admin@findy.pe</span>
 					</div>
 					<div class='question' for='q2' style='border-bottom: 1px solid black;'>
 						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
-						<p>¿Pregunta #2?</p>
+						<p>¿Cómo saber si es un local real y seguro?</p>
 					</div>
 					<div class="answer q2" style="display: none;">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+						Antes de activar los comercios en la plataforma, nuestro equipo los visita para validar la categoría de comercio y verificar su ubicación real. En caso se observe que es un local inseguro, no se les permite ingresar a la plataforma.
 					</div>
 					<div class='question' for='q3' style='border-bottom: 1px solid black;'>
 						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
-						<p>¿Pregunta #3?</p>
+						<p>¿Cómo sé que vende cada local?</p>
 					</div>
 					<div class="answer q3" style="display: none;">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
+						Al dar click sobre cada comercio podrás ver una pequeña descripción sobre los productos que vende.
+					</div>
+					<div class='question' for='q4' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>¿Cómo se si mi comercio ya está activo?</p>
+					</div>
+					<div class="answer q4" style="display: none;">
+						Una vez registrado, un miembro de nuestro equipo se contactará contigo para visitar el local y poder activarlo. Te llegará un correo de confirmación de activación.
+					</div>
+					<div class='question' for='q5' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>¿Cómo funciona la plataforma?</p>
+					</div>
+					<div class="answer q5" style="display: none;">
+						Si deseas ubicar comercios abiertos en tiempo real debes tener una cuenta activa con correo válido y contraseña y activar tu GPS.
 					</div>
 				</div>
 			</div>
@@ -435,13 +447,14 @@
 		<div data-role="page" id="commentsPage" style="height: 100%;">
 			<div id="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
 				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="helpPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
 					<h3 style="margin: 0; padding: 15px 0px;">Contáctate con FindyApp</h3>
 				</div>
-				<div class="comments">
+				<div class="comments" style="height: 100px">
 					<h3 style="margin-top: 0">Tus comentarios podrán hacer mejor a FindyApp</h3>
 					<p style="font-size: 12px;">Cuentanos que te gusta de la aplicación o qué podriamos hacer para mejorar</p>
 				</div>
-				<div id="formComment">
+				<div id="formComment" style="height: calc(100% - 225px)">
 					<div class="user_info">
 						<label>Nombre</label>
 						<input id="comment_name" type="text" name="user_name" placeholder="Aldo Ponce de Leon">
@@ -455,8 +468,10 @@
 						<input id="comment_text" type="text" placeholder="Escribe aquí tus comentarios..." name="user_comment">
 					</div>
 				</div>
-				<div class="btn_send_comment" style="width: calc(100% - 20px); border-radius: 10px;">
-					<p style="margin:0; padding: 10px 0;">Enviar</p>
+				<div style="height: 45px;">
+					<div class="btn_send_comment" style="width: calc(100% - 20px); border-radius: 10px;">
+						<p style="margin:0; padding: 10px 0;">Enviar</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -475,6 +490,6 @@
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript" src="cordova.js"></script>
+		
 	</body>
 </html>

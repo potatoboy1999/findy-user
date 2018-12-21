@@ -1,5 +1,5 @@
 //var base_api_url='http://localhost/findy/public/api/';
-var base_api_url='http://findy.pe/public/api/';
+var base_api_url='https://admin.findy.pe/api/';
 var storage = window.localStorage;
 var storageLng = null;
 var storageLat = null;
@@ -7,9 +7,22 @@ var commerceArray = null;
 var commerce = null;
 var user = null;
 var profileCurrentTab = 'info';
+var ctgLoaded = false;
+
+var currPage = "";
 
 window.onload= function () {
-    //botones listeners
+    $.mobile.loading("show", {
+      text: "cargando",
+      textVisible: true,
+      textonly:false
+    });
+    document.addEventListener("deviceready", onDeviceReady, false);
+};
+
+function onDeviceReady() {
+  console.log('deviceReady!!');
+  //botones listeners
     //$("#getLocation").on("click",getCurrentLocation);
     $('#btn_fb').on('click',getDataFB);
     $('.btn_link_logIn').on('click',viewLogIn);
@@ -19,6 +32,7 @@ window.onload= function () {
     $('.btnLessInfo').on('click',function(){$('.moreInfo').hide();$('.info').show()})
     $('#btnLogIn').on("click",validateLogIn);
     $('#btnRegister').on("click",requestRegister);
+    $('#btn_position').on('click',getCurrentLocation);
     $("#verCategoriasBtn").on('click',viewCategories);
     $('.exit-info').on('click',hideMoreInfo);
     $("#btn_sideMenu").on('click',showSideMenu);
@@ -32,6 +46,7 @@ window.onload= function () {
     $('.btn_viewMap').on('click',viewMap);
     $('#btn_user_data').on('click',showProfileData);
     $('#btn_user_history').on('click',showProfileHistory);
+    $('.left-back').on('click',goToPage);
     
     $('.question').on('click',toggleAnswer);
     $('#btn_close_session').on('click',closeSession);
@@ -40,54 +55,117 @@ window.onload= function () {
 
     //$(".findy-category").on('click',viewSubCategories);
     
-    //load pages
-    $("#mapPage").on("pageshow", loadMapPage);
-    $("#profilePage").on("pageshow", loadVisitsFromUser);
-    
-};
+    //$("#mapPage").on("pageshow", loadMapPage);
+    //$("#profilePage").on("pageshow", loadVisitsFromUser);
+    //$("#helpPage").on("pageshow",loadDocs);  
+  document.addEventListener("backbutton", onBackKeyDown, false);
+  $.mobile.loading("hide");
+}
+
+function onBackKeyDown() {
+  if (currPage == 'logIn' || currPage == 'registerPage') {
+    navigator.notification.confirm('menu',confirmMenu,'Going Back',['Vamos!','Me Quedo']);
+  }
+  if(currPage == 'mapPage'){
+    navigator.notification.confirm('Quiere salir de la app?',confirmExit,'Exit',['Si','No']);
+  }
+}
+//confirm navigation
+function confirmMenu(btn){
+  if(btn == 1){
+    viewMenu();
+  }
+}
+function confirmExit(btn){
+  if(btn == 1){
+    navigator.app.exitApp();
+  }
+}
+
+//load pages
+$(document).on("pagebeforeshow",function(){
+  currPage = $.mobile.activePage.attr('id');
+});
+$(document).on("pagebeforeshow","#mapPage",loadMapPage);
+$(document).on("pagebeforeshow","#profilePage",loadProfilePage);
+$(document).on("pagebeforeshow","#helpPage",loadDocs);
+$(document).on("pagebeforeshow","#ctgPage",loadCtgPage);
+$(document).on("pagebeforeshow","#subCtgPage",validateCtgLoad);
+
 
 //PREVENT MIN HEIGHT JQUERY MOBILE
 $(document).on( "pagecontainershow", function ( e, data ) {
    var activePage = data.toPage;
+   activePage.css( "height", '100%' );
    setTimeout(function () {
       //var currentHeight = activePage.css( "min-height" );
-      activePage.css( "height", '100%' ); /* subtract 1px or set your custom height */
-   }, 50); /* set delay here */
+      //activePage.css( "height", '100%' ); /* subtract 1px or set your custom height */
+   }, 0); /* set delay here */
 });
 $(window).on( "throttledresize", function ( e ) {
    var activePage = $.mobile.pageContainer.pagecontainer( "getActivePage" );
+   activePage.css( "height", '100%' );
    setTimeout(function () {
       //var currentHeight = activePage.css( "min-height" );
-      activePage.css( "height", '100%' );
-   }, 50);
+      //activePage.css( "height", '100%' );
+   }, 0);
 });
 
 /*------- LOAD PAGES --------*/
 
 function loadMapPage(){
-  if(!map){
-    initMap();
-    //getCurrentLocation();
-    loadCommerceLocation(); 
+    hideSideMenu();
+    hideMoreInfo();
+    hideInfo();
+    if(!map){
+      initMap();
+      //getCurrentLocation();
+      loadCommerceLocation(); 
+      loadCategories();
+    }
+}
+function loadProfilePage(){
+  var uName = storage.getItem('userName');
+  var uEmail = storage.getItem('email');
+  $('.user_name').html(uName);
+  $('input[name="user_name"]').val(uName);
+  $('input[name="email"]').val(uEmail);
+  loadVisitsFromUser();
+  showProfileData();
+}
+function loadCtgPage(){
+  if (!ctgLoaded) {
     loadCategories();
+    ctgLoaded = true;
+  }
+}
+function validateCtgLoad(){
+  if (!ctgLoaded) {
+    viewCategories();
   }
 }
 
 /*------- LOAD DATA FUNCTIONS ------------*/
 
 function loadCategories(){
+  $.mobile.loading("show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
+
   $.ajax({
     url:base_api_url+'category/all',
     dataType:"json",
     success:function(response){
-      console.log('categories');
       console.log(response);
       ctg = response;
       var ctgDiv = $("#categories");
       ctgDiv.html('');
       ctg.forEach(function(ctg){
-        ctgDiv.append("<div class='findy-category' ctg-id='"+ctg['id']+"' style='float: left;'><div class='ctg-absolute'><img width='50' height='50' src='http://findy.pe/public/img/categoria/"+ctg.image+"'><p class='ctg-name'>"+ctg['name']+"</p></div></div>");
+        ctgDiv.append("<div class='findy-category' ctg-id='"+ctg['id']+"' ctg-image='"+ctg.image+"' ctg-name='"+ctg['name']+"' style='float: left;'><div class='ctg-absolute'><img width='50' height='50' src='https://admin.findy.pe/img/categoria/"+ctg.image+"'><p class='ctg-name'>"+ctg['name']+"</p></div></div>");
       });
+      $.mobile.loading("hide");
       $(".findy-category").on('click',viewSubCategories);
     },
     error:function(error){
@@ -100,7 +178,7 @@ function loadSubCategories(subCtgArray){
   var listDiv = $('#subCtgList');
   listDiv.html('');
   subCtgArray.forEach(function(subCtg){
-    listDiv.append("<div class='subCtg' subCtg='"+subCtg['id']+"' style='border-bottom: 1px solid black;'><span class='right-arrow'>></span><p>"+subCtg['name']+"</p></div>");
+    listDiv.append("<div class='subCtg' subCtg='"+subCtg['id']+"' style='border-bottom: 1px solid black;'><div class='right-arrow' style='background-color: transparent'><img width='20' height='20' src='img/icons/continue.png'></div><p>"+subCtg['name']+"</p></div>");
   });
   $('.subCtg').on('click',showMapCategories);
 }
@@ -122,7 +200,7 @@ function loadPositionCategories(ctgId){
         //alert('Comercio: '+comm.name+', lat:'+comm.lat+', lng:'+comm.lng);        
         var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
         var icon = {
-                      url: "http://findy.pe/public/img/marker/"+comm.category_img,
+                      url: "https://admin.findy.pe/img/marker/"+comm.category_img,
                       size: new google.maps.Size(150, 200),
                       origin: new google.maps.Point(0, 0),
                       anchor: new google.maps.Point(17, 34),
@@ -209,8 +287,43 @@ function loadVisitsFromUser(){
   });
 }
 
-/*------- REDIRECT / SHOW FUNCTIONS ------------*/
+function loadDocs(){
+  loadTerms();
+  loadPolitics();
+}
+function loadTerms(){
+  $.ajax({
+    url:base_api_url+'docs/terms',
+    success:function(response){
+      $('#condiciones').html(response);
+    },
+    error:function(error){
+      navigator.notification.alert('Error en la carga de documentos');
+    }
+  });
+}
+function loadPolitics(){
+  $.ajax({
+    url:base_api_url+'docs/politics',
+    success:function(response){
+      $('#privacidad').html(response);
+    },
+    error:function(error){
+      navigator.notification.alert('Error en la carga de documentos');
+    }
+  });
+}
 
+
+/*------- REDIRECT / SHOW FUNCTIONS ------------*/
+function goToPage(){
+  page = $(this).attr('pageto');
+  window.location.href = "#"+page;
+}
+
+function viewMenu(){
+  window.location.href = "#menu";
+}
 function viewLogIn(){
   window.location.href = "#logIn";
 }
@@ -221,6 +334,11 @@ function viewCategories(){
   window.location.href="#ctgPage";
 }
 function viewProfile(){
+  $.mobile.loading( "show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
   window.location.href = "#profilePage";
 }
 function viewQuestions(){
@@ -245,7 +363,18 @@ function viewMap(){
  window.location.href = "#mapPage";
 }
 function viewSubCategories(){
+  $.mobile.loading("show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
+
   var id = $(this).attr('ctg-id');
+  var name = $(this).attr('ctg-name');
+  var image = $(this).attr('ctg-image');
+  $(".nameCtg").html(name);
+  $("#ctgHeaderImg").attr('src',"img/categories_white/"+ image);
+
   console.log(id);
   $.ajax({
     url:base_api_url+'category/subList',
@@ -256,6 +385,15 @@ function viewSubCategories(){
     },
     success:function(response){
         console.log(response);
+        if (response.length == 1) {
+          var ctgId = response[0]['id'];
+          deleteMarkers();
+          loadPositionCategories(ctgId);
+          hideInfo();
+          $.mobile.loading("hide");
+          window.location.href="#mapPage";
+          return;
+        }
         loadSubCategories(response);
         window.location.href="#subCtgPage";
     },
@@ -270,6 +408,7 @@ function showMapCategories(){
   deleteMarkers();
   loadPositionCategories(ctgId);
   hideInfo();
+  ctgLoaded = false;
   window.location.href = "#mapPage";
 }
 function toggleAnswer(e){
@@ -349,6 +488,13 @@ function requestRegister(e){
 function validateLogIn(e){
   e.preventDefault();
 
+  $.mobile.loading( "show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
+  //window.plugins.spinnerDialog.show(null,'cargando...');
+
   email = $("#logInForm input[name='email']").val();
   password = $("#logInForm input[name='password']").val();
   
@@ -369,6 +515,8 @@ function validateLogIn(e){
       if (response['status']=='ok') {
         user = response['idUser'];
         storage.setItem('userId', response['idUser']);
+        storage.setItem('userName',response['user_name']);
+        storage.setItem('email',response['email']);
         $('.user_name').html(response['user_name']);
         $('input[name="user_name"]').val(response['user_name']);
         $('input[name="email"]').val(response['email']);
@@ -378,6 +526,7 @@ function validateLogIn(e){
         window.location.href = "#mapPage";
       }else{
         navigator.notification.alert(response.message);
+        $.mobile.loading( "hide" );
       }
     },
     error: function(error) {
@@ -388,6 +537,11 @@ function validateLogIn(e){
 }
 
 function closeSession(){
+  storage.removeItem('email');
+  storage.removeItem('userId');
+  storage.removeItem('userName');
+  storage.removeItem('PosLat');
+  storage.removeItem('PosLng');
   window.location.href = "#logIn";
 }
 function getDataFB(e){
@@ -414,6 +568,12 @@ function fbApiError(error){
 }*/
 /*------- EDIT DATA ----------*/
 function editProfile(){
+  $.mobile.loading( "show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
+
   var custId = storage.getItem('userId');
   var user_name = $('#profile_name').val();
   var email = $('#profile_email').val();
@@ -435,9 +595,16 @@ function editProfile(){
           'email':email
         },
         success:function(response){
+          storage.setItem('userName',user_name);
+          storage.setItem('email',email);
+          $('.user_name').html(user_name);
+          $('input[name="user_name"]').val(user_name);
+          $('input[name="email"]').val(email);
+          $.mobile.loading( "hide");
           navigator.notification.alert('Se han guardado los cambios');
         },
         error: function(error) {
+          $.mobile.loading("hide");
           navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
           //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
         }
@@ -450,6 +617,11 @@ function editProfile(){
 }
 /*------- SEND DATA ----------*/
 function sendComment(){
+  $.mobile.loading("show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
   var custId = storage.getItem('userId');
   var user_name = $('#comment_name').val();
   var email = $('#comment_email').val();
@@ -478,6 +650,7 @@ function sendComment(){
           viewCommentThanks();
         },
         error: function(error) {
+          $.mobile.loading("hide");
           navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
           //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
         }
@@ -492,6 +665,11 @@ function sendComment(){
 /*------- GEOLOCATION --------*/
 function getCurrentLocation(){
   //alert('Get GPS Start');
+  $.mobile.loading("show", {
+    text: "localizandote...",
+    textVisible: true,
+    textonly:false
+  });
 
   //GET CURRENT POSITION 1 TIME
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
@@ -522,6 +700,7 @@ function geoSuccess(position){
   var marker = new google.maps.Marker(markerOptions);
   //mapMsg.setCenter(results[0].geometry.location);
   map.panTo({lat:lat, lng:lng});
+  $.mobile.loading("hide");
 
   //Cargar comercios en rango de 3km
   hideCommOutOfRange(commerceArray); 
@@ -553,7 +732,9 @@ function hideCommOutOfRange(cArray){
 }
 
 function geoError(error){
-  navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
+  $.mobile.loading("hide");
+  navigator.notification.alert("No te encontramos. Por favor verifica tu GPS");
+  //navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
 };
 function calcDistance(lat, lng, pos2) {
     var pos1 = new LatLon(lat, lng);
@@ -674,7 +855,7 @@ function showInfo(id){
       $('.commName').html(comm.name);
       $('.commDireccion').html(comm.address);
       $('.commSchedule').html('<strong>Horario de Atención:</strong> '+comm.hourStart+" - "+comm.hourEnd);
-      $('.commCategoryImg').attr('src','http://findy.pe/public/img/categoria/'+comm.category_image)
+      $('.commCategoryImg').attr('src','https://admin.findy.pe/img/categoria/'+comm.category_image)
       $('.linkNavigation').attr('lat',comm.lat);
       $('.linkNavigation').attr('lng',comm.lng);
       $('.linkNavigation').attr('idComm',comm.id);

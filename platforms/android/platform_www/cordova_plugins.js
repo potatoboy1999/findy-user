@@ -25,14 +25,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
-    "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
-    "pluginId": "cordova-plugin-facebook4",
-    "clobbers": [
-      "facebookConnectPlugin"
-    ]
-  },
-  {
     "id": "cordova-plugin-geolocation.geolocation",
     "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
     "pluginId": "cordova-plugin-geolocation",
@@ -69,6 +61,14 @@ module.exports = [
     "merges": [
       "launchnavigator"
     ]
+  },
+  {
+    "id": "cordova-plugin-spinner-dialog.SpinnerDialog",
+    "file": "plugins/cordova-plugin-spinner-dialog/www/spinner.js",
+    "pluginId": "cordova-plugin-spinner-dialog",
+    "merges": [
+      "window.plugins.spinnerDialog"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -76,10 +76,10 @@ module.exports.metadata =
 {
   "cordova-plugin-actionsheet": "2.3.3",
   "cordova-plugin-dialogs": "2.0.1",
-  "cordova-plugin-facebook4": "3.2.0",
   "cordova-plugin-geolocation": "4.0.1",
   "cordova-plugin-whitelist": "1.3.3",
-  "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2"
+  "uk.co.workingedge.phonegap.plugin.launchnavigator": "4.2.2",
+  "cordova-plugin-spinner-dialog": "1.3.1"
 };
 // BOTTOM OF METADATA
 });

@@ -116,7 +116,7 @@ function loadCommerceLocation(){
 				//set marker icons
 				//console.log('creando el icono');
 				var icon = {
-	                    url: "http://findy.pe/public/img/marker/"+comm.category_img,
+	                    url: "https://admin.findy.pe/img/marker/"+comm.category_img,
 	                    size: new google.maps.Size(40, 55),
 	                    origin: new google.maps.Point(0, 0),
 	                    anchor: new google.maps.Point(17, 34),
