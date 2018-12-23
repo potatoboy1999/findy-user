@@ -4,7 +4,7 @@ if (typeof module!='undefined' && module.exports) var Dms = require('./dms'); //
 var map = null;
 var arrayMarkers = [];
 //var base_api_url='http://localhost/findy/public/api/';
-var base_api_url='http://findy.pe/public/api/';
+var base_api_url='http://admin.findy.pe/api/';
 
 function initMap() {
 	arrayMarkers = [];
@@ -99,6 +99,29 @@ function initMap() {
 	map = new google.maps.Map(document.getElementById('map'), options);
 }
 
+function refreshAllCommerceLocation(){
+	$.mobile.loading("show", {
+		text: "espere...",
+		textVisible: true,
+		textonly:false
+	});
+	$.ajax({
+		url:base_api_url+'commerces/locations',
+		dataType:"json",
+		success:function(response){
+			$.mobile.loading("hide");
+			console.log('all commerces:');
+			console.log(response);
+			commerceArray = response;
+			getCurrentLocation();
+		},
+		error:function(error){
+			$.mobile.loading("hide");
+			navigator.notification.alert('Error: no hay conexión a internet');
+		}
+	});
+}
+
 function loadCommerceLocation(){
 	//alert('Cargar los comercios en el mapa');
 	$.ajax({
@@ -109,45 +132,62 @@ function loadCommerceLocation(){
 			console.log(response);
 			commerceArray = response;
 			getCurrentLocation();
-			commerceArray.forEach(function(comm){
-				//alert('Comercio: '+comm.name+', lat:'+comm.lat+', lng:'+comm.lng);
-				
-				var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
-				//set marker icons
-				//console.log('creando el icono');
-				var icon = {
-	                    url: "https://admin.findy.pe/img/marker/"+comm.category_img,
-	                    size: new google.maps.Size(40, 55),
-	                    origin: new google.maps.Point(0, 0),
-	                    anchor: new google.maps.Point(17, 34),
-	                    scaledSize: new google.maps.Size(40, 55)
-	                  };
-	         //Create the Marker
-	         //console.log('creando el marcador');
-	         var marker = new google.maps.Marker({
-	                        map: map,
-	                        icon: icon,
-	                        title: comm.id.toString(),
-	                        position: pos
-	                      });
-	         arrayMarkers.push(marker);
-	         map.addListener('click', function() {
-					hideInfo();
-					hideMoreInfo();
-				});
-	         marker.addListener('click', function() {
-					map.setZoom(18);
-					map.panTo(marker.getPosition());
-					var id = marker.getTitle();
-					showInfo(id);
-				});
-			});
+
+			console.log('commerceArray:');
+			console.log(commerceArray);
+
+			createMarkersCommerces(commerceArray);
+
+			console.log('TODOS los comercios mostrados');
 		},
 		error:function(error){
-			navigator.notification.alert('Error en la carga de coordenadas')
+			navigator.notification.alert('Error en la carga de comercios')
 		}
 	});
 	//alert('Comercios cargados exitosamente');
+}
+function createMarkersCommerces(arrayCommerces){
+	//delete previouse markers
+	arrayMarkers = [];
+
+	commerceArray.forEach(function(comm){
+		var bStatus = comm.bussiness_status;
+		var img = "marker/"+comm.category_img;
+		if (bStatus == 0) {
+			img = "marker_transparent/"+comm.category_img;
+		}
+		var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
+		//set marker icons
+		var icon = {
+                 url: "img/"+img,
+                 size: new google.maps.Size(40, 55),
+                 origin: new google.maps.Point(0, 0),
+                 anchor: new google.maps.Point(17, 50),
+                 scaledSize: new google.maps.Size(40, 55),
+                 labelOrigin: new google.maps.Point(20, 65)
+               };
+      //Create the Marker
+      var marker = new google.maps.Marker({
+                     map: map,
+                     icon: icon,
+                     title: comm.id.toString(),
+                     position: pos,
+                     label: comm.name,
+                     labelOrigin: new google.maps.Point(20, 65),
+                     labelClass: "labels"
+                   });
+      arrayMarkers.push(marker);
+      map.addListener('click', function() {
+			hideInfo();
+			hideMoreInfo();
+		});
+      marker.addListener('click', function() {
+			map.setZoom(18);
+			map.panTo(marker.getPosition());
+			var id = marker.getTitle();
+			showInfo(id);
+		});
+	});
 }
 
 function setMapOnAll(map) {

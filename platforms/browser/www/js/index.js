@@ -3,17 +3,21 @@ var base_api_url='https://admin.findy.pe/api/';
 var storage = window.localStorage;
 var storageLng = null;
 var storageLat = null;
+//var markerPosition = null;
+var positionArray = [];
 var commerceArray = null;
 var commerce = null;
 var user = null;
 var profileCurrentTab = 'info';
 var ctgLoaded = false;
+var sideMenu = false;
 
 var currPage = "";
+var currCtg = null;
 
 window.onload= function () {
     $.mobile.loading("show", {
-      text: "cargando",
+      text: "Inicializando...",
       textVisible: true,
       textonly:false
     });
@@ -23,51 +27,59 @@ window.onload= function () {
 function onDeviceReady() {
   console.log('deviceReady!!');
   //botones listeners
-    //$("#getLocation").on("click",getCurrentLocation);
-    $('#btn_fb').on('click',getDataFB);
-    $('.btn_link_logIn').on('click',viewLogIn);
-    $('.btn_link_register').on('click',viewRegister);
-    $('.btn_nav').on('click',navigate);
-    $('.btnMoreInfo').on('click',showMoreInfo);
-    $('.btnLessInfo').on('click',function(){$('.moreInfo').hide();$('.info').show()})
-    $('#btnLogIn').on("click",validateLogIn);
-    $('#btnRegister').on("click",requestRegister);
-    $('#btn_position').on('click',getCurrentLocation);
-    $("#verCategoriasBtn").on('click',viewCategories);
-    $('.exit-info').on('click',hideMoreInfo);
-    $("#btn_sideMenu").on('click',showSideMenu);
-    $(".exit-menu").on('click',hideSideMenu);
-    $('#btn_profile').on('click',viewProfile);
-    $('#btn_help').on('click',viewHelp);
-    $('#btn_settings').on('click',viewSettings);
-    $('#btn_questions').on('click',viewQuestions);
-    $('#btn_about').on('click',viewAbout);
-    $('#btn_comment').on('click',viewSendComment);
-    $('.btn_viewMap').on('click',viewMap);
-    $('#btn_user_data').on('click',showProfileData);
-    $('#btn_user_history').on('click',showProfileHistory);
-    $('.left-back').on('click',goToPage);
-    
-    $('.question').on('click',toggleAnswer);
-    $('#btn_close_session').on('click',closeSession);
-    $('.save-profile').on('click',editProfile);
-    $('.btn_send_comment').on('click',sendComment);
+  //$("#getLocation").on("click",getCurrentLocation);
+  $('#btn_fb').on('click',getDataFB);
+  $('.btn_link_logIn').on('click',viewLogIn);
+  $('.btn_link_register').on('click',viewRegister);
+  $('.btn_nav').on('click',navigate);
+  $('.btnMoreInfo').on('click',showMoreInfo);
+  $('.btnLessInfo').on('click',function(){$('.moreInfo').hide();$('.info').show()})
+  $('#btnLogIn').on("click",validateLogIn);
+  $('#btnRegister').on("click",requestRegister);
+  $('#btn_position').on('click',refreshLocation);
+  $("#verCategoriasBtn").on('click',viewCategories);
+  $('.exit-info').on('click',hideMoreInfo);
+  $("#btn_sideMenu").on('click',showSideMenu);
+  $(".exit-menu").on('click',hideSideMenu);
+  $('#btn_profile').on('click',viewProfile);
+  $('#btn_help').on('click',viewHelp);
+  $('#btn_settings').on('click',viewSettings);
+  $('#btn_questions').on('click',viewQuestions);
+  $('#btn_about').on('click',viewAbout);
+  $('#btn_comment').on('click',viewSendComment);
+  $('.btn_viewMap').on('click',viewMap);
+  $('#btn_user_data').on('click',showProfileData);
+  $('#btn_user_history').on('click',showProfileHistory);
+  $('.left-back').on('click',goToPage);
+  
+  $('.question').on('click',toggleAnswer);
+  $('#btn_close_session').on('click',closeSession);
+  $('.save-profile').on('click',editProfile);
+  $('.btn_send_comment').on('click',sendComment);
 
-    //$(".findy-category").on('click',viewSubCategories);
-    
-    //$("#mapPage").on("pageshow", loadMapPage);
-    //$("#profilePage").on("pageshow", loadVisitsFromUser);
-    //$("#helpPage").on("pageshow",loadDocs);  
+  //$(".findy-category").on('click',viewSubCategories);
+  
+  //$("#mapPage").on("pageshow", loadMapPage);
+  //$("#profilePage").on("pageshow", loadVisitsFromUser);
+  //$("#helpPage").on("pageshow",loadDocs);  
   document.addEventListener("backbutton", onBackKeyDown, false);
   $.mobile.loading("hide");
 }
 
 function onBackKeyDown() {
   if (currPage == 'logIn' || currPage == 'registerPage') {
-    navigator.notification.confirm('menu',confirmMenu,'Going Back',['Vamos!','Me Quedo']);
+    viewMenu();
+    //navigator.notification.confirm('menu',confirmMenu,'Going Back',['Vamos!','Me Quedo']);
   }
   if(currPage == 'mapPage'){
-    navigator.notification.confirm('Quiere salir de la app?',confirmExit,'Exit',['Si','No']);
+    if (sideMenu) {
+      hideSideMenu();
+    }else{
+      navigator.notification.confirm('Quiere salir de la app?',confirmExit,'Exit',['Si','No']);
+    }
+  }
+  if(currPage == 'ctgPage'){
+    viewMap();
   }
 }
 //confirm navigation
@@ -97,18 +109,10 @@ $(document).on("pagebeforeshow","#subCtgPage",validateCtgLoad);
 $(document).on( "pagecontainershow", function ( e, data ) {
    var activePage = data.toPage;
    activePage.css( "height", '100%' );
-   setTimeout(function () {
-      //var currentHeight = activePage.css( "min-height" );
-      //activePage.css( "height", '100%' ); /* subtract 1px or set your custom height */
-   }, 0); /* set delay here */
 });
 $(window).on( "throttledresize", function ( e ) {
    var activePage = $.mobile.pageContainer.pagecontainer( "getActivePage" );
    activePage.css( "height", '100%' );
-   setTimeout(function () {
-      //var currentHeight = activePage.css( "min-height" );
-      //activePage.css( "height", '100%' );
-   }, 0);
 });
 
 /*------- LOAD PAGES --------*/
@@ -158,7 +162,7 @@ function loadCategories(){
     url:base_api_url+'category/all',
     dataType:"json",
     success:function(response){
-      console.log(response);
+      //console.log(response);
       ctg = response;
       var ctgDiv = $("#categories");
       ctgDiv.html('');
@@ -178,12 +182,18 @@ function loadSubCategories(subCtgArray){
   var listDiv = $('#subCtgList');
   listDiv.html('');
   subCtgArray.forEach(function(subCtg){
-    listDiv.append("<div class='subCtg' subCtg='"+subCtg['id']+"' style='border-bottom: 1px solid black;'><div class='right-arrow' style='background-color: transparent'><img width='20' height='20' src='img/icons/continue.png'></div><p>"+subCtg['name']+"</p></div>");
+    listDiv.append("<div class='subCtg' subCtg='"+subCtg['id']+"' style='border-bottom: 1px solid #c4c4c4;'><div class='right-arrow' style='background-color: transparent'><img width='20' height='20' src='img/icons/continue.png'></div><p>"+subCtg['name']+"</p></div>");
   });
   $('.subCtg').on('click',showMapCategories);
 }
 
 function loadPositionCategories(ctgId){
+  console.log('cargando posiciones por categoria.....');
+  $.mobile.loading("show", {
+    text: "buscando comercios...",
+    textVisible: true,
+    textonly:false
+  });
   $.ajax({
     url:base_api_url+'commerces/getCategory',
     type:'post',
@@ -195,38 +205,43 @@ function loadPositionCategories(ctgId){
       console.log('Commerce Category');
       console.log(response);
 
+      currCtg = ctgId;
       commerceArray = response;
-      response.forEach(function(comm){
-        //alert('Comercio: '+comm.name+', lat:'+comm.lat+', lng:'+comm.lng);        
-        var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
-        var icon = {
-                      url: "https://admin.findy.pe/img/marker/"+comm.category_img,
-                      size: new google.maps.Size(150, 200),
-                      origin: new google.maps.Point(0, 0),
-                      anchor: new google.maps.Point(17, 34),
-                      scaledSize: new google.maps.Size(40, 55)
-                    };
-           //Create the Marker
-           //console.log('creando el marcador');
-           var marker = new google.maps.Marker({
-                          map: map,
-                          icon: icon,
-                          title: comm.id.toString(),
-                          position: pos
-                        });
-           arrayMarkers.push(marker);
-           marker.addListener('click', function() {
-             map.setZoom(18);
-             map.panTo(marker.getPosition());
-            
-             var id = marker.getTitle();
-             showInfo(id);
-           });
-      });
-      hideCommOutOfRange(commerceArray);
+      
+      loadCommInRange(commerceArray,8000);
+      $.mobile.loading("hide");
     },
     error:function(error){
+      $.mobile.loading("hide");
       navigator.notification.alert('Error en la carga de coordenadas')
+    }
+  });
+}
+
+function refreshCtgCommerceLocation(ctgId){
+  console.log('cargando posiciones por categoria.....');
+  $.mobile.loading("show", {
+    text: "espere...",
+    textVisible: true,
+    textonly:false
+  });
+  $.ajax({
+    url:base_api_url+'commerces/getCategory',
+    type:'post',
+    dataType:'json',
+    data:{
+      'ctgId':ctgId
+    },
+    success:function(response){
+      $.mobile.loading("hide");
+      console.log('Commerce Category');
+      console.log(response);
+      commerceArray = response;
+      getCurrentLocation();
+    },
+    error:function(error){
+      $.mobile.loading("hide");
+      navigator.notification.alert('Error: no hay conexión a internet')
     }
   });
 }
@@ -324,6 +339,9 @@ function goToPage(){
 function viewMenu(){
   window.location.href = "#menu";
 }
+function viewMap(){
+  window.location.href = "#mapPage";
+}
 function viewLogIn(){
   window.location.href = "#logIn";
 }
@@ -384,13 +402,13 @@ function viewSubCategories(){
       'parent':id
     },
     success:function(response){
-        console.log(response);
+        //console.log(response);
         if (response.length == 1) {
+          $.mobile.loading("hide");
           var ctgId = response[0]['id'];
           deleteMarkers();
           loadPositionCategories(ctgId);
           hideInfo();
-          $.mobile.loading("hide");
           window.location.href="#mapPage";
           return;
         }
@@ -398,16 +416,23 @@ function viewSubCategories(){
         window.location.href="#subCtgPage";
     },
     error: function(error) {
+      $.mobile.loading("hide");
       navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/register');
     }
   });
 }
 function showMapCategories(){
+  $.mobile.loading("show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
   var ctgId = $(this).attr('subctg');
-  console.log(ctgId);
+  //console.log(ctgId);
   deleteMarkers();
-  loadPositionCategories(ctgId);
   hideInfo();
+  $.mobile.loading("hide");
+  loadPositionCategories(ctgId);
   ctgLoaded = false;
   window.location.href = "#mapPage";
 }
@@ -452,11 +477,13 @@ function requestRegister(e){
   
   //Set Obligatory Inputs
   if(email === '' || user_name === '' || password === '' || password_confirm === ''){
+    $.mobile.loading( "hide");
     navigator.notification.alert('Por favor llene todos los datos');
     return;
   }
   //Confirm passwords the same
   if(password !== password_confirm){
+    $.mobile.loading( "hide");
     navigator.notification.alert('Las contraseñas no son iguales');
     return;
   }
@@ -475,11 +502,13 @@ function requestRegister(e){
         navigator.notification.alert(response.message);
         window.location.href = "#logIn";
       }else{
+        $.mobile.loading( "hide");
         navigator.notification.alert(response.message);
       }
       
     },
     error: function(error) {
+      $.mobile.loading( "hide");
       navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/register');
     }
   });
@@ -500,6 +529,7 @@ function validateLogIn(e){
   
   //Set Obligatory Inputs
   if(email === '' || password === ''){
+    $.mobile.loading( "hide");
     navigator.notification.alert('Por favor llene todos los datos');
     return;
   }
@@ -525,11 +555,12 @@ function validateLogIn(e){
 
         window.location.href = "#mapPage";
       }else{
-        navigator.notification.alert(response.message);
         $.mobile.loading( "hide" );
+        navigator.notification.alert(response.message);
       }
     },
     error: function(error) {
+      $.mobile.loading( "hide");
       navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
       //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
     }
@@ -579,9 +610,11 @@ function editProfile(){
   var email = $('#profile_email').val();
   var password = $('#profile_password').val();
   if (!user_name || !email) {
+    $.mobile.loading( "hide");
     navigator.notification.alert('Por favor complete los datos en su perfil');
   }else{
     if (email.indexOf('@') == -1) {
+      $.mobile.loading( "hide");
       navigator.notification.alert('Por favor ingrese un email válido');
     }else{
       //navigator.notification.alert('Espere un momento');
@@ -627,9 +660,11 @@ function sendComment(){
   var email = $('#comment_email').val();
   var comment = $('#comment_text').val();
   if (!user_name || !email || !comment) {
+    $.mobile.loading( "hide");
     navigator.notification.alert('Por favor complete los datos');
   }else{
     if (email.indexOf('@') == -1) {
+      $.mobile.loading( "hide");
       navigator.notification.alert('Por favor ingrese un email válido');
     }else{
       //navigator.notification.alert('Espere un momento');
@@ -663,13 +698,21 @@ function sendComment(){
 }
 
 /*------- GEOLOCATION --------*/
+function refreshLocation(){
+  hideSideMenu();
+  if (currCtg) {
+    refreshCtgCommerceLocation(currCtg);
+  }else{
+    refreshAllCommerceLocation();
+  }
+}
 function getCurrentLocation(){
-  //alert('Get GPS Start');
   $.mobile.loading("show", {
     text: "localizandote...",
     textVisible: true,
     textonly:false
   });
+  console.log('GPS start');
 
   //GET CURRENT POSITION 1 TIME
   navigator.geolocation.getCurrentPosition(geoSuccess, geoError, {maximunAge:300000, timeout:30000, enableHighAccuracy:true});
@@ -680,6 +723,12 @@ function getCurrentLocation(){
 
 function geoSuccess(position){
   //alert('Retrieve current location');
+  $.mobile.loading("hide");
+  $.mobile.loading("show", {
+    text: "cargando...",
+    textVisible: true,
+    textonly:false
+  });
   lng = position.coords.longitude;
   lat = position.coords.latitude;
 
@@ -687,33 +736,43 @@ function geoSuccess(position){
   storage.setItem('PosLng',lng);
   storage.setItem('PosLat',lat);
 
+  position = {lat:lat, lng:lng};
+
   //navigator.notification.alert("longitude: "+lng+", Latitude: "+lat);
-  var markerOptions = new google.maps.Marker({
-    clickable: true,
-    flat: true,
-    map: map,
-    position: {lat:lat, lng:lng},
-    title: "You are here",
-    visible:true,
-    icon:'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-  });
-  var marker = new google.maps.Marker(markerOptions);
+  if (positionArray.length == 0){
+    console.log('marker no Existe');
+    var markerOptions = {
+      map: map,
+      position: position,
+      title: "You are here",
+      icon:'img/marker/blue-dot.png',
+    };
+    var markerPosition = new google.maps.Marker(markerOptions);
+    positionArray.push(markerPosition);
+  }else{
+    console.log('marker Existe');
+    map.setZoom(16);
+    positionArray[0].setPosition(position);
+  }
   //mapMsg.setCenter(results[0].geometry.location);
   map.panTo({lat:lat, lng:lng});
-  $.mobile.loading("hide");
 
-  //Cargar comercios en rango de 3km
-  hideCommOutOfRange(commerceArray); 
+  console.log('position found');
+  //Cargar comercios en rango de 8km
+  console.log('buscando rango 8km');
+  loadCommInRange(commerceArray,8000); 
+
+  $.mobile.loading("hide");
 };
 
-function hideCommOutOfRange(cArray){
+function loadCommInRange(cArray,range){
   posLatLng = new LatLon(parseFloat(storage.getItem('PosLat')),parseFloat(storage.getItem('PosLng')));
   commInRange = [];
   commOutOfRange = [];
   cArray.forEach(function(commerce){
     commLat = commerce.lat;
     commLng = commerce.lng;
-    if (calcDistance(commLat,commLng, posLatLng) > 3000) {
+    if (calcDistance(commLat,commLng, posLatLng) > range) {
       commOutOfRange.push(commerce);
     }else{
       commInRange.push(commerce);
@@ -721,11 +780,13 @@ function hideCommOutOfRange(cArray){
     //navigator.notification.alert('Distancia a '+commerce.name+': '+calcDistance(commLat, commLng, posLatLng)+' metros');
     console.log('Distancia a '+commerce.name+': '+calcDistance(commLat, commLng, posLatLng)+' metros');
   });
-  hideMapOnArray(map,commOutOfRange);
+  //hideMapOnArray(map,commOutOfRange);
   console.log(commInRange);
   console.log(commOutOfRange);
 
   commerceArray = commInRange;
+  deleteMarkers();
+  createMarkersCommerces(commerceArray);
   if (commerceArray.length == 0) {
         navigator.notification.alert('No hay commercios de esta categoria cerca a ti (en 3km)');
       }
@@ -740,10 +801,15 @@ function calcDistance(lat, lng, pos2) {
     var pos1 = new LatLon(lat, lng);
     return pos1.distanceTo(pos2);
 };
+
 /*------ WAZE/MAPS LINKS --------*/
 
 function navigate(){
-  //navigator.notification.alert("Start Call to navigator");
+  /*
+  if (!storage.PosLat || !storage.PosLng){
+    navigator.notification.alert('No sabemos donde te encuentras. Por favor activa tu GPS para comenzar tu viaje.');
+    return;
+  }*/
   linkNav = $('.linkNavigation');
   lat = linkNav.attr('lat');
   lng = linkNav.attr('lng');
@@ -755,23 +821,20 @@ function navigate(){
   console.log('COMMERCE ID:'+idComm);
   console.log('USER ID:'+idUser);
   saveTravelHistory(idComm,idUser);
-  linkNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
-  window.open(linkNav,'_system');
+  linkGoogleNav = "http://maps.google.com/maps?daddr="+lat+","+lng+"&amp;ll=";
+  //linkWazeNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
+  window.open(linkGoogleNav,'_system');
   /*
-  navigator.notification.alert(lat);
-  navigator.notification.alert(lng);
   launchnavigator.navigate([lat,lng],{
-        start:"-12.108670,-77.028547",
         enableDebug: true,
         successCallback: onSuccessNav,
         errorCallback: onErrorNav
       });
-  navigator.notification.alert(linkNav);
+  //navigator.notification.alert(linkNav);
   */
 }
 
 function navigateFromHistory(){
-  console.log('hola');
   btn = $(this);
   lat = btn.attr('lat');
   lng = btn.attr('lng');
@@ -784,8 +847,9 @@ function navigateFromHistory(){
   console.log('COMMERCE ID:'+idComm);
   console.log('USER ID:'+idUser);
   saveTravelHistory(idComm,idUser);
-  linkNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
-  window.open(linkNav,'_system');
+  linkGoogleNav = "http://maps.google.com/maps?daddr="+lat+","+lng+"&amp;ll=";
+  //linkNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';  
+  window.open(linkGoogleNav,'_system');
 }
 
 function onSuccessNav(){
@@ -844,6 +908,7 @@ function hideMoreInfo(){
   $('.moreInfo').hide();
 }
 function hideSideMenu(){
+  sideMenu = false;
   $("#mapMenu").hide();
 }
 function showInfo(id){
@@ -881,6 +946,7 @@ function showMoreInfo(){
   $('.moreInfo').show();
 }
 function showSideMenu(){
+  sideMenu = true;
   $("#mapMenu").show();
 }
 
