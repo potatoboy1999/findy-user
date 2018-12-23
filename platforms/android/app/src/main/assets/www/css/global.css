@@ -61,8 +61,8 @@ input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; bo
 #logIn label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
 #logIn input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
 #logIn *:focus {outline: none;}*/
-#logIn .content .top{height: calc(100% - 120px);overflow-y: scroll;}
-#logIn .content .bottom{height: 120px;}
+#logIn .content .top{height: calc(100% - 190px);overflow-y: scroll;}
+#logIn .content .bottom{height: 190px;}
 
 @media only screen and (max-width: 320px){
   #logIn .headerLogoImg{background-size: 180px 80px}

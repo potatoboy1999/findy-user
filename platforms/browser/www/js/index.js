@@ -42,6 +42,8 @@ function onDeviceReady() {
   $("#btn_sideMenu").on('click',showSideMenu);
   $(".exit-menu").on('click',hideSideMenu);
   $('#btn_profile').on('click',viewProfile);
+  $("#btn_send_pass").on('click',changePassword);
+  $("#btnChangePassword").on('click',viewNewPass);
   $('#btn_help').on('click',viewHelp);
   $('#btn_settings').on('click',viewSettings);
   $('#btn_questions').on('click',viewQuestions);
@@ -78,8 +80,17 @@ function onBackKeyDown() {
       navigator.notification.confirm('Quiere salir de la app?',confirmExit,'Exit',['Si','No']);
     }
   }
-  if(currPage == 'ctgPage'){
+  if(currPage == 'ctgPage' || currPage == 'helpPage' || currPage == 'profilePage'){
     viewMap();
+  }
+  if (currPage == 'passwordPage') {
+    viewProfile();
+  }
+  if (currPage == 'questionsPage' || currPage == 'aboutPage' || currPage == 'commentsPage') {
+    viewHelp();
+  }
+  if (currPage == 'subCtgPage') {
+    viewCategories();
   }
 }
 //confirm navigation
@@ -359,6 +370,9 @@ function viewProfile(){
   });
   window.location.href = "#profilePage";
 }
+function viewNewPass(){
+  window.location.href = "#passwordPage";
+}
 function viewQuestions(){
   window.location.href = "#questionsPage";
 }
@@ -576,26 +590,37 @@ function closeSession(){
   window.location.href = "#logIn";
 }
 function getDataFB(e){
-  /*
+  //console.log('start FB');
+  //alert('start FB');
   e.preventDefault();
-  facebookConnectPlugin.login(["public_profile","email"],fbSuccess,fbError);*/
+  //facebookConnectPlugin.login(["public_profile","email"],fbSuccess,fbError);
 }
 /*
 function fbSuccess(result){
   //success
+  console.log('Exito fb');
   console.log(JSON.stringify(result));
   //calling api
   facebookConnectPlugin.api("/me?fields=email,name,picture",["public_profile","email"],fbApiSuccess,fbApiError);
 }
 function fbError(error){
-  alert(JSON.stringify(error));
+  console.log('Error fb');
+  alert('Error FB');
+  console.log(JSON.stringify(error));
+  //alert(JSON.stringify(error));
 }
 function fbApiSuccess(userData){
-  alert(JSON.stringify(userData));
+  console.log('Exito API');
+  console.log(JSON.stringify(userData));
+  //alert('EXITO API');
 }
 
 function fbApiError(error){
-  alert(JSON.stringify(error));
+  console.log('Error API');
+  alert('Error API');
+  console.log(JSON.stringify(error));
+  //alert(JSON.stringify(error));
+
 }*/
 /*------- EDIT DATA ----------*/
 function editProfile(){
@@ -647,6 +672,49 @@ function editProfile(){
     }
   }
   //console.log('PASSWORD: '+password);
+}
+function changePassword(){
+  $.mobile.loading("show", {
+    text: "cargando",
+    textVisible: true,
+    textonly:false
+  });
+  var custId = storage.getItem('userId');
+  old_password = $("#formPassword input[name='old_pass']").val();
+  password = $("#formPassword input[name='new_pass']").val();
+  password_confirm = $("#formPassword input[name='new_pass_conf']").val();
+
+  if(old_password === '' || password === '' || password_confirm === ''){
+    $.mobile.loading( "hide");
+    navigator.notification.alert('Por favor llene todos los datos');
+    return;
+  }
+  
+  //Confirm passwords the same
+  if(password !== password_confirm){
+    $.mobile.loading("hide");
+    navigator.notification.alert('Las contraseñas no son iguales');
+    return;
+  }
+  $.ajax({
+        url:base_api_url+'profile/changePass',
+        type:'post',
+        dataType:'json',
+        data:{
+          'custId': custId,
+          'old_password': old_password,
+          'password':password
+        },
+        success:function(response){
+          navigator.notification.alert('Se han guardado los cambios');
+          viewProfile();
+        },
+        error: function(error) {
+          $.mobile.loading("hide");
+          navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
+          //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+        }
+      });
 }
 /*------- SEND DATA ----------*/
 function sendComment(){

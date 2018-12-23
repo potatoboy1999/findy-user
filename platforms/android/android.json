@@ -58,6 +58,11 @@
                         }
                     ]
                 }
+            },
+            "app/src/main/res/values/facebookconnect.xml": {
+                "parents": {
+                    "/*": []
+                }
             }
         }
     },

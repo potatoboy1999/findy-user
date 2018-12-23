@@ -3,4 +3,6 @@
     <string name="app_name">Findy-User</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
+    <string name="fb_app_id">291949018192665</string>
+    <string name="fb_app_name">FindyApp</string>
 </resources>

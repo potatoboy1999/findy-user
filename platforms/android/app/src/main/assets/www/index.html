@@ -68,7 +68,7 @@
 					</div>
 					<div class="bottom">
              		<button id="btnLogIn" class="bttn bttn-menu-primary">Ingresar</button>
-            		<!--<button id="btn_fb" class="bttn bttn-menu-primary" style="background-color: blue; color: white;">Ingresar con FB</button>-->
+            		<button id="btn_fb" class="bttn bttn-menu-primary" style="background-color: #375291; color: white;">Ingresar con FB</button>
 						<div>
 				      	<p>¿No te has registrado? <a href="#registerPage">Registrate Aquí</a></p>
 				      </div>
@@ -233,8 +233,8 @@
 				<div id="verCategoriasBtn" class="topDiv">
 					<p style="font-size: 15px; margin-top:15px; margin-bottom: 15px; color: #00A9AD">Ver todas las categorias</p>
 				</div>
-				<div id="btn_position" class="topDiv" style="z-index: 98;">
-					<p style="text-align: center; margin: 0;padding-top: 8px;color: #00A9AD;">o</p>
+				<div id="btn_position" class="topDiv" style="z-index: 98; background-image: url('img/icons/gpsMarker.png');background-position: center; background-repeat: no-repeat;background-size:20px;">
+					<p style="text-align: center; margin: 0;padding-top: 8px;color: #00A9AD;"></p>
 				</div>
 				<div id="map" style="width: 100%; height: 100%; text-shadow: none;"></div>
 			</div>
@@ -309,7 +309,7 @@
 						<label>Contraseña</label>
 						<input id="profile_password" type="password" name="password" placeholder="******" disabled>
 						<div style="position: absolute; right: 10px; bottom: 18px;">
-							<span id="btnChangePassword" style="color: #00A9AD">Cambiar</span>
+							<span id="btnChangePassword" style="color: #00A9AD; z-index: 99; padding: 8px">Cambiar</span>
 						</div>
 					</div>
 					<div class="btn_profile save-profile" style="width: 50%; margin: auto; text-shadow: none;">
@@ -336,6 +336,33 @@
 								<div class='fix-clear'></div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="passwordPage" data-enhance="false" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 15px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="profilePage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Configurar contraseña</h3>
+				</div>
+				<div id="formPassword" style="height: calc(100% - 160px)">
+					<div class="user_info">
+						<label>Anterior contraseña</label>
+						<input type="password" name="old_pass" placeholder="*****">
+					</div>
+					<div class="user_info">
+						<label>Nueva contraseña</label>
+						<input id="new_pass" type="password" name="new_pass" placeholder="*****">
+					</div>
+					<div class="user_info">
+						<label>Repetir nueva contraseña</label>
+						<input id="new_pass_conf" type="password" name="new_pass_conf" placeholder="*****">
+					</div>
+				</div>
+				<div style="height: 80px;">
+					<div id="btn_send_pass" class="bttn bttn-menu-primary" style="width: calc(100% - 20px); border-radius: 10px; margin:0">
+						<p style="margin:0; padding: 5px 0; text-align: center;">Guardar cambios</p>
 					</div>
 				</div>
 			</div>

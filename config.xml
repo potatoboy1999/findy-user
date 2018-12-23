@@ -25,6 +25,7 @@
         <variable name="OKHTTP_VERSION" value="3.10.0" />
         <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
     </plugin>
-    <preference name="orienation" value="portrait" />
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="true" />
     <preference name="phonegap-version" value="cli-8.1.1" />
 </widget>
