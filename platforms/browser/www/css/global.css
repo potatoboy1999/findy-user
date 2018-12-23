@@ -21,9 +21,11 @@
 /*--------- GLOBAL ------------*/
 html, body {height: 100%}
 body{margin: 0px; font-family: GothamRnd-Medium;}
+
 @media only screen and (max-height: 500px){
-  .contentWrapper{height: 550px!important;}
+  .containerWrapper{height: 550px!important;}
 }
+
 label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
 input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
 *:focus {outline: none;}
