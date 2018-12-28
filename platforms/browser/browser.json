@@ -1,68 +1,68 @@
 {
-  "prepare_queue": {
-    "installed": [],
-    "uninstalled": []
-  },
-  "config_munge": {
-    "files": {
-      "config.xml": {
-        "parents": {
-          "/*": []
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": []
+                }
+            }
         }
-      }
+    },
+    "installed_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "cordova-plugin-facebook": {
+            "FACEBOOK_APP_ID": "291949018192665",
+            "FACEBOOK_DISPLAY_NAME": "FindyApp",
+            "PACKAGE_NAME": "com.findy.findyApp"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+            "id": "cordova-plugin-dialogs.notification",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-dialogs/www/browser/notification.js",
+            "id": "cordova-plugin-dialogs.notification_browser",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-facebook/www/CordovaFacebook.js",
+            "id": "cordova-plugin-facebook.CordovaFacebook",
+            "pluginId": "cordova-plugin-facebook",
+            "clobbers": [
+                "CordovaFacebook"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "cordova-plugin-compat": "1.2.0",
+        "cordova-plugin-geolocation": "4.0.1",
+        "cordova-plugin-whitelist": "1.3.3",
+        "cordova-plugin-dialogs": "2.0.1",
+        "cordova-plugin-facebook": "0.2.2"
     }
-  },
-  "installed_plugins": {
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
-    },
-    "cordova-plugin-facebook": {
-      "FACEBOOK_APP_ID": "291949018192665",
-      "FACEBOOK_DISPLAY_NAME": "FindyApp",
-      "PACKAGE_NAME": "com.findy.findyApp"
-    }
-  },
-  "dependent_plugins": {},
-  "modules": [
-    {
-      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-      "id": "cordova-plugin-dialogs.notification",
-      "pluginId": "cordova-plugin-dialogs",
-      "merges": [
-        "navigator.notification"
-      ]
-    },
-    {
-      "file": "plugins/cordova-plugin-dialogs/www/browser/notification.js",
-      "id": "cordova-plugin-dialogs.notification_browser",
-      "pluginId": "cordova-plugin-dialogs",
-      "merges": [
-        "navigator.notification"
-      ]
-    },
-    {
-      "file": "plugins/cordova-plugin-facebook/www/CordovaFacebook.js",
-      "id": "cordova-plugin-facebook.CordovaFacebook",
-      "pluginId": "cordova-plugin-facebook",
-      "clobbers": [
-        "CordovaFacebook"
-      ]
-    }
-  ],
-  "plugin_metadata": {
-    "cordova-plugin-compat": "1.2.0",
-    "cordova-plugin-geolocation": "4.0.1",
-    "cordova-plugin-whitelist": "1.3.3",
-    "cordova-plugin-dialogs": "2.0.1",
-    "cordova-plugin-facebook": "0.2.2"
-  }
 }

@@ -596,7 +596,7 @@ function closeSession(){
 }
 function getDataFB(e){
   //console.log('start FB');
-  alert('start FB');
+  //alert('start FB');
 
   e.preventDefault();
 

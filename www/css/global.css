@@ -40,8 +40,7 @@ input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; bo
 .bttn-menu-primary:hover{background-color: #006d70}
 .bttn-menu-secondary:hover{background-color: #c4fdff; color: #006d70}
 
-#btn_fb:hover{background-color: #203056};
-
+#btn_fb:hover{background-color: #203056 !important;}
 
 .headerMenuImg{background-position: center; background-repeat: no-repeat; min-height: 150px; width: 100%;}
 @media only screen and (max-width: 320px){
