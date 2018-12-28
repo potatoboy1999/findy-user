@@ -5,4 +5,5 @@
     <string name="activity_name">@string/launcher_name</string>
     <string name="fb_app_id">291949018192665</string>
     <string name="fb_app_name">FindyApp</string>
+    <string name="facebook_app_id">291949018192665</string>
 </resources>

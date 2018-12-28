@@ -15,17 +15,17 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <engine name="browser" spec="^5.0.4" />
-    <engine name="android" spec="~7.1.4" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1" />
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
-    <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.2.2">
-        <variable name="OKHTTP_VERSION" value="3.10.0" />
-        <variable name="LOCATION_USAGE_DESCRIPTION" value="This app requires access to your location for navigation purposes" />
-    </plugin>
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="true" />
     <preference name="phonegap-version" value="cli-8.1.1" />
+    <plugin name="cordova-plugin-facebook" spec="0.2.2">
+        <variable name="FACEBOOK_DISPLAY_NAME" value="FindyApp" />
+        <variable name="FACEBOOK_APP_ID" value="291949018192665" />
+    </plugin>
+    <engine name="browser" spec="^5.0.4" />
+    <engine name="android" spec="^7.1.4" />
 </widget>

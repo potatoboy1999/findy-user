@@ -16,14 +16,11 @@
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.findy.findyApp"
     },
-    "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-      "OKHTTP_VERSION": "1.2.3",
+    "cordova-plugin-facebook": {
+      "FACEBOOK_APP_ID": "291949018192665",
+      "FACEBOOK_DISPLAY_NAME": "FindyApp",
       "PACKAGE_NAME": "com.findy.findyApp"
     }
   },
-  "dependent_plugins": {
-    "cordova-plugin-actionsheet": {
-      "PACKAGE_NAME": "com.findy.findyApp"
-    }
-  }
+  "dependent_plugins": {}
 }

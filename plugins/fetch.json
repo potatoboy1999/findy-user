@@ -31,16 +31,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "uk.co.workingedge.phonegap.plugin.launchnavigator": {
-    "source": {
-      "type": "registry",
-      "id": "uk.co.workingedge.phonegap.plugin.launchnavigator@^4.2.2"
-    },
-    "is_top_level": true,
-    "variables": {
-      "OKHTTP_VERSION": "1.2.3"
-    }
-  },
   "cordova-plugin-actionsheet": {
     "source": {
       "type": "registry",
@@ -48,5 +38,16 @@
     },
     "is_top_level": false,
     "variables": {}
+  },
+  "cordova-plugin-facebook": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-facebook"
+    },
+    "is_top_level": true,
+    "variables": {
+      "FACEBOOK_DISPLAY_NAME": "FindyApp",
+      "FACEBOOK_APP_ID": "291949018192665"
+    }
   }
 }

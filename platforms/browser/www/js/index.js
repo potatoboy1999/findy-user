@@ -594,6 +594,22 @@ function getDataFB(e){
   //alert('start FB');
   e.preventDefault();
   //facebookConnectPlugin.login(["public_profile","email"],fbSuccess,fbError);
+  window.CordovaFacebook.login({
+    permissions: ['email', 'user_likes'],
+    onSuccess: function(result) {
+      if(result.declined.length > 0) {
+         alert("The User declined something!");
+      }
+      /* ... */
+    },
+    onFailure: function(result) {
+      if(result.cancelled) {
+         alert("The user doesn't like my app");
+      } else if(result.error) {
+         alert("There was an error:" + result.errorLocalized);
+      }
+    }
+  });
 }
 /*
 function fbSuccess(result){

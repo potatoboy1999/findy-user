@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\xampp\\htdocs\\PhoneGap\\Findy-user\\platforms\\android\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-cs\\values-cs.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\aleja\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.3.0.aar\\82adf96b84a56fd19331363a38fcb101\\res\\values-cs\\values-cs.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,22",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "161,277,405,500,576,653,712,784,859,956,1031,1106,1194,1297,1363,1429,1677",
+                        "endColumns": "115,127,94,75,76,58,71,74,96,74,74,87,102,65,65,124,62",
+                        "endOffsets": "272,400,495,571,648,707,779,854,951,1026,1101,1189,1292,1358,1424,1549,1735"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,171,299,394,470,547,606,678,753,850,925,1000,1088,1191,1257,1323,1448",
+                        "endColumns": "115,127,94,75,76,58,71,74,96,74,74,87,102,65,65,124,62",
+                        "endOffsets": "166,294,389,465,542,601,673,748,845,920,995,1083,1186,1252,1318,1443,1506"
+                    }
+                }
+            ]
+        }
+    ]
+}

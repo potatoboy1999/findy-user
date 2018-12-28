@@ -15,6 +15,8 @@ var sideMenu = false;
 var currPage = "";
 var currCtg = null;
 
+var fcLogin = false;
+
 window.onload= function () {
     $.mobile.loading("show", {
       text: "Inicializando...",
@@ -588,40 +590,92 @@ function closeSession(){
   storage.removeItem('PosLat');
   storage.removeItem('PosLng');
   window.location.href = "#logIn";
+  if (fcLogin) {
+    window.CordovaFacebook.logout();
+  }
 }
 function getDataFB(e){
   //console.log('start FB');
-  //alert('start FB');
+  alert('start FB');
+
   e.preventDefault();
-  //facebookConnectPlugin.login(["public_profile","email"],fbSuccess,fbError);
-}
-/*
-function fbSuccess(result){
-  //success
-  console.log('Exito fb');
-  console.log(JSON.stringify(result));
-  //calling api
-  facebookConnectPlugin.api("/me?fields=email,name,picture",["public_profile","email"],fbApiSuccess,fbApiError);
-}
-function fbError(error){
-  console.log('Error fb');
-  alert('Error FB');
-  console.log(JSON.stringify(error));
-  //alert(JSON.stringify(error));
-}
-function fbApiSuccess(userData){
-  console.log('Exito API');
-  console.log(JSON.stringify(userData));
-  //alert('EXITO API');
+
+  window.CordovaFacebook.login({
+    permissions: ['email', 'public_profile'],
+    onSuccess: function(result) {
+      if(result.declined.length > 0) {
+         navigator.notification.alert("Inicio con facebook cancelado");
+      }else{
+        //console.log('FB success');
+        window.CordovaFacebook.graphRequest({
+            path: '/me',
+            params: { fields: 'email,id,first_name,last_name,gender,link,name' },
+            onSuccess: function (userData) {
+                uData = JSON.stringify(userData,null,4);
+                //console.log(userData);
+                facebookCallback(userData);
+            },
+            onFailure: function (result) {
+                if (result.error) {
+                    navigator.notification.alert('error!');
+                    //console.log('error', 'There was an error in graph request:' + result.errorLocalized);
+                }
+            }
+          });
+      }
+    },
+    onFailure: function(result) {
+      if(result.cancelled) {
+        navigator.notification.alert("Inicio con facebook cancelado");
+        //navigator.notification.alert("The user doesn't like my app");
+      } else if(result.error) {
+        navigator.notification.alert("Ups, ocurrió un error con facebook");
+        //navigator.notification.alert("There was an error:" + result.errorLocalized);
+      }
+    }
+  });
 }
 
-function fbApiError(error){
-  console.log('Error API');
-  alert('Error API');
-  console.log(JSON.stringify(error));
-  //alert(JSON.stringify(error));
+function facebookCallback(fbData){
+  var name = fbData.name;
+  var email = fbData.email;
+  var fbId = fbData.id;
+  $.ajax({
+        url:base_api_url+'customer/callbackFB',
+        type:'post',
+        dataType:'json',
+        data:{
+          'email': email,
+          'name':name,
+          'fbId':fbId
+        },
+        success:function(response){
+          actionTaken = response.function;
+          if (actionTaken == 'logIn' || actionTaken == 'register') {
+            user = response['idUser'];
+            storage.setItem('userId', response['idUser']);
+            storage.setItem('userName',response['user_name']);
+            storage.setItem('email',response['email']);
+            $('.user_name').html(response['user_name']);
+            $('input[name="user_name"]').val(response['user_name']);
+            $('input[name="email"]').val(response['email']);
+            loadMapPage();
+            loadVisitsFromUser();
+            fcLogin = true;
+            window.location.href = "#mapPage";
+          }else{
+            fcLogin = false;
+            navigator.notification.alert('Error FB!');  
+          }
+        },
+        error: function(error) {
+          $.mobile.loading("hide");
+          navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
+          //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+        }
+      });
+}
 
-}*/
 /*------- EDIT DATA ----------*/
 function editProfile(){
   $.mobile.loading( "show", {
@@ -892,14 +946,6 @@ function navigate(){
   linkGoogleNav = "http://maps.google.com/maps?daddr="+lat+","+lng+"&amp;ll=";
   //linkWazeNav = 'https://www.waze.com/ul?ll='+lat+'%2C'+lng+'&navigate=yes&zoom=17';
   window.open(linkGoogleNav,'_system');
-  /*
-  launchnavigator.navigate([lat,lng],{
-        enableDebug: true,
-        successCallback: onSuccessNav,
-        errorCallback: onErrorNav
-      });
-  //navigator.notification.alert(linkNav);
-  */
 }
 
 function navigateFromHistory(){

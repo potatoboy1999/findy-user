@@ -1,0 +1,51 @@
+{
+  "_from": "cordova-plugin-facebook",
+  "_id": "cordova-plugin-facebook@0.2.2",
+  "_inBundle": false,
+  "_integrity": "sha1-qbtX2MO4pAF6aiiLgjsC348T9BQ=",
+  "_location": "/cordova-plugin-facebook",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-facebook",
+    "name": "cordova-plugin-facebook",
+    "escapedName": "cordova-plugin-facebook",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-facebook/-/cordova-plugin-facebook-0.2.2.tgz",
+  "_shasum": "a9bb57d8c3b8a4017a6a288b823b02df8f13f414",
+  "_spec": "cordova-plugin-facebook",
+  "_where": "c:\\xampp\\htdocs\\PhoneGap\\Findy-user",
+  "author": {
+    "name": "Blake Israel"
+  },
+  "bugs": {
+    "url": "https://github.com/bisrael/cordova-plugin-facebook/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A Facebook plugin for Cordova 5.0.0+",
+  "homepage": "https://github.com/bisrael/cordova-plugin-facebook#readme",
+  "keywords": [
+    "cordova",
+    "facebook"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "cordova-plugin-facebook",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bisrael/cordova-plugin-facebook.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.2.2"
+}
