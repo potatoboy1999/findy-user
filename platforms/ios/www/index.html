@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+		<meta http-equiv="Content-Security-Policy" content="default-src *; style-src *  'unsafe-inline'; script-src *  'unsafe-inline'; media-src *">
+		<title>Findy</title>
+
+		
+		<script type="text/javascript" src="cordova.js"></script>
+
+		<script src="js/mathDistance/latlon-spherical.js"></script>
+    	<script src="js/mathDistance/dms.js"></script>
+		<script src="js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript">
+			//PREVENT SPECIAL STYLING
+			$(document).on('pageinit', function () {
+			    //alert('Wild alert appeared');
+			    $.mobile.ignoreContentEnabled = true;
+			});
+			$(document).on('mobileinit', function () {
+			    //alert('Wild alert appeared');
+			    $.mobile.ignoreContentEnabled = true;
+			});
+		</script>
+		<script src="jquery_mobile/jquery.mobile-1.4.5.min.js"></script>
+
+		<script src="js/geolocation/map.js"></script>
+		<script src="js/index.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ruGnwOw-V0cDLoT_Es1CU3jY3tDuB7s" defer></script>
+
+		<link rel="stylesheet" href="jquery_mobile/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap/style.css">
+		<link rel="stylesheet" type="text/css" href="css/global.css">
+	</head>
+	<body>
+		<div data-role="page" id="menu" style="height: 100%;">
+   		<div data-role="main" style="height: 100%; background-image:url('img/dummy/Bg_onboarding1.png');background-size: cover; background-repeat: no-repeat; position: relative;">
+   			<div class="headerMenuImg" style="background-image: url('img/logo/logo_findy.png'); position: absolute;top:20%;">
+   			</div>
+   			<div style="width: 100%;position: absolute;z-index: 99;bottom: 0px; text-align: center;">
+   				<div class="btn_link_register" style="width: 50%;float: left; color: #00A9AD; background-color: white; cursor: pointer; text-shadow: none">
+	   				<p>Registrarme</p>
+	   			</div>
+	   			<div class="btn_link_logIn" style="width: 50%;float: left; background-color: #00A9AD; cursor: pointer;text-shadow: none; color: white;">
+	   				<p>Ingresar</p>
+	   			</div>
+	   			<div style="clear: both;"></div>
+   			</div>
+   		</div><!--main-->
+   	</div>
+		<div data-role="page" id="logIn" data-enhance="false" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div style="height: 50px"></div>
+   			<div class="headerLogoImg" style="background-image: url('img/logo/logo_findy.png');">
+				</div>
+				<form class="content" autocomplete="off" id="logInForm">
+					<div class="top">
+						<div class="form-group">
+	               	<label>E-Mail</label>    
+	               	<input class="form-control" type="email" name="email" placeholder="micorreo@gmail.com">
+	             	</div>
+	            	<div class="form-group">
+	               	<label>Contraseña</label>    
+	               	<input class="form-control" type="password" name="password" placeholder="contraseña">
+	             	</div>
+	             	<div style="min-height: 20px;"></div>
+					</div>
+					<div class="bottom">
+             		<button id="btnLogIn" class="bttn bttn-menu-primary">Ingresar</button>
+            		<button id="btn_fb" class="bttn bttn-menu-primary" style="background-color: #375291; color: white;">Ingresar con FB</button>
+						<div>
+				      	<p>¿No te has registrado? <a href="#registerPage">Registrate Aquí</a></p>
+				      </div>
+					</div>
+				</form>
+			</div>
+   	</div>
+   	<div data-role="page" id="registerPage" data-enhance="false" style="height: 100%;">
+   		<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+   			<div style="height: 50px"></div>
+   			<div class="headerLogoImg" style="background-image: url('img/logo/logo_findy.png');">
+				</div>
+				<form class="content" autocomplete="off" id="registerForm">
+					<div class="top">
+						<div class="form-group">
+                  	<label>E-Mail*</label>    
+                  	<input class="form-control" type="email" name="email" maxlength="100" placeholder="micorreo@gmail.com" required>
+                	</div>
+                	<div class="form-group">
+                  	<label>Usuario*</label>    
+                  	<input class="form-control" type="text" name="user_name" maxlength="40" placeholder="usuario" required>
+                	</div>
+                	<div class="form-group">
+                  	<label>Contraseña*</label>    
+                  	<input class="form-control" type="password" name="password" maxlength="40" placeholder="contraseña" required>
+                	</div>
+                	<div class="form-group">
+                  	<label>Confirmar Contraseña*</label>    
+                  	<input class="form-control" type="password" name="password_confirm" maxlength="40" placeholder="confirmar contraseña" required>
+                	</div>
+                	<div style="min-height: 20px;"></div>
+					</div>
+					<div class="bottom">
+             		<button id="btnRegister" class="bttn bttn-menu-primary">Registrarme</button>
+						<div>
+				      	<p>¿Ya tienes una cuenta? <a href="#logIn">Ingresa aquí</a></p>
+				      </div>
+					</div>
+				</form>
+   		</div>
+   	</div>
+		<div data-role="page" id="mapPage" style="height: 100%;">
+			<div id="mapContainer" style="height: 100%; position: relative;">
+				<div id="btn_sideMenu">
+					<span style="border:1px solid #c4c4c4; color: #00A9AD; padding: 10px 16px; border-radius: 5px; background-color: white;">=</span>
+				</div>
+				<div id="mapMenu" style="font-family: 'GothamRnd-Light'; display: none; color: white; text-shadow: none;">
+					<span class='right-exit exit-menu'>X</span>
+					<div class="user">
+						<div style="float: left; width: 70px ">
+							<img width="60" height="60" src="img/icons/avatar_pic.png">
+						</div>
+						<div style="float: left; width: calc(100% - 70px); ">
+							<p><strong>Bienvenido,</strong></p>
+							<p class="user_name">Aldo Ponce De Leon</p>
+						</div>
+						<div style="clear: both"></div>
+					</div>
+					<div class="menu_options">
+						<div id="btn_profile" class="option">
+							<div style="float: left; width: 50px;">
+								<img width="20" height="20" src="img/menu_icons/perfil.png">
+							</div>
+							<div style="float: left; width: calc(100% - 50px);">
+								<p>Perfil</p>
+							</div>
+							<div class="fix-clear"></div>
+						</div>
+						<div id="btn_help" class="option">
+							<div style="float: left; width: 50px;">
+								<img width="20" height="20" src="img/menu_icons/consultas.png">
+							</div>
+							<div style="float: left; width: calc(100% - 50px);">
+								<p>Consultas</p>
+							</div>
+							<div class="fix-clear"></div>
+						</div>
+						<!--
+						<div id="btn_settings" class="option">
+							<div style="float: left; width: 50px;">
+								<img width="20" height="20" src="img/menu_icons/configuracion.png">
+							</div>
+							<div style="float: left; width: calc(100% - 50px);">
+								<p>Configuración</p>
+							</div>
+							<div class="fix-clear"></div>
+						</div>-->
+					</div>
+					<div class="menu_logOff">
+						<div id="btn_close_session" class="option">
+							<div style="float: left; width: 50px;">
+								<img width="20" height="20" src="img/menu_icons/salir.png">
+							</div>
+							<div style="float: left; width: calc(100% - 50px);">
+								<p>Salir</p>
+							</div>
+							<div class="fix-clear"></div>
+						</div>
+					</div>
+				</div>
+				<div class="topDiv iCommerce info " style="display: none;">
+					<div class="tipoLogo" style="width: 20%; float: left;">
+						<img class="commCategoryImg" width="50" height="60" src="img/categories/default.png">
+					</div>
+					<div class="infoDetail" style="width: 80%; float: left;">
+						<h3 class="commName">'Commercio'</h3>
+						<p class="commDireccion">'Direccion'</p>
+						<p class="commSchedule">'Horario'</p>
+					</div>
+					<div style="clear: both"></div>
+					<div style="text-align: center">
+						<div style="width: calc(50% - 10px); float: left; padding: 5px">
+							<div class="btn_nav">
+								<p><a class="linkNavigation" href="#" lat="" lng="" style="color: white; text-decoration: none;; text-shadow: none;">¿Cómo Llegar?</a></p>
+							</div>
+						</div>
+						<div style="width: calc(50% - 10px); float: left; padding: 5px">
+							<div class="btnMoreInfo" commId="" style="border: 1px solid #00A9AD; color: #00A9AD; border-radius: 10px;">
+								<p>Ver Más</p>
+							</div>
+						</div>
+						<div class="fix-clear"></div>
+					</div>
+				</div>
+				<div class="topDiv iCommerce moreInfo" style="display: none; height: calc(100% - 80px)">
+					<div>
+						<span class='right-exit exit-info'>X</span>
+						<div style="clear: both;"></div>
+					</div>
+					<div style="height: 130px;">
+						<div style="width: 100%; text-align: center; padding: 10px 0px;">
+							<img class="commCategoryImg" width="60" height="60" src="https://admin.findy.pe/img/categoria/bodegas.png">
+							<p class="comm_name">NOMBRE</p>
+						</div>
+					</div>
+					<div style="height: calc(100% - 250px); overflow-y: scroll;">
+						<div>
+							<p><strong>Descripción</strong></p>
+							<p class="comm_descr">---- ----- ----- ----- ----- ----- ----- ---- ----- ----- ----- ---- ----- ---- ----- ----- --- ---- --- --- ---- ---- -- --</p>
+						</div>
+						<div>
+							<p><strong>Horario de Atención</strong></p>
+							<p class="comm_hours"><span class="comm_start">00:00am</span> - <span class="comm_end">00:00pm</span></p>
+							<p class="comm_days">Lunes - Domingo</p>
+						</div>
+						<div>
+							<p><strong>Dirección</strong></p>
+							<p class="comm_address">Av Colonial 21928, Cercado de Lima 15081</p>
+						</div>
+					</div>
+					<div style=" height: 110px;">
+						<div style="padding: 5px; text-align: center;">
+							<div class="btn_nav" style="width: 100%;">
+								<p><a class="linkNavigation" href="#" lat="" lng="" idComm="" style="color: white; text-decoration: none; text-shadow: none;"><strong>¿Cómo Llegar?</strong></a></p>
+							</div>
+							<div class="btnLessInfo" commId="" style="width: 100%; text-align: center; color: #00A9AD;">
+								<p>Ver Menos</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="verCategoriasBtn" class="topDiv">
+					<p style="font-size: 15px; margin-top:15px; margin-bottom: 15px; color: #00A9AD">Ver todas las categorias</p>
+				</div>
+				<div id="btn_position" class="topDiv" style="z-index: 98; background-image: url('img/icons/gpsMarker.png');background-position: center; background-repeat: no-repeat;background-size:20px;">
+					<p style="text-align: center; margin: 0;padding-top: 8px;color: #00A9AD;"></p>
+				</div>
+				<div id="map" style="width: 100%; height: 100%; text-shadow: none;"></div>
+			</div>
+		</div>
+		<div data-role="page" id="ctgPage" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="ctgHeader" style="text-align: center;">
+					<div class='left-back' pageTo="mapPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Categorias Disponibles</h3>
+					<div class="fix-clear"></div>
+				</div>
+				<div id="categories" style="margin: 0px -10px">
+					<div class='findy-category' ctg-id='' style='float: left;'>
+						<div class='ctg-absolute'>
+							<img width='50' height='50' src='https://admin.findy.pe/img/categoria/default.png'>
+							<p class='ctg-name'>?</p>
+						</div>
+					</div>
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="subCtgPage" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="ctgHeader" style="text-align: center;">
+					<div class='left-back' pageTo="ctgPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 id="nameCtgHeader" class="pageTitle">Categorias <span class="nameCtg">??</span></h3>
+				</div>
+				<div id="categoryPresent" style="margin: 0px -10px;position: relative; background-color: #00A9AD; height: 30%; text-align: center">
+					<div style="position: absolute; width: 100px; top: 15%; left: calc(50% - 50px);">
+						<img id="ctgHeaderImg" height="70" width="70" src="img\categories\restaurantes.png">
+						<p class="nameCtg" style="color:white;text-shadow: none;">Restaurantes</p>
+					</div>
+				</div>
+				<div id="subCtgList">
+					<div class='subCtg' subCtg='' style='border-bottom: 1px solid #c4c4c4;'>
+						<div class='right-arrow' style='background-color: transparent'><img width="20" height="20" src="img/icons/continue.png"></div>
+						<p>Casual Dining</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="profilePage" data-enhance="false" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="mapPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Mi Perfil</h3>
+				</div>
+				<div id="user_presentation" style="height: calc(48% - 80px); overflow-y: auto;">
+					<div style="text-align: center">
+						<img width="120" height="120" src="img/icons/profile.png">
+						<p class="user_name">User Name</p>
+					</div>
+					<!--<div class="btn_profile save-photo" style="width: 50%; margin: auto;">
+						<p>Cambiar Foto</p>
+					</div>-->
+				</div>
+				<div class="extra_info_menu" style=" height: 30px;margin:0 -10px;border-bottom: 2px solid #c4c4c4; overflow-x: scroll;overflow-y: hidden;">
+					<span id="btn_user_data" style="margin:0; padding: 5px 10px; font-size: 14px;" class="info_active">Datos Personales</span>
+					<span id="btn_user_history" style="margin:0; padding: 5px 10px; font-size: 14px;">Lugares Visitados</span>
+				</div>
+				<div id="user_extra_info" style="height: calc(52% - 51px); margin:0 -10px;overflow-y: auto; padding: 10px 15px; display: block;">
+					<div class="user_info">
+						<label>Nombre</label>
+						<input id="profile_name" type="text" name="user_name" value="Aldo Ponce de Leon">
+					</div>
+					<div class="user_info">
+						<label>Correo</label>
+						<input id="profile_email" type="email" name="email" value="aldo.ponce@gmail.com">
+					</div>
+					<div class="user_info" style="position: relative;">
+						<label>Contraseña</label>
+						<input id="profile_password" type="password" name="password" placeholder="******" disabled>
+						<div style="position: absolute; right: 10px; bottom: 18px;">
+							<span id="btnChangePassword" style="color: #00A9AD; z-index: 99; padding: 8px">Cambiar</span>
+						</div>
+					</div>
+					<div class="btn_profile save-profile" style="width: 50%; margin: auto; text-shadow: none;">
+						<p>Guardar</p>
+					</div>
+				</div>
+				<div id="user_travel_history" style="height: calc(52% - 51px); margin:0 -10px;overflow-y: auto; padding: 10px 15px; display: none;">
+					<div class='travel'>
+						<div class='go-arrow transparent' commId='' lat='' lng='' >
+							<span>Volver A Ir</span>
+							<img width='20' height='20' src='img/icons/continue.png'>
+						</div>
+						<div class='status'>
+							<span class='b_status open'>Abierto</span>
+						</div>
+						<div class='travel_info'>
+							<div>
+								<div class='left'>
+									<img height='30' width='30' src='img/categories/restaurantes.png'>
+								</div>
+								<div class='right'>
+									<p>MEZZANINE JUGOS NIÑOS</p>	
+								</div>
+								<div class='fix-clear'></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="passwordPage" data-enhance="false" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 15px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="profilePage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Configurar contraseña</h3>
+				</div>
+				<div id="formPassword" style="height: calc(100% - 160px)">
+					<div class="user_info">
+						<label>Anterior contraseña</label>
+						<input type="password" name="old_pass" placeholder="*****">
+					</div>
+					<div class="user_info">
+						<label>Nueva contraseña</label>
+						<input id="new_pass" type="password" name="new_pass" placeholder="*****">
+					</div>
+					<div class="user_info">
+						<label>Repetir nueva contraseña</label>
+						<input id="new_pass_conf" type="password" name="new_pass_conf" placeholder="*****">
+					</div>
+				</div>
+				<div style="height: 80px;">
+					<div id="btn_send_pass" class="bttn bttn-menu-primary" style="width: calc(100% - 20px); border-radius: 10px; margin:0">
+						<p style="margin:0; padding: 5px 0; text-align: center;">Guardar cambios</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="helpPage" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="mapPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Ayuda</h3>
+				</div>
+				<div style="height: calc(35% - 100px); margin: 0px -10px; background-color: #00A9AD; text-align: center; padding: 20px 0 0 0; color: white; text-shadow: none;">
+					<img width="50" height="50" src="img/icons/preguntas_frecuentes.png">
+					<p style="margin:0; text-align: center;">Ayuda</p>
+				</div>
+				<div id="questionList" style="height: 65%; overflow-y: auto;">
+					<div class='question' for='privacidad' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>Políticas de privacidad</p>
+					</div>
+					<div id="privacidad" class="answer privacidad" style="display: none; text-align: justify;">
+						---
+					</div>
+					<div class='question' for='condiciones' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>Condiciones de Uso</p>
+					</div>
+					<div id="condiciones" class="answer condiciones" style="display: none; text-align: justify;">
+						---
+					</div>
+					<div id="btn_questions" class='question' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
+						<p>Preguntas frecuentes</p>
+					</div>
+					<div id="btn_about" class='question' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
+						<p>Sobre FindyApp</p>
+					</div>
+					<div id="btn_comment" class='question' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
+						<p>Contactar a FindyApp</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="settingsPage" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<h3 class="pageTitle">Configuraciones</h3>
+				</div>
+				<div style="height: calc(35% - 100px); margin: 0px -10px; background-color: #00A9AD; text-align: center; padding: 20px 0 0 0; color: white; text-shadow: none;">
+					<img width="50" height="50" src="img/icons/configurar_app.png">
+					<p style="margin:0; text-align: center;">Configura tu app</p>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="aboutPage" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="helpPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Sobre FindyApp</h3>
+				</div>
+				<div style="height: calc(40% - 80px); margin: 0px -10px; background-color: #00A9AD; text-align: center; padding: 20px 0 0 0">
+					<img width="110" height="110" src="img/icons/sobre_findy.png">
+				</div>
+				<div id="questionList">
+					<div class='question' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
+						<p>Danos Me Gusta en Facebook</p>
+					</div>
+					<div class='question' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
+						<p><a href="https://play.google.com/store/apps/details?id=com.findy.findyApp">Compartir FindyApp</a></p>
+					</div>
+					<div class='question' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow'><img width="20" height="20" src="img/icons/continue.png"></div>
+						<p>Síguenos en Twitter</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="questionsPage" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="helpPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Preguntas Frecuentes</h3>
+				</div>
+				<div style="height: calc(35% - 100px); margin: 0px -10px; background-color: #00A9AD; text-align: center; padding: 20px 0 0 0; color: white; text-shadow: none;">
+					<img width="50" height="50" src="img/icons/preguntas_frecuentes.png">
+					<p style="margin:0; text-align: center;">Preguntas Frecuentes</p>
+				</div>
+				<div id="questionList" style="height: 65%; overflow-y: auto;">
+					<div class='question' for='q1' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>¿Puedo desafiliar mi cuenta como local comercial?</p>
+					</div>
+					<div class="answer q1" style="display: none;">
+						Claro, sólo tienes que enviar un correo al buzón <span style="color: #00A9AD;">admin@findy.pe</span>
+					</div>
+					<div class='question' for='q2' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>¿Cómo saber si es un local real y seguro?</p>
+					</div>
+					<div class="answer q2" style="display: none;">
+						Antes de activar los comercios en la plataforma, nuestro equipo los visita para validar la categoría de comercio y verificar su ubicación real. En caso se observe que es un local inseguro, no se les permite ingresar a la plataforma.
+					</div>
+					<div class='question' for='q3' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>¿Cómo sé que vende cada local?</p>
+					</div>
+					<div class="answer q3" style="display: none;">
+						Al dar click sobre cada comercio podrás ver una pequeña descripción sobre los productos que vende.
+					</div>
+					<div class='question' for='q4' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>¿Cómo se si mi comercio ya está activo?</p>
+					</div>
+					<div class="answer q4" style="display: none;">
+						Una vez registrado, un miembro de nuestro equipo se contactará contigo para visitar el local y poder activarlo. Te llegará un correo de confirmación de activación.
+					</div>
+					<div class='question' for='q5' style='border-bottom: 1px solid black;'>
+						<div class='right-arrow' st="down"><img width="20" height="20" src="img/icons/drop_down.png"></div>
+						<p>¿Cómo funciona la plataforma?</p>
+					</div>
+					<div class="answer q5" style="display: none;">
+						Si deseas ubicar comercios abiertos en tiempo real debes tener una cuenta activa con correo válido y contraseña y activar tu GPS.
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="commentsPage" data-enhance="false" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 15px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<div class='left-back' pageTo="helpPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<h3 class="pageTitle">Contáctate con FindyApp</h3>
+				</div>
+				<div class="comments" style="height: 100px; color: #444444">
+					<h3 style="margin-top: 0">Tus comentarios podrán hacer mejor a FindyApp</h3>
+					<p style="font-size: 12px;">Cuentanos que te gusta de la aplicación o qué podriamos hacer para mejorar</p>
+				</div>
+				<div id="formComment" style="height: calc(100% - 225px)">
+					<div class="user_info">
+						<label>Nombre</label>
+						<input id="comment_name" type="text" name="user_name" placeholder="Aldo Ponce de Leon">
+					</div>
+					<div class="user_info">
+						<label>Correo</label>
+						<input id="comment_email" type="text" name="email" placeholder="email@email.com">
+					</div>
+					<div class="user_info">
+						<label>Escribe tus comentarios</label>
+						<input id="comment_text" type="text" placeholder="Escribe aquí tus comentarios..." name="user_comment">
+					</div>
+				</div>
+				<div style="height: 45px;">
+					<div class="btn_send_comment" style="width: calc(100% - 20px); border-radius: 10px;">
+						<p style="margin:0; padding: 10px 0;">Enviar</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div data-role="page" id="commentThanksPage" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div id="profileHeader" style="height: 80px; text-align: center;">
+					<h3 style="margin: 0; padding: 15px 0px;">Contáctate con FindyApp</h3>
+				</div>
+				<div class="thanksDiv" style="">
+					<img height="100" width="120" src="img/icons/thanks_mail.png">
+					<p style="font-family: 'GothamRnd-Bold';font-size: 18px;">Muchas gracias por tus comentarios</p>
+					<p style="font-size: 14px;">Te prometemos que lo vamos a tener en cuenta</p>
+				</div>
+				<div class="btn_viewMap" style="width: calc(100% - 20px); border-radius: 10px;">
+					<p style="margin:0; padding: 10px 0;">Volver al mapa</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

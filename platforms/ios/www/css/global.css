@@ -1,0 +1,189 @@
+
+@font-face{
+  font-family:'GothamRnd-Medium';
+  src:url('../fonts/GothamRnd-Medium.otf') format('opentype');
+}
+@font-face{
+  font-family:'GothamRnd-Bold';
+  src:url('../fonts/GothamRnd-Bold.otf') format('opentype');
+}
+@font-face{
+  font-family:'GothamRnd-MedItal';
+  src:url('../fonts/GothamRnd-MedItal.otf') format('opentype');
+}
+@font-face{
+  font-family:'GothamRnd-Light';
+  src:url('../fonts/GothamRnd-Light.otf') format('opentype');
+}
+
+/*COLOR FINDY: #00A9AD / COLOR FINDY LIGHT:#42C0C3*/ 
+
+/*--------- GLOBAL ------------*/
+html, body {height: 100%}
+body{margin: 0px; font-family: GothamRnd-Medium;}
+
+@media only screen and (max-height: 500px){
+  .containerWrapper{height: 550px!important;}
+}
+
+label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
+input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
+*:focus {outline: none;}
+
+.fix-clear{clear: both;}
+
+.bttn{font-family:'GothamRnd-Medium'; width: 100%; padding: 12px; margin: 10px 0; border: none;border-radius: 8px; text-shadow: none;}
+
+.bttn-menu-primary{background-color: #00A9AD; color: white;}
+.bttn-menu-secondary{background-color: white; color: #00A9AD; border:1px solid #00A9AD;}
+
+.bttn-menu-primary:hover{background-color: #006d70}
+.bttn-menu-secondary:hover{background-color: #c4fdff; color: #006d70}
+
+#btn_fb:hover{background-color: #203056 !important;}
+
+.headerMenuImg{background-position: center; background-repeat: no-repeat; min-height: 150px; width: 100%;}
+@media only screen and (max-width: 320px){
+	.headerMenuImg{background-size: 250px 100px}
+}
+@media only screen and (min-width: 321px){
+	.headerMenuImg{background-size: auto;}
+}
+.pageTitle{margin: 0;color: #666666; font-size: 15px; padding: 20px 0px 15px 0;}
+
+/*-------- #LOG IN ---------------*/
+#logIn .headerLogoImg{background-position: center; background-repeat: no-repeat; height: 130px; width: 100%;}
+#logIn .content{height: calc(100% - 180px);}
+#logIn .content p{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3;text-align: center}
+#logIn .content a{font-family: 'GothamRnd-Medium'; font-size: 13px; text-decoration: none; color: #00A9AD}
+#logIn .form-group{padding: 10px 15px;}
+
+/*
+#logIn label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
+#logIn input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
+#logIn *:focus {outline: none;}*/
+#logIn .content .top{height: calc(100% - 190px);overflow-y: scroll;}
+#logIn .content .bottom{height: 190px;}
+
+@media only screen and (max-width: 320px){
+  #logIn .headerLogoImg{background-size: 180px 80px}
+}
+@media only screen and (min-width: 321px){
+  #logIn .headerLogoImg{background-size: 220px 90px}
+}
+
+/*-------- #REGISTER---------------*/
+#registerPage .headerLogoImg{background-position: center; background-repeat: no-repeat; height: 130px; width: 100%;}
+#registerPage .content{height: calc(100% - 180px);}
+#registerPage .content p{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3;text-align: center}
+#registerPage .content a{font-family: 'GothamRnd-Medium'; font-size: 13px; text-decoration: none; color: #00A9AD}
+#registerPage .form-group{padding: 10px 15px;}
+#registerPage .form-group label{font-size: 12px;}
+/*
+#registerPage label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
+#registerPage input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
+#registerPage *:focus {outline: none;}*/
+#registerPage .content .top{height: calc(100% - 120px);overflow-y: scroll;}
+#registerPage .content .bottom{height: 120px;}
+
+@media only screen and (max-width: 320px){
+  #registerPage .headerLogoImg{background-size: 180px 80px}
+}
+@media only screen and (min-width: 321px){
+  #registerPage .headerLogoImg{background-size: 220px 90px}
+}
+
+/*--------- SIDE MENU ------------*/
+#btn_sideMenu{position: absolute;left: 5%; top:5%; z-index: 99; width: 90%;}
+#mapMenu{text-shadow: none!important;}
+#mapMenu{position: absolute; left: 0; top:2%; height: 98%; background-color: #00A9AD; width: 85%; z-index: 101;}
+.menu_options{}
+.menu_logOff{margin-top: 20px;}
+.user{padding: 50px 15px 20px 15px}
+.user p{margin:3px 0px;}
+.option{padding: 10px 20px;}
+.option p{margin:0;}
+.exit-menu{padding: 10px 20px;}
+
+.topDiv{position: absolute; left: 5%; z-index: 99; width: 90%; border: 1px solid #c4c4c4; border-radius: 10px}
+#verCategoriasBtn{bottom:30px; min-height: 50px; background-color: white; cursor: pointer; text-align: center;}
+#btn_position{width: 40px; left:80%; bottom:100px;min-height: 40px;background-color: white;text-align: center; border-radius: 20px;}
+
+.info{bottom:100px; padding: 10px; width: calc(90% - 20px); min-height: 80px; background-color: white;}
+.moreInfo{padding: 10px 15px;width: calc(90% - 30px);bottom: 30px; min-height: 90%; background-color: white; z-index: 100; }
+
+.btn_nav{border-radius: 10px; color: white; background-color: #00A9AD;}
+.btn_nav p{padding: 1em 0px; margin:0; font-size: 13px;}
+.btnMoreInfo p{padding: 1em 0px; margin:0; font-size: 13px;}
+
+.right-exit{float:right; opacity: 0.5;}
+.comm_name{font-family: 'GothamRnd-Bold'; margin-bottom: 5px;}
+.comm_distance{font-family: 'GothamRnd-Light'; font-size: 14px;margin: 0px; margin-bottom: 0px;}
+.comm_distance span{color: blue;}
+.comm_descr,.comm_hours,.comm_days,.comm_address{font-family: 'GothamRnd-Light'; font-size: 15px;}
+
+.infoDetail h3,.infoDetail p{margin:0px;padding: 2px 0px;}
+.infoDetail p{font-family: 'GothamRnd-Light'}
+
+@media only screen and (max-width: 350px){
+  .infoDetail p{font-size: 10px;}
+}
+@media only screen and (min-width: 351px){
+  .infoDetail p{font-size: 11px;}
+}
+
+
+.left-back{position: absolute; top:6px;left:5px; padding: 10px;}
+
+.findy-category{width: calc(50% - 25px); margin: 10px 10px; padding-top: 40%; border:1px solid #c4c4c4; border-radius: 10px; position: relative;}
+.ctg-absolute{position:  absolute;top: 20%;left: 0;right: 0;text-align: center;font-size: 20px;}
+.ctg-absolute p{margin: 2px 0px;}
+
+.ctg-name{font-size: 14px; width: 80%; margin:auto !important;}
+
+.subCtg p{padding-left: 10px;}
+.right-arrow{float:right; padding: 2px 8px; margin-right: 20px; border-radius: 10px;}
+.transparent{background-color: transparent;}
+
+.question p{padding-left: 10px; font-size: 14px;}
+.question .right-arrow{background-color: transparent!important}
+#questionList .answer{font-family: 'GothamRnd-Light'; font-size: 13px;padding: 1.5em 1em 0 1em;}
+
+.btn_profile{border-radius: 10px; color: white; background-color: #00b3bc;}
+.btn_profile p{font-family: 'GothamRnd-Light'; text-align: center; padding: 0.8em 0px; margin:0;}
+
+.user_info{padding: 10px 0px;}
+.user_info label{font-family: 'GothamRnd-Light'; font-size: 15px; color: #00b3bc}
+
+.go-arrow{position: absolute; bottom: 5px; right: 10px; padding: 2px 8px ; color: #00b3bc}
+.go-arrow span{margin: 8px;}
+.go-arrow img{vertical-align: middle}
+
+.travel{min-height: 88px;border: 2px solid #c4c4c4; border-radius: 10px; position: relative; margin-bottom: 20px;}
+.travel .status{position: absolute; bottom: 5px; left: 10px; padding: 2px 8px;}
+
+.travel_info{width: calc(100% - 30px);}
+.travel_info>div{margin-left: 20px; margin-top: 10px;}
+.travel_info img{vertical-align: middle}
+.travel_info .left{float: left; width: 30px;}
+.travel_info .right{float: left; width: calc(100% - 30px); text-shadow: none;}
+.travel_info .right p{margin:0; padding-left: 10px;}
+
+.info_active{color: #00b3bc}
+
+.b_status{padding: 5px 15px; margin:0}
+.b_status.open{color: #00b3bc}
+.b_status.closed{color: #acadaf}
+
+#commentsPage input{border-bottom: 2px solid #00A9AD;}
+
+.btn_send_comment{position: relative; bottom:30px; background-color: #00b3bc; text-align: center; color: white; text-shadow: none; margin:auto;}
+.btn_viewMap{position: absolute; bottom:30px; background-color: #00b3bc; text-align: center; color: white; text-shadow: none; margin:auto;}
+
+.thanksDiv{width: 80%; left: 10%; position: absolute; top:25%;  text-align: center;}
+.thanksDiv p{margin:0; padding: 5px 0;}
+
+.labels{
+  font-family: 'GothamRnd-Medium';
+  font-size: 14px;
+}

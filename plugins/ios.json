@@ -1,0 +1,33 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-compat": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
+    "cordova-plugin-facebook": {
+      "FACEBOOK_APP_ID": "291949018192665",
+      "FACEBOOK_DISPLAY_NAME": "FindyApp",
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-actionsheet": {
+      "PACKAGE_NAME": "com.findy.findyApp"
+    }
+  }
+}

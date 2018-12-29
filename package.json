@@ -12,6 +12,7 @@
     "dependencies": {
         "cordova-android": "^7.1.4",
         "cordova-browser": "^5.0.4",
+        "cordova-ios": "^4.5.5",
         "cordova-plugin-compat": "^1.2.0",
         "cordova-plugin-dialogs": "^2.0.1",
         "cordova-plugin-facebook": "0.2.2",
@@ -34,7 +35,8 @@
         },
         "platforms": [
             "browser",
-            "android"
+            "android",
+            "ios"
         ]
     }
 }
