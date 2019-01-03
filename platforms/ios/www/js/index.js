@@ -111,6 +111,7 @@ function confirmExit(btn){
 $(document).on("pagebeforeshow",function(){
   currPage = $.mobile.activePage.attr('id');
 });
+$(document).on("pagebeforeshow","#menu",loadMenuPage);
 $(document).on("pagebeforeshow","#mapPage",loadMapPage);
 $(document).on("pagebeforeshow","#profilePage",loadProfilePage);
 $(document).on("pagebeforeshow","#helpPage",loadDocs);
@@ -129,7 +130,13 @@ $(window).on( "throttledresize", function ( e ) {
 });
 
 /*------- LOAD PAGES --------*/
-
+function loadMenuPage(){
+  var i = Math.floor((Math.random() * 4) + 0);
+  var arrayImgs = ['findy_fondo_inicio.png','findy_locales.png','findy_como_llegar.png','findy_tiempo_real.png'];
+  var imglink = arrayImgs[i];
+  console.log(imglink);
+  $("#menu-back").css('background-image',"url('img/dummy/"+imglink+"')");
+}
 function loadMapPage(){
     hideSideMenu();
     hideMoreInfo();
@@ -180,7 +187,7 @@ function loadCategories(){
       var ctgDiv = $("#categories");
       ctgDiv.html('');
       ctg.forEach(function(ctg){
-        ctgDiv.append("<div class='findy-category' ctg-id='"+ctg['id']+"' ctg-image='"+ctg.image+"' ctg-name='"+ctg['name']+"' style='float: left;'><div class='ctg-absolute'><img width='50' height='50' src='https://admin.findy.pe/img/categoria/"+ctg.image+"'><p class='ctg-name'>"+ctg['name']+"</p></div></div>");
+        ctgDiv.append("<div class='findy-category' ctg-id='"+ctg['id']+"' ctg-image='"+ctg.image+"' ctg-name='"+ctg['name']+"' style='float: left;'><div class='ctg-absolute'><img width='50' height='50' src='img/categories/"+ctg.image+"'><p class='ctg-name'>"+ctg['name']+"</p></div></div>");
       });
       $.mobile.loading("hide");
       $(".findy-category").on('click',viewSubCategories);
@@ -1034,7 +1041,7 @@ function showInfo(id){
       $('.commName').html(comm.name);
       $('.commDireccion').html(comm.address);
       $('.commSchedule').html('<strong>Horario de Atención:</strong> '+comm.hourStart+" - "+comm.hourEnd);
-      $('.commCategoryImg').attr('src','https://admin.findy.pe/img/categoria/'+comm.category_image)
+      $('.commCategoryImg').attr('src','img/categories/'+comm.category_image)
       $('.linkNavigation').attr('lat',comm.lat);
       $('.linkNavigation').attr('lng',comm.lng);
       $('.linkNavigation').attr('idComm',comm.id);

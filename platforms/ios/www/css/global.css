@@ -47,7 +47,7 @@ input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; bo
 	.headerMenuImg{background-size: 250px 100px}
 }
 @media only screen and (min-width: 321px){
-	.headerMenuImg{background-size: auto;}
+	.headerMenuImg{background-size: 270px 105px}
 }
 .pageTitle{margin: 0;color: #666666; font-size: 15px; padding: 20px 0px 15px 0;}
 
@@ -136,7 +136,7 @@ input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; bo
 .left-back{position: absolute; top:6px;left:5px; padding: 10px;}
 
 .findy-category{width: calc(50% - 25px); margin: 10px 10px; padding-top: 40%; border:1px solid #c4c4c4; border-radius: 10px; position: relative;}
-.ctg-absolute{position:  absolute;top: 20%;left: 0;right: 0;text-align: center;font-size: 20px;}
+.ctg-absolute{position:  absolute;top: calc(50% - 38px);left: 0;right: 0;text-align: center;font-size: 20px;}
 .ctg-absolute p{margin: 2px 0px;}
 
 .ctg-name{font-size: 14px; width: 80%; margin:auto !important;}
