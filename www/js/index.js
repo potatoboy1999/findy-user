@@ -1064,5 +1064,23 @@ function showSideMenu(){
   $("#mapMenu").show();
 }
 
+function addSearchCounter(id){
+  $.ajax({
+    url:base_api_url+'commerces/search/count',
+    type:'post',
+    dataType:'json',
+    data:{
+      'commId':id
+    },
+    success:function(response){
+      console.log(response.message);
+    },
+    error: function(error) {
+      console.log('Error - counter: No se pudo comunicar con el servidor de Findy');
+      //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
+    }
+  });
+}
+
 
 

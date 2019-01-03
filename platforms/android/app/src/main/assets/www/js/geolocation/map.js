@@ -185,6 +185,7 @@ function createMarkersCommerces(arrayCommerces){
 			map.setZoom(18);
 			map.panTo(marker.getPosition());
 			var id = marker.getTitle();
+			addSearchCounter(id);
 			showInfo(id);
 		});
 	});
