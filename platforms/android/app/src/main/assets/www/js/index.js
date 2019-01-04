@@ -61,6 +61,9 @@ function onDeviceReady() {
   $('.save-profile').on('click',editProfile);
   $('.btn_send_comment').on('click',sendComment);
 
+  $('#shareLink').on('click',viewShareLink);
+  
+
   //$(".findy-category").on('click',viewSubCategories);
   
   //$("#mapPage").on("pageshow", loadMapPage);
@@ -402,6 +405,10 @@ function viewCommentThanks(){
 }
 function viewMap(){
  window.location.href = "#mapPage";
+}
+function viewShareLink(){
+  link = "https://play.google.com/store/apps/details?id=com.findy.findyApp";
+  window.open(link,'_system');
 }
 function viewSubCategories(){
   $.mobile.loading("show", {
