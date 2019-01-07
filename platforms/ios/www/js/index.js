@@ -55,14 +55,15 @@ function onDeviceReady() {
   $('#btn_user_data').on('click',showProfileData);
   $('#btn_user_history').on('click',showProfileHistory);
   $('.left-back').on('click',goToPage);
+  $(".linkToCopy").on('click',copyLink);
   
   $('.question').on('click',toggleAnswer);
   $('#btn_close_session').on('click',closeSession);
   $('.save-profile').on('click',editProfile);
   $('.btn_send_comment').on('click',sendComment);
 
-  $('#shareLink').on('click',viewShareLink);
-  
+  $('#fbLink').on('click',viewFbLink);
+  $('#InstagramLink').on('click',viewInstagramLink);
 
   //$(".findy-category").on('click',viewSubCategories);
   
@@ -406,9 +407,13 @@ function viewCommentThanks(){
 function viewMap(){
  window.location.href = "#mapPage";
 }
-function viewShareLink(){
-  link = "https://play.google.com/store/apps/details?id=com.findy.findyApp";
+function viewFbLink(){
+  link = "https://www.facebook.com/FINDY-1159776080854374/?modal=admin_todo_tour";
   window.open(link,'_system');
+}
+function viewInstagramLink(){
+  link = "https://www.instagram.com/findyperu/";
+  window.open(link,'_system'); 
 }
 function viewSubCategories(){
   $.mobile.loading("show", {
@@ -924,7 +929,7 @@ function loadCommInRange(cArray,range){
   deleteMarkers();
   createMarkersCommerces(commerceArray);
   if (commerceArray.length == 0) {
-        navigator.notification.alert('No hay commercios de esta categoria cerca a ti (en 3km)');
+        navigator.notification.alert('No hay negocios cerca a 8km');
       }
 }
 
@@ -1094,6 +1099,17 @@ function addSearchCounter(id){
       //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
     }
   });
+}
+
+function copyLink(){
+  //console.log('copying link!');
+  var copyText = $(this);
+
+  copyText.select();
+
+  document.execCommand("copy");
+
+  navigator.notification.alert("Se ha copiado al portapapeles");
 }
 
 
