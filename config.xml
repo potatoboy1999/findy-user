@@ -20,13 +20,14 @@
     <plugin name="cordova-plugin-compat" spec="^1.2.0" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.1" />
-    <preference name="orientation" value="portrait" />
-    <preference name="fullscreen" value="true" />
-    <preference name="phonegap-version" value="cli-8.1.1" />
     <plugin name="cordova-plugin-facebook" spec="0.2.2">
         <variable name="FACEBOOK_DISPLAY_NAME" value="FindyApp" />
         <variable name="FACEBOOK_APP_ID" value="291949018192665" />
     </plugin>
+    
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="true" />
+    <preference name="phonegap-version" value="cli-8.1.1" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="android" spec="^7.1.4" />
     <engine name="ios" spec="~4.5.5" />
@@ -60,4 +61,8 @@
         <icon density="xxhdpi" src="res/icon/android/xxhdpi.png"/>
         <icon density="xxxhdpi" src="res/icon/android/xxxhdpi.png"/>
     </platform>
+    
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+        <string>need location access to find things nearby</string>
+    </edit-config>
 </widget>
