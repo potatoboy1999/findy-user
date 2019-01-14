@@ -83,8 +83,8 @@ input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; bo
 #registerPage label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
 #registerPage input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
 #registerPage *:focus {outline: none;}*/
-#registerPage .content .top{height: calc(100% - 120px);overflow-y: scroll;}
-#registerPage .content .bottom{height: 120px;}
+#registerPage .content .top{height: calc(100% - 150px);overflow-y: scroll;}
+#registerPage .content .bottom{height: 150px;}
 
 @media only screen and (max-width: 320px){
   #registerPage .headerLogoImg{background-size: 180px 80px}

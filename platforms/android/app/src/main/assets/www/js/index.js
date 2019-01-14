@@ -79,6 +79,9 @@ function onBackKeyDown() {
     viewMenu();
     //navigator.notification.confirm('menu',confirmMenu,'Going Back',['Vamos!','Me Quedo']);
   }
+  if (currPage == 'terms' || currPage == 'politics') {
+    redirectRegister();
+  }
   if(currPage == 'mapPage'){
     if (sideMenu) {
       hideSideMenu();
@@ -116,6 +119,9 @@ $(document).on("pagebeforeshow",function(){
   currPage = $.mobile.activePage.attr('id');
 });
 $(document).on("pagebeforeshow","#menu",loadMenuPage);
+$(document).on("pagebeforeshow","#registerPage",loadDocs);
+$(document).on("pagebeforeshow","#terms",loadTerms);
+$(document).on("pagebeforeshow","#politics",loadPolitics);
 $(document).on("pagebeforeshow","#mapPage",loadMapPage);
 $(document).on("pagebeforeshow","#profilePage",loadProfilePage);
 $(document).on("pagebeforeshow","#helpPage",loadDocs);
@@ -335,6 +341,7 @@ function loadTerms(){
     url:base_api_url+'docs/terms',
     success:function(response){
       $('#condiciones').html(response);
+      $('#terms_content').html(response);
     },
     error:function(error){
       navigator.notification.alert('Error en la carga de documentos');
@@ -346,14 +353,13 @@ function loadPolitics(){
     url:base_api_url+'docs/politics',
     success:function(response){
       $('#privacidad').html(response);
+      $('#politics_content').html(response);
     },
     error:function(error){
       navigator.notification.alert('Error en la carga de documentos');
     }
   });
 }
-
-
 /*------- REDIRECT / SHOW FUNCTIONS ------------*/
 function goToPage(){
   page = $(this).attr('pageto');
