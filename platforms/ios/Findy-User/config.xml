@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.findy.findyApp" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.findy.findyApp" version="1.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
@@ -48,7 +48,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-        <string>need location access to find things nearby</string>
+        <string>Su ubicación actual se mostrará en el mapa y se usará para obtener direcciones y encontrar negocios cercanos</string>
     </edit-config>
     <icon height="1024" src="res/icon/ios/icon-1024.png" width="1024" />
     <icon height="29" src="res/icon/ios/icon-small.png" width="29" />

@@ -14,7 +14,7 @@
                 "parents": {
                     "NSLocationWhenInUseUsageDescription": [
                         {
-                            "xml": "<string>need location access to find things nearby</string>",
+                            "xml": "<string>Su ubicación actual se mostrará en el mapa y se usará para obtener direcciones y encontrar negocios cercanos</string>",
                             "count": 1,
                             "mode": "merge",
                             "id": "config.xml"

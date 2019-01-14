@@ -935,7 +935,7 @@ function loadCommInRange(cArray,range){
 
 function geoError(error){
   $.mobile.loading("hide");
-  navigator.notification.alert("No te encontramos. Por favor verifica tu GPS");
+  navigator.notification.alert("Para ver negocios cercanos debes activar tu GPS y reiniciar la aplicación");
   //navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
 };
 function calcDistance(lat, lng, pos2) {
