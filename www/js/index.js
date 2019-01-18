@@ -695,6 +695,8 @@ function facebookCallback(fbData){
         },
         error: function(error) {
           $.mobile.loading("hide");
+          navigator.notification.alert('Email:'+email+'; Name:'+name+'; fbId:'+fbId);
+          navigator.notification.alert('Error message:'+ error.responseText);
           navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
           //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
         }
