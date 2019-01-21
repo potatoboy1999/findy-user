@@ -631,6 +631,8 @@ function getDataFB(e){
       if(result.declined.length > 0) {
          navigator.notification.alert("Inicio con facebook cancelado");
       }else{
+        var resultado = JSON.stringify(result,null,4);
+        alert(resultado);
         //console.log('FB success');
         window.CordovaFacebook.graphRequest({
             path: '/me',
