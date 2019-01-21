@@ -626,7 +626,7 @@ function getDataFB(e){
   e.preventDefault();
 
   window.CordovaFacebook.login({
-    permissions: ['email', 'public_profile'],
+    permissions: ["public_profile","email"],
     onSuccess: function(result) {
       if(result.declined.length > 0) {
          navigator.notification.alert("Inicio con facebook cancelado");
@@ -634,7 +634,7 @@ function getDataFB(e){
         //console.log('FB success');
         window.CordovaFacebook.graphRequest({
             path: '/me',
-            params: { fields: 'email,id,first_name,last_name,gender,link,name' },
+            params: { fields: "id,name,email" },
             onSuccess: function (userData) {
                 uData = JSON.stringify(userData,null,4);
                 alert(uData);
