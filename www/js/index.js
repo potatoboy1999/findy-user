@@ -682,7 +682,6 @@ function facebookCallback(fbData){
   var name = fbData.name;
   var email = fbData.email;
   var fbId = fbData.id;
-  navigator.notification.alert('Email:'+email+'; Name:'+name+'; fbId:'+fbId);
   $.ajax({
         url:base_api_url+'customer/callbackFB',
         type:'post',
@@ -713,7 +712,7 @@ function facebookCallback(fbData){
         },
         error: function(error) {
           $.mobile.loading("hide");
-          navigator.notification.alert('Error message:'+ error.responseText);
+          //navigator.notification.alert('Error message:'+ error.responseText);
           navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
           //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
         }
