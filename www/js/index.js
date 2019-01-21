@@ -635,7 +635,8 @@ function getDataFB(e){
         alert(resultado);
         window.CordovaFacebook.graphRequest({
             path: '/me',
-            params: { fields: "id,name,email", scope: 'email,public_profile'},
+            params: { fields: "id,name,email"},
+            scope: 'public_profile,email',
             onSuccess: function (userData) {
                 uData = JSON.stringify(userData,null,4);
                 alert(uData);
@@ -644,7 +645,7 @@ function getDataFB(e){
             onFailure: function (result) {
                 if (result.error) {
                     navigator.notification.alert('error!');
-                    //alert('error', 'There was an error in graph request:' + result.errorLocalized);
+                    alert('error', 'There was an error in graph request:' + result.errorLocalized);
                 }
             }
           });
