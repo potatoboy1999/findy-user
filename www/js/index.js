@@ -632,18 +632,18 @@ function getDataFB(e){
          navigator.notification.alert("Inicio con facebook cancelado");
       }else{
         var resultado = JSON.stringify(result,null,4);
-        alert(resultado.accessToken);
+        //alert(resultado.accessToken);
         window.CordovaFacebook.graphRequest({
             path: '/me?fields=email,name,id&access_token='+resultado.accessToken,
             onSuccess: function (userData) {
-                uData = JSON.stringify(userData,null,4);
-                alert(uData);
-                //facebookCallback(userData);
+                //uData = JSON.stringify(userData,null,4);
+                //alert(uData);
+                facebookCallback(userData);
             },
             onFailure: function (result) {
                 if (result.error) {
-                    navigator.notification.alert('error!');
-                    alert('error', 'There was an error in graph request:' + result.errorLocalized);
+                    navigator.notification.alert('Error al obtener datos de facebook!');
+                    //alert('error', 'There was an error in graph request:' + result.errorLocalized);
                 }
             }
           });
