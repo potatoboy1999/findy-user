@@ -635,8 +635,7 @@ function getDataFB(e){
         alert(resultado);
         window.CordovaFacebook.graphRequest({
             path: '/me',
-            params: { fields: "id,name,email"},
-            scope: 'public_profile,email',
+            params: {access_token: resultado.accessToken, fields: "id,name,email"},
             onSuccess: function (userData) {
                 uData = JSON.stringify(userData,null,4);
                 alert(uData);
