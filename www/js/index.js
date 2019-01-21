@@ -624,11 +624,7 @@ function getDataFB(e){
   //alert('start FB');
 
   e.preventDefault();
-  window.CordovaFacebook.logout({
-    onSuccess: function() {
-      alert("The user is now logged out");
-    }
-  });
+  window.CordovaFacebook.logout();
   window.CordovaFacebook.login({
     permissions: ["public_profile","email"],
     onSuccess: function(result) {
@@ -637,19 +633,18 @@ function getDataFB(e){
       }else{
         var resultado = JSON.stringify(result,null,4);
         alert(resultado);
-        //console.log('FB success');
         window.CordovaFacebook.graphRequest({
             path: '/me',
-            params: { fields: "id,name,email" },
+            params: { fields: "id,name,email", scope: 'email,public_profile'},
             onSuccess: function (userData) {
                 uData = JSON.stringify(userData,null,4);
                 alert(uData);
-                facebookCallback(userData);
+                //facebookCallback(userData);
             },
             onFailure: function (result) {
                 if (result.error) {
                     navigator.notification.alert('error!');
-                    //console.log('error', 'There was an error in graph request:' + result.errorLocalized);
+                    //alert('error', 'There was an error in graph request:' + result.errorLocalized);
                 }
             }
           });
@@ -661,7 +656,7 @@ function getDataFB(e){
         //navigator.notification.alert("The user doesn't like my app");
       } else if(result.error) {
         navigator.notification.alert("Ups, ocurrió un error con facebook");
-        navigator.notification.alert("There was an error:" + result.errorLocalized);
+        //navigator.notification.alert("There was an error:" + result.errorLocalized);
       }
     }
   });
