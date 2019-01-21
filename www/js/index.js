@@ -657,7 +657,7 @@ function getDataFB(e){
         //navigator.notification.alert("The user doesn't like my app");
       } else if(result.error) {
         navigator.notification.alert("Ups, ocurrió un error con facebook");
-        //navigator.notification.alert("There was an error:" + result.errorLocalized);
+        navigator.notification.alert("There was an error:" + result.errorLocalized);
       }
     }
   });
