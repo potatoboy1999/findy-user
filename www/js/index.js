@@ -624,7 +624,11 @@ function getDataFB(e){
   //alert('start FB');
 
   e.preventDefault();
-
+  window.CordovaFacebook.logout({
+    onSuccess: function() {
+      alert("The user is now logged out");
+    }
+  });
   window.CordovaFacebook.login({
     permissions: ["public_profile","email"],
     onSuccess: function(result) {
