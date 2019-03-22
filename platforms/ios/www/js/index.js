@@ -1,9 +1,9 @@
-var base_api_url='http://localhost/findy/public/api/';
-var ctg_icon_url = 'http://localhost/findy/public/img/categoria/';
-var ctg_white_icon_url = 'http://localhost/findy/public/img/categories_white/';
-//var base_api_url='https://admin.findy.pe/api/';
-//var ctg_icon_url='https://admin.findy.pe/img/categoria/';
-//var ctg_white_icon_url = 'https://admin.findy.pe/img/categories_white/';
+//var base_api_url='http://localhost/findy/public/api/';
+//var ctg_icon_url = 'http://localhost/findy/public/img/categoria/';
+//var ctg_white_icon_url = 'http://localhost/findy/public/img/categories_white/';
+var base_api_url='https://admin.findy.pe/api/';
+var ctg_icon_url='https://admin.findy.pe/img/categoria/';
+var ctg_white_icon_url = 'https://admin.findy.pe/img/categories_white/';
 
 var storage = window.localStorage;
 var storageLng = null;

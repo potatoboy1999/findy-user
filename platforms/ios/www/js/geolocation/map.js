@@ -1,8 +1,8 @@
 
-var marker_icon_url = 'http://localhost/findy/public/img/marker/';
-var marker_trans_icon_url = 'http://localhost/findy/public/img/marker_transparent/';
-//var marker_icon_url = 'https://admin.findy.pe/img/marker/';
-//var marker_trans_icon_url = 'https://admin.findy.pe/img/marker_transparent/';
+//var marker_icon_url = 'http://localhost/findy/public/img/marker/';
+//var marker_trans_icon_url = 'http://localhost/findy/public/img/marker_transparent/';
+var marker_icon_url = 'https://admin.findy.pe/img/marker/';
+var marker_trans_icon_url = 'https://admin.findy.pe/img/marker_transparent/';
 
 'use strict';
 if (typeof module!='undefined' && module.exports) var Dms = require('./dms'); // ≡ import Dms from 'dms.js'
