@@ -1,3 +1,9 @@
+
+var marker_icon_url = 'http://localhost/findy/public/img/marker/';
+var marker_trans_icon_url = 'http://localhost/findy/public/img/marker_transparent/';
+//var marker_icon_url = 'https://admin.findy.pe/img/marker/';
+//var marker_trans_icon_url = 'https://admin.findy.pe/img/marker_transparent/';
+
 'use strict';
 if (typeof module!='undefined' && module.exports) var Dms = require('./dms'); // ≡ import Dms from 'dms.js'
 
@@ -152,14 +158,14 @@ function createMarkersCommerces(arrayCommerces){
 
 	commerceArray.forEach(function(comm){
 		var bStatus = comm.bussiness_status;
-		var img = "marker/"+comm.category_img;
+		var img = marker_icon_url+comm.category_img;
 		if (bStatus == 0) {
-			img = "marker_transparent/"+comm.category_img;
+			img = marker_trans_icon_url+comm.category_img;
 		}
 		var pos = {lat:parseFloat(comm.lat),lng:parseFloat(comm.lng)}
 		//set marker icons
 		var icon = {
-                 url: "img/"+img,
+                 url: img,
                  size: new google.maps.Size(40, 55),
                  origin: new google.maps.Point(0, 0),
                  anchor: new google.maps.Point(17, 50),

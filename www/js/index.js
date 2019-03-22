@@ -1,5 +1,10 @@
-//var base_api_url='http://localhost/findy/public/api/';
-var base_api_url='https://admin.findy.pe/api/';
+var base_api_url='http://localhost/findy/public/api/';
+var ctg_icon_url = 'http://localhost/findy/public/img/categoria/';
+var ctg_white_icon_url = 'http://localhost/findy/public/img/categories_white/';
+//var base_api_url='https://admin.findy.pe/api/';
+//var ctg_icon_url='https://admin.findy.pe/img/categoria/';
+//var ctg_white_icon_url = 'https://admin.findy.pe/img/categories_white/';
+
 var storage = window.localStorage;
 var storageLng = null;
 var storageLat = null;
@@ -197,7 +202,7 @@ function loadCategories(){
       var ctgDiv = $("#categories");
       ctgDiv.html('');
       ctg.forEach(function(ctg){
-        ctgDiv.append("<div class='findy-category' ctg-id='"+ctg['id']+"' ctg-image='"+ctg.image+"' ctg-name='"+ctg['name']+"' style='float: left;'><div class='ctg-absolute'><img width='50' height='50' src='img/categories/"+ctg.image+"'><p class='ctg-name'>"+ctg['name']+"</p></div></div>");
+        ctgDiv.append("<div class='findy-category' ctg-id='"+ctg['id']+"' ctg-image='"+ctg.image+"' ctg-name='"+ctg['name']+"' style='float: left;'><div class='ctg-absolute'><img width='50' height='50' src='"+ctg_icon_url+ctg.image+"'><p class='ctg-name'>"+ctg['name']+"</p></div></div>");
       });
       $.mobile.loading("hide");
       $(".findy-category").on('click',viewSubCategories);
@@ -312,7 +317,7 @@ function loadVisitsFromUser(){
                             "<div class='travel_info'>"+
                               "<div>"+
                                 "<div class='left'>"+
-                                  "<img height='35' width='35' src='img/categories/"+comm.category_img+"'>"+
+                                  "<img height='35' width='35' src='"+ctg_icon_url+comm.category_img+"'>"+
                                 "</div>"+
                                 "<div class='right'>"+
                                   "<p>"+comm.name+"</p>"+
@@ -432,7 +437,7 @@ function viewSubCategories(){
   var name = $(this).attr('ctg-name');
   var image = $(this).attr('ctg-image');
   $(".nameCtg").html(name);
-  $("#ctgHeaderImg").attr('src',"img/categories_white/"+ image);
+  $("#ctgHeaderImg").attr('src',ctg_white_icon_url+ image);
 
   console.log(id);
   $.ajax({
@@ -444,9 +449,10 @@ function viewSubCategories(){
     },
     success:function(response){
         //console.log(response);
-        if (response.length == 1) {
+        if (response.length == 0) {
           $.mobile.loading("hide");
-          var ctgId = response[0]['id'];
+          var ctgId = id;
+          console.log(ctgId);
           deleteMarkers();
           loadPositionCategories(ctgId);
           hideInfo();
@@ -458,7 +464,7 @@ function viewSubCategories(){
     },
     error: function(error) {
       $.mobile.loading("hide");
-      navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/register');
+      navigator.notification.alert('Error: No se pudo contactar con la API... ');
     }
   });
 }
@@ -1077,7 +1083,7 @@ function showInfo(id){
       $('.commName').html(comm.name);
       $('.commDireccion').html(comm.address);
       $('.commSchedule').html('<strong>Horario de Atención:</strong> '+comm.hourStart+" - "+comm.hourEnd);
-      $('.commCategoryImg').attr('src','img/categories/'+comm.category_image)
+      $('.commCategoryImg').attr('src',ctg_icon_url+comm.category_image)
       $('.linkNavigation').attr('lat',comm.lat);
       $('.linkNavigation').attr('lng',comm.lng);
       $('.linkNavigation').attr('idComm',comm.id);
