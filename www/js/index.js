@@ -638,6 +638,7 @@ function getDataFB(e){
          navigator.notification.alert("Inicio con facebook cancelado");
       }else{
         var resultado = JSON.stringify(result,null,4);
+        alert('TOKEN FB');
         alert(resultado.accessToken);
         window.CordovaFacebook.graphRequest({
             path: '/me?fields=email,name,id&access_token='+resultado.accessToken,
