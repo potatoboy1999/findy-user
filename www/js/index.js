@@ -652,6 +652,8 @@ function getDataFB(e){
                     navigator.notification.alert('Error al obtener datos de facebook!');
                     //alert('error', 'There was an error in graph request:' + result.errorLocalized);
                 }
+                navigator.notification.alert('Error Facebook data feed');
+                
             }
           });
         /*
