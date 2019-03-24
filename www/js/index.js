@@ -692,7 +692,7 @@ function getDataFB(e){
 }
 
 function facebookCallback(fbData){
-  navigator.notification.alert('SEND USER INFORMATION');
+//  navigator.notification.alert('SEND USER INFORMATION');
   var name = fbData.name;
   var email = fbData.email;
   var fbId = fbData.id;
