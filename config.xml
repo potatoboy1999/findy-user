@@ -62,7 +62,7 @@
         <icon density="xxxhdpi" src="res/icon/android/xxxhdpi.png"/>
     </platform>
 
-    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
         <string>Su ubicación actual se mostrará en el mapa y se usará para obtener direcciones y encontrar negocios cercanos</string>
     </edit-config>
 </widget>
