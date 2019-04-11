@@ -30,7 +30,7 @@ label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
 input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
 *:focus {outline: none;}
 
-.fondo_banner{/*height: 100%;*/height:calc(150px);background-repeat: no-repeat !important;background-position: 50% 50% !important; background-size: contain!important; background-color: black; background-repeat: no-repeat;}
+.fondo_banner{/*height: 100%;*/height:calc(200px);background-repeat: no-repeat !important;background-position: 50% 50% !important; background-size: contain!important; background-color: black; background-repeat: no-repeat;}
 
 .fix-clear{clear: both;}
 
