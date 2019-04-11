@@ -1,9 +1,10 @@
-//var base_api_url='http://localhost/findy/public/api/';
-//var ctg_icon_url = 'http://localhost/findy/public/img/categoria/';
-//var ctg_white_icon_url = 'http://localhost/findy/public/img/categories_white/';
-var base_api_url='https://admin.findy.pe/api/';
-var ctg_icon_url='https://admin.findy.pe/img/categoria/';
-var ctg_white_icon_url = 'https://admin.findy.pe/img/categories_white/';
+var base_api_url='http://localhost/findy/public/api/';
+var commerce_images = 'http://localhost/findy/img/commerces/';
+var ctg_icon_url = 'http://localhost/findy/public/img/categoria/';
+var ctg_white_icon_url = 'http://localhost/findy/public/img/categories_white/';
+//var base_api_url='https://admin.findy.pe/api/';
+//var ctg_icon_url='https://admin.findy.pe/img/categoria/';
+//var ctg_white_icon_url = 'https://admin.findy.pe/img/categories_white/';
 
 var storage = window.localStorage;
 var storageLng = null;
@@ -12,6 +13,7 @@ var storageLat = null;
 var positionArray = [];
 var commerceArray = null;
 var commerce = null;
+var commerce_img = [];
 var user = null;
 var profileCurrentTab = 'info';
 var ctgLoaded = false;
@@ -33,6 +35,8 @@ window.onload= function () {
 
 function onDeviceReady() {
   console.log('deviceReady!!');
+  //activar carrusel
+  
   //botones listeners
   //$("#getLocation").on("click",getCurrentLocation);
   $('#btn_fb').on('click',getDataFB);
@@ -94,7 +98,7 @@ function onBackKeyDown() {
       navigator.notification.confirm('Quiere salir de la app?',confirmExit,'Exit',['Si','No']);
     }
   }
-  if(currPage == 'ctgPage' || currPage == 'helpPage' || currPage == 'profilePage'){
+  if(currPage == 'ctgPage' || currPage == 'helpPage' || currPage == 'profilePage' || currPage == 'moreInfo'){
     viewMap();
   }
   if (currPage == 'passwordPage') {
@@ -385,6 +389,9 @@ function viewRegister(){
 }
 function viewCategories(){
   window.location.href="#ctgPage";
+}
+function viewMoreInfo(){
+ window.location.href="#moreInfo"; 
 }
 function viewProfile(){
   $.mobile.loading( "show", {
@@ -692,7 +699,6 @@ function getDataFB(e){
 }
 
 function facebookCallback(fbData){
-//  navigator.notification.alert('SEND USER INFORMATION');
   var name = fbData.name;
   var email = fbData.email;
   var fbId = fbData.id;
@@ -1088,6 +1094,7 @@ function showInfo(id){
     dataType:"json",
     success:function(comm){
       commerce = comm;
+      commerce_img = comm.images;
       $('.commName').html(comm.name);
       $('.commDireccion').html(comm.address);
       $('.commSchedule').html('<strong>Horario de Atención:</strong> '+comm.hourStart+" - "+comm.hourEnd);
@@ -1108,13 +1115,27 @@ function showMoreInfo(){
   var commId = $(this).attr('commId');
   console.log(commId);
   hideInfo();
+  $("#owl-carousel-global").html('<div id="owl-carousel-banner" class="owl-carousel" style="height:100%; background-color: black;"></div>');
+  var carousel = $("#owl-carousel-banner");
+  carousel.html('');
+  commerce_img.forEach(function(imgData){
+    carousel.append("<div class='item'><div class='fondo_banner banner-item' style='background: url("+commerce_images+imgData.url+");'></div></div>");
+  });
+  $("#owl-carousel-banner").owlCarousel({
+    navigation : false,
+    pagination: false,
+    singleItem : true,
+    transitionStyle : "fade",
+    autoPlay: 5e3,
+  });
   $('.comm_name').html(commerce['name']);
   $('.comm_descr').html(commerce['description']);
   $('.comm_start').html(commerce['hourStart']);
   $('.comm_end').html(commerce['hourEnd']);
   $('.comm_days').html(commerce['daysWord']);
   $('.comm_address').html(commerce['address']);
-  $('.moreInfo').show();
+  //$('.moreInfo').show();
+  viewMoreInfo();
 }
 function showSideMenu(){
   sideMenu = true;

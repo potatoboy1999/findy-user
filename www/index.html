@@ -23,6 +23,7 @@
 			});
 		</script>
 		<script src="jquery_mobile/jquery.mobile-1.4.5.min.js"></script>
+    	<script src="owl-carousel/owl.carousel.min.js"></script>
 
 		<script src="js/geolocation/map.js"></script>
 		<script src="js/index.js"></script>
@@ -30,6 +31,9 @@
 
 		<link rel="stylesheet" href="jquery_mobile/jquery.mobile-1.4.5.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/bootstrap/style.css">
+		<link rel="stylesheet" type="text/css" href="owl-carousel/owl.carousel.css">
+		<link rel="stylesheet" type="text/css" href="owl-carousel/owl.theme.css">
+		<link rel="stylesheet" type="text/css" href="owl-carousel/owl.transitions.css">		
 		<link rel="stylesheet" type="text/css" href="css/global.css">
 	</head>
 	<body>
@@ -263,6 +267,45 @@
 					<p style="text-align: center; margin: 0;padding-top: 8px;color: #00A9AD;"></p>
 				</div>
 				<div id="map" style="width: 100%; height: 100%; text-shadow: none;"></div>
+			</div>
+		</div>
+		<div data-role="page" id="moreInfo" data-enhance="false" style="height: 100%;">
+			<div class="containerWrapper" style="height: 100%; position: relative; padding: 0px 10px;">
+				<div style="height: 150px; margin: 0px -10px; background-color: white; text-align: center; padding: 0px 0 0 0">
+					<div class='left-back' style="float: left; z-index: 99; border-radius: 12px; background-color: white; padding: 11px 11px 6px 11px !important; " pageTo="mapPage"><img width="20" height="20" src="img/icons/left_arrow.png"></div>
+					<div id="owl-carousel-global" style="height:150px;">
+					</div>
+				</div>
+				<div style="padding: 0px 15px">
+					<div style="height: 130px;">
+						<div style="width: 100%; text-align: center; padding: 10px 0px;">
+							<img class="commCategoryImg" width="60" height="60" src="https://admin.findy.pe/img/categoria/bodegas.png">
+							<p class="comm_name">NOMBRE</p>
+						</div>
+					</div>
+					<div style="height: calc(100% - 180px); overflow-y: scroll;">
+						<div>
+							<p style="margin-top: 5px;"><strong>Descripción</strong></p>
+							<p class="comm_descr">---- ----- ----- ----- ----- ----- ----- ---- ----- ----- ----- ---- ----- ---- ----- ----- --- ---- --- --- ---- ---- -- --</p>
+						</div>
+						<div>
+							<p><strong>Horario de Atención</strong></p>
+							<p class="comm_hours"><span class="comm_start">00:00am</span> - <span class="comm_end">00:00pm</span></p>
+							<p class="comm_days">Lunes - Domingo</p>
+						</div>
+						<div>
+							<p><strong>Dirección</strong></p>
+							<p class="comm_address">Av Colonial 21928, Cercado de Lima 15081</p>
+						</div>
+					</div>
+					<div style=" height: 50px;">
+						<div style="padding: 5px; text-align: center;">
+							<div class="btn_nav" style="width: 100%;">
+								<p><a class="linkNavigation" href="#" lat="" lng="" idComm="" style="color: white; text-decoration: none; text-shadow: none;"><strong>¿Cómo Llegar?</strong></a></p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div data-role="page" id="ctgPage" style="height: 100%;">
