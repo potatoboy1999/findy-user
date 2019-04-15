@@ -34,9 +34,9 @@ input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; bo
 #owl-carousel-global{height:200px;}
 .fondo_banner{/*height: 100%;*/height:calc(200px);background-repeat: no-repeat !important;background-position: 50% 50% !important; background-size: contain!important; background-color: black; background-repeat: no-repeat;}
 @media only screen and (min-width: 720px){
-  #headerInfo{height: 500px;}
-  #owl-carousel-global{height:500px;}
-  .fondo_banner{height:calc(500px);}
+  #headerInfo{height: 432px;}
+  #owl-carousel-global{height:432px;}
+  .fondo_banner{height:calc(432px);}
 }
 .fix-clear{clear: both;}
 
