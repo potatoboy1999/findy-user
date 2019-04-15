@@ -30,8 +30,14 @@ label{font-family: 'GothamRnd-Light'; font-size: 13px; color: #42C0C3}
 input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; border: none; border-bottom: 1px solid #00A9AD;}
 *:focus {outline: none;}
 
+#headerInfo{height: 200px; margin: 0px -10px; background-color: white; text-align: center; padding: 0px 0 0 0;}
+#owl-carousel-global{height:200px;}
 .fondo_banner{/*height: 100%;*/height:calc(200px);background-repeat: no-repeat !important;background-position: 50% 50% !important; background-size: contain!important; background-color: black; background-repeat: no-repeat;}
-
+@media only screen and (min-width: 720px){
+  #headerInfo{height: 500px;}
+  #owl-carousel-global{height:500px;}
+  .fondo_banner{height:calc(500px);}
+}
 .fix-clear{clear: both;}
 
 .bttn{font-family:'GothamRnd-Medium'; width: 100%; padding: 12px; margin: 10px 0; border: none;border-radius: 8px; text-shadow: none;}
