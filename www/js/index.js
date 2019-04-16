@@ -648,6 +648,7 @@ function getDataFB(e){
         var resultado = JSON.stringify(result,null,4);
         //alert('TOKEN FB');
         //alert(resultado.accessToken);
+        /*
         window.CordovaFacebook.graphRequest({
             path: '/me',
             params: {access_token: resultado.accessToken, fields: "id,name,email"},
@@ -665,8 +666,8 @@ function getDataFB(e){
                 }
             }
           });
+        */
         
-        /*
         window.CordovaFacebook.graphRequest({
             path: '/me?fields=email,name,id&access_token='+resultado.accessToken,
             onSuccess: function (userData) {
@@ -682,7 +683,7 @@ function getDataFB(e){
                 navigator.notification.alert('Error Facebook data feed');
             }
           });
-        */
+        
       }
     },
     onFailure: function(result) {
