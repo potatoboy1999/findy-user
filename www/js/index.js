@@ -703,6 +703,7 @@ function facebookCallback(fbData){
   var name = fbData.name;
   var email = fbData.email;
   var fbId = fbData.id;
+  /////////////////////////////////////////////////////////////////////////////////////////CAMBIOS TEMPORALES
   navigator.notification.alert('Nombre: ' + name);
   navigator.notification.alert('Email: ' + email);
   navigator.notification.alert('FBid: ' + fbId);
