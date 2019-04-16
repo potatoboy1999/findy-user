@@ -648,7 +648,6 @@ function getDataFB(e){
         var resultado = JSON.stringify(result,null,4);
         //alert('TOKEN FB');
         //alert(resultado.accessToken);
-        
         window.CordovaFacebook.graphRequest({
           path: '/me',
           params: {access_token: resultado.accessToken, fields: "id,name,email"},
