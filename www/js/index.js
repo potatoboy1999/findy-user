@@ -1,11 +1,11 @@
-//var base_api_url='http://192.168.0.10/findy/public/api/';
-//var commerce_images = 'http://192.168.0.10/findy/img/commerces/';
-//var ctg_icon_url = 'http://192.168.0.10/findy/public/img/categoria/';
-//var ctg_white_icon_url = 'http://192.168.0.10/findy/public/img/categories_white/';
-var base_api_url='https://admin.findy.pe/api/';
-var commerce_images = 'https://admin.findy.pe/img/commerces/';
-var ctg_icon_url='https://admin.findy.pe/img/categoria/';
-var ctg_white_icon_url = 'https://admin.findy.pe/img/categories_white/';
+var base_api_url='http://192.168.0.10/findy/public/api/';
+var commerce_images = 'http://192.168.0.10/findy/img/commerces/';
+var ctg_icon_url = 'http://192.168.0.10/findy/public/img/categoria/';
+var ctg_white_icon_url = 'http://192.168.0.10/findy/public/img/categories_white/';
+//var base_api_url='https://admin.findy.pe/api/';
+//var commerce_images = 'https://admin.findy.pe/img/commerces/';
+//var ctg_icon_url='https://admin.findy.pe/img/categoria/';
+//var ctg_white_icon_url = 'https://admin.findy.pe/img/categories_white/';
 
 var storage = window.localStorage;
 var storageLng = null;
@@ -703,6 +703,9 @@ function facebookCallback(fbData){
   var name = fbData.name;
   var email = fbData.email;
   var fbId = fbData.id;
+  navigator.notification.alert('Nombre: ' + name);
+  navigator.notification.alert('Email: ' + email);
+  navigator.notification.alert('FBid: ' + fbId);
   $.ajax({
         url:base_api_url+'customer/callbackFB',
         type:'post',
@@ -713,6 +716,9 @@ function facebookCallback(fbData){
           'fbId':fbId
         },
         success:function(response){
+          if (response['status'] == 'error') {
+            navigator.notification.alert(response['message']);
+          }
           actionTaken = response.function;
           if (actionTaken == 'logIn' || actionTaken == 'register') {
             user = response['idUser'];
@@ -733,7 +739,7 @@ function facebookCallback(fbData){
         },
         error: function(error) {
           $.mobile.loading("hide");
-          //navigator.notification.alert('Error message:'+ error.responseText);
+          navigator.notification.alert('Error message:'+ error.responseText);
           navigator.notification.alert('Error: No se pudo comunicar con el servidor de Findy');
           //navigator.notification.alert('Error: No se pudo contactar con la API... Url:'+base_api_url+'customer/validateUser');
         }
