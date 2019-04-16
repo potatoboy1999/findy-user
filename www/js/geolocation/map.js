@@ -103,6 +103,7 @@ function initMap() {
 		styles: style
   	};
 	map = new google.maps.Map(document.getElementById('map'), options);
+	map.setZoom(12);
 }
 
 function refreshAllCommerceLocation(){

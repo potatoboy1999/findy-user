@@ -648,6 +648,7 @@ function getDataFB(e){
         var resultado = JSON.stringify(result,null,4);
         //alert('TOKEN FB');
         //alert(resultado.accessToken);
+        /*
         window.CordovaFacebook.graphRequest({
             path: '/me',
             params: {access_token: resultado.accessToken, fields: "id,name,email"},
@@ -665,13 +666,13 @@ function getDataFB(e){
                 }
             }
           });
+        */
         
-        /*
         window.CordovaFacebook.graphRequest({
             path: '/me?fields=email,name,id&access_token='+resultado.accessToken,
             onSuccess: function (userData) {
-                uData = JSON.stringify(userData,null,4);
-                alert(uData);
+                //uData = JSON.stringify(userData,null,4);
+                //alert(uData);
                 facebookCallback(userData);
             },
             onFailure: function (result) {
@@ -682,7 +683,7 @@ function getDataFB(e){
                 navigator.notification.alert('Error Facebook data feed');
             }
           });
-        */
+        
       }
     },
     onFailure: function(result) {
@@ -713,6 +714,10 @@ function facebookCallback(fbData){
           'fbId':fbId
         },
         success:function(response){
+          if (response['status'] == 'error') {
+            navigator.notification.alert(response['message']);
+            return;
+          }
           actionTaken = response.function;
           if (actionTaken == 'logIn' || actionTaken == 'register') {
             user = response['idUser'];

@@ -93,8 +93,8 @@ function initMap() {
 					];
   	// INICIALIZAR MAPA
   	var options = { 
-		center: {lat: -12.066367, lng: -76.952500},
-		zoom: 17,
+		center: {lat: -12.0490021, lng: -77.0243085},
+		zoom: 12,
 		streetViewControl: false,
 		rotateControl: false,
 		fullscreenControl: false,
@@ -103,6 +103,7 @@ function initMap() {
 		styles: style
   	};
 	map = new google.maps.Map(document.getElementById('map'), options);
+	map.setZoom(12);
 }
 
 function refreshAllCommerceLocation(){
