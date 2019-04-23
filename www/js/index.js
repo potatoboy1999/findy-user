@@ -72,6 +72,7 @@ function onDeviceReady() {
   $('.save-profile').on('click',editProfile);
   $('.btn_send_comment').on('click',sendComment);
 
+  $('#resetPassword').on('click',viewPasswordReset);
   $('#fbLink').on('click',viewFbLink);
   $('#InstagramLink').on('click',viewInstagramLink);
 
@@ -426,6 +427,10 @@ function viewCommentThanks(){
 function viewMap(){
  window.location.href = "#mapPage";
 }
+function viewPasswordReset(){
+  link = "https://user.findy.pe/public/password/reset";
+  window.open(link,'_system');
+}
 function viewFbLink(){
   link = "https://www.facebook.com/FINDY-1159776080854374/?modal=admin_todo_tour";
   window.open(link,'_system');
@@ -648,6 +653,7 @@ function getDataFB(e){
         var resultado = JSON.stringify(result,null,4);
         //alert('TOKEN FB');
         //alert(resultado.accessToken);
+        // METHOD FOR ANDROID
         window.CordovaFacebook.graphRequest({
           path: '/me',
           params: {access_token: resultado.accessToken, fields: "id,name,email"},
@@ -665,7 +671,7 @@ function getDataFB(e){
               }
           }
         });
-        
+        // METHOD FOR IOS
         /*
         window.CordovaFacebook.graphRequest({
           path: '/me?fields=email,name,id&access_token='+resultado.accessToken,
@@ -985,7 +991,7 @@ function loadCommInRange(cArray,range){
 
 function geoError(error){
   $.mobile.loading("hide");
-  navigator.notification.alert("Para ver negocios cercanos debes activar tu GPS y reiniciar la aplicación");
+  navigator.notification.alert("Presione el botón de Localización nuevamente");
   //navigator.notification.alert("code: "+ error.code+ ", message: "+error.message);
 };
 function calcDistance(lat, lng, pos2) {
