@@ -428,7 +428,7 @@ function viewMap(){
  window.location.href = "#mapPage";
 }
 function viewPasswordReset(){
-  link = "https://user.findy.pe/public/password/reset";
+  link = "https://user.findy.pe/password/reset";
   window.open(link,'_system');
 }
 function viewFbLink(){
