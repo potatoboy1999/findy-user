@@ -905,7 +905,7 @@ function refreshLocation(){
 }
 function getCurrentLocation(){
   $.mobile.loading("show", {
-    text: "localizandote...",
+    text: "localizándote...",
     textVisible: true,
     textonly:false
   });
