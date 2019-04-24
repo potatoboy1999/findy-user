@@ -114,8 +114,9 @@ input{font-family: 'GothamRnd-Light'; background-color: #f9f9f9; width: 100%; bo
 .exit-menu{padding: 10px 20px;}
 
 .topDiv{position: absolute; left: 5%; z-index: 99; width: 90%; border: 1px solid #c4c4c4; border-radius: 10px}
+#mapTitle{bottom:90px; min-height: 40px; background-color: white; text-align: center; width: calc(100% - 120px);}
 #verCategoriasBtn{bottom:30px; min-height: 50px; background-color: white; cursor: pointer; text-align: center;}
-#btn_position{width: 40px; left:80%; bottom:100px;min-height: 40px;background-color: white;text-align: center; border-radius: 20px;}
+#btn_position{width: 60px; left:calc(100% - 80px); bottom:85px;min-height: 60px;background-color: white;text-align: center; border-radius: 30px;}
 
 .info{bottom:100px; padding: 10px; width: calc(90% - 20px); min-height: 80px; background-color: white;}
 .moreInfo{padding: 10px 15px;width: calc(90% - 30px);bottom: 30px; min-height: 90%; background-color: white; z-index: 100; }
