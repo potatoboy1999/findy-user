@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.findy.findyApp" version="1.2.8" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.findy.findyApp" version="1.2.9" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Findy-User</name>
     <description>
         Findy, encuentra todas tus tiendas
@@ -61,8 +61,10 @@
         <icon density="xxhdpi" src="res/icon/android/xxhdpi.png"/>
         <icon density="xxxhdpi" src="res/icon/android/xxxhdpi.png"/>
     </platform>
-
-    <edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
         <string>Su ubicación actual se mostrará en el mapa y se usará para obtener direcciones y encontrar negocios cercanos</string>
     </edit-config>
+    <!--<edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+        <string>Su ubicación actual se mostrará en el mapa y se usará para obtener direcciones y encontrar negocios cercanos</string>
+    </edit-config>-->
 </widget>

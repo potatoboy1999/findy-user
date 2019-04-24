@@ -654,6 +654,7 @@ function getDataFB(e){
         //alert('TOKEN FB');
         //alert(resultado.accessToken);
         // METHOD FOR ANDROID
+        /*
         window.CordovaFacebook.graphRequest({
           path: '/me',
           params: {access_token: resultado.accessToken, fields: "id,name,email"},
@@ -671,8 +672,9 @@ function getDataFB(e){
               }
           }
         });
+        */
+        
         // METHOD FOR IOS
-        /*
         window.CordovaFacebook.graphRequest({
           path: '/me?fields=email,name,id&access_token='+resultado.accessToken,
           onSuccess: function (userData) {
@@ -688,7 +690,7 @@ function getDataFB(e){
               navigator.notification.alert('Error Facebook data feed');
           }
         });
-        */
+        
         
       }
     },
